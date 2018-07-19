@@ -1,0 +1,19 @@
+.root {
+  margin: 0;
+  border-color: currentColor;
+  border-style: solid;
+  border-width: 0;
+  padding: 0.25rem 1rem;
+  background-color: transparent;
+  color: inherit;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.isPrimary {
+  border-width: 0.0625rem;
+  padding: 0.75rem 3rem;
+  background-color: rgba(0, 0, 0, 0.5);
+}

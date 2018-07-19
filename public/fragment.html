@@ -1,0 +1,33 @@
+<div class="init-interactive" data-scripts="[public_path]/index.js" data-modules="[public_path]/index.modules.js" data-no-support-msg="true"></div>
+
+<style>
+  html[veiled] {
+    overflow: hidden;
+    max-height: 100%;
+  }
+
+  html:not([veiled])>body {
+    will-change: opacity;
+    transition: opacity cubic-bezier(.25, .5, .5, 1) 1s, background-color cubic-bezier(.25, .5, .5, 1) 1s;
+  }
+
+  html[veiled]>body {
+    opacity: 0;
+    background-color: #fff;
+    pointer-events: none;
+  }
+</style>
+<script>
+  (function () {
+    var timeout;
+
+    function unveil() {
+      clearTimeout(timeout);
+      document.documentElement.removeAttribute('veiled');
+    };
+
+    document.documentElement.setAttribute('veiled', '');
+    timeout = setTimeout(unveil, 2000);
+    window.addEventListener('unveil', unveil);
+  })();
+</script>

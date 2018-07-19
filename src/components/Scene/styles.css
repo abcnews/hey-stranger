@@ -1,0 +1,83 @@
+.root {
+  position: relative;
+  transition: transform 0.5s, transform-origin 0.5s;
+}
+
+@media (orientation: landscape) {
+  .root {
+    max-width: none !important;
+    max-height: none !important;
+  }
+}
+
+.root > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.base {
+  background-color: #000;
+}
+
+.base > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s 0.25s;
+}
+
+.hasFocused .base > * {
+  opacity: 0;
+  transition-duration: 0s;
+}
+
+.base::after {
+  content: '';
+  position: absolute;
+  top: -1px; /* Cover sub-pixel height clipping */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.45) 30%, rgba(0, 0, 0, 0) 60%);
+}
+
+.bodies {
+  z-index: 1;
+}
+
+.bodies::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0) 85%, rgba(0, 0, 0, 0.6));
+}
+
+.body {
+  position: absolute;
+}
+
+.body img {
+  transform: translate3d(-50%, 0, 0);
+  width: 100%;
+  height: auto;
+  transition: filter 0.5s;
+}
+
+.hasFocused .body:not(.isFocused) img {
+  filter: brightness(0.25) blur(1px);
+}
+
+/* TODO: Move to new component */
+
+.content {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  height: 100%;
+}

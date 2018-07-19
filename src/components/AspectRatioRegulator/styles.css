@@ -1,0 +1,110 @@
+.root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+}
+
+.children {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.invalid .children {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hint {
+  display: none;
+  transform: translate3d(-50%, -50%, 0);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.invalid .hint {
+  display: block;
+}
+
+.hint svg {
+  width: 6rem;
+  height: 6rem;
+}
+
+.hint path {
+  transform-origin: 50% 50%;
+  animation-duration: 4s;
+  animation-timing-function: cubic-bezier(0.5, 0, 0.5, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+
+.invalid .hint path {
+  animation-play-state: running;
+}
+
+@keyframes deviceClockwise {
+  0%,
+  60%,
+  100% {
+    transform: rotate(-90deg) translate3d(0, 4px, 0);
+  }
+  10%,
+  50% {
+    transform: translate3d(0, 4px, 0);
+  }
+}
+
+@keyframes deviceCounterClockwise {
+  0%,
+  60%,
+  100% {
+    transform: rotate(90deg) translate3d(0, 4px, 0);
+  }
+  10%,
+  50% {
+    transform: translate3d(0, 4px, 0);
+  }
+}
+
+@keyframes validity {
+  0%,
+  15%,
+  50%,
+  100% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(1.75);
+  }
+  25%,
+  45% {
+    transform: none;
+  }
+}
+
+.device {
+  fill: #bfbfbf;
+  animation-name: deviceClockwise;
+}
+
+.isCounterClockwise .device {
+  animation-name: deviceCounterClockwise;
+}
+
+.tick,
+.cross {
+  fill: #fff;
+  animation-name: validity;
+}
+
+.minInvalid .tick,
+.maxInvalid .cross {
+  animation-delay: 2s;
+}

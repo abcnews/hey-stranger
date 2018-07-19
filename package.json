@@ -1,0 +1,30 @@
+{
+  "name": "hey-stranger",
+  "version": "0.0.0",
+  "description": "A project generated from aunty's preact app template.",
+  "license": "MIT",
+  "private": true,
+  "contributors": [
+    "Colin Gourlay <Gourlay.Colin@abc.net.au>"
+  ],
+  "aunty": {
+    "type": "preact"
+  },
+  "scripts": {
+    "start": "aunty serve",
+    "test": "aunty test"
+  },
+  "devDependencies": {
+    "@abcnews/aunty": "^9.5.1",
+    "html-looks-like": "^1.0.3",
+    "preact-render-to-string": "^3.7.0"
+  },
+  "dependencies": {
+    "@abcnews/alternating-case-to-object": "^2.0.0",
+    "classnames": "^2.2.6",
+    "debounce": "^1.1.0",
+    "preact": "^8.2.9",
+    "preact-compat": "^3.18.0",
+    "xhr": "^2.5.0"
+  }
+}

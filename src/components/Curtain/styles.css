@@ -1,0 +1,40 @@
+.root {
+  transform: translate3d(-50%, 0, 0);
+  z-index: 1;
+  position: absolute;
+  top: 2rem;
+  bottom: 2rem;
+  left: 50%;
+  width: 100%;
+  transition: opacity 0.5s 0.5s, transform 2s;
+}
+
+.isRaised {
+  opacity: 0;
+  transform: translate3d(-50%, -50%, 0);
+  pointer-events: none;
+}
+
+.root > * {
+  display: block;
+  margin: 0 auto;
+}
+
+.root button {
+  outline: 0;
+}
+
+@media (max-width: 30rem) {
+  .root > :not(:first-child) {
+    transform: translate3d(-50%, 0, 0);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin: 0;
+  }
+
+  .isRaised > :not(:first-child) {
+    transform: translate3d(-50%, 150vh, 0);
+    transition: transform 2s;
+  }
+}

@@ -1,0 +1,80 @@
+.root {
+  max-width: 33.75rem;
+  text-align: center;
+  text-shadow: 0 0 1px #000;
+}
+
+.root > * {
+  margin: 0 1.25rem 1.25rem;
+}
+
+.title {
+  line-height: 1rem;
+}
+
+.title > * {
+  display: block;
+  margin: 1rem auto;
+}
+
+.title span {
+  overflow: hidden;
+  height: 0;
+}
+
+.title svg {
+  width: 100%;
+  max-width: 40rem;
+  height: auto;
+}
+
+.title svg + svg {
+  max-width: 26.25rem;
+}
+
+.byline,
+.infoSource {
+  font-size: 0.75rem;
+}
+
+.infoSource {
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.standfirst {
+  line-height: 1.5;
+}
+
+@media (min-width: 30rem) {
+  .root > * {
+    margin: 0 2rem 2rem;
+  }
+
+  .byline,
+  .infoSource {
+    font-size: 0.875rem;
+  }
+
+  .standfirst {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 60rem) {
+  .root {
+    max-width: 50rem;
+  }
+
+  .title svg {
+    max-width: 40rem;
+  }
+
+  .title svg + svg {
+    max-width: 32.25rem;
+  }
+
+  .standfirst {
+    font-size: 1.25rem;
+  }
+}

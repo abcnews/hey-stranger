@@ -1,0 +1,11 @@
+.root {
+  transform: translate3d(-50%, 25%, 0);
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transition: transform 2s;
+}
+
+.isUnveiled {
+  transform: translate3d(-50%, 0, 0);
+}
