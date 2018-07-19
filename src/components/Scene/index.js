@@ -3,9 +3,6 @@ const debounce = require('debounce');
 const { h, Component } = require('preact');
 const styles = require('./styles.css');
 
-const SMALLEST_TRANSPARENT_IMAGE = 'data:image/gif;base64,R0lGODlhAQABAAAAADs=';
-
-let nextId = 0;
 let viewportHeight;
 let viewportWidth;
 let viewportRatio;
@@ -30,7 +27,6 @@ class Scene extends Component {
   constructor(props) {
     super(props);
 
-    this.id = `${styles.root}__${nextId++}`;
     this.actorsBackToFront = props.actors.slice().sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
     this.actorsFrontToBack = this.actorsBackToFront.slice().reverse();
     this.actorBodiesSceneBoxes = props.actors.map(actor => ({
@@ -177,8 +173,6 @@ class Scene extends Component {
     });
   }
 
-  // Component lifecycle
-
   componentDidMount() {
     mountedComponents.set(this, true);
     invalidateViewport();
@@ -198,10 +192,11 @@ class Scene extends Component {
 
     this.scrollMax = Math.max(0, Math.round((scaledWidth - viewportWidth) / 2));
 
+    const [autoPanClassName, autoPanStyles] = createAutoPan(this.scrollMax);
+
     return (
       <div
-        id={this.id}
-        className={cn(styles.root, {
+        className={cn(styles.root, autoPanClassName, {
           [styles.hasFocused]: focused
         })}
         onMouseDown={isInteractive ? this.scrollBegin : null}
@@ -227,12 +222,12 @@ class Scene extends Component {
           transitionDuration: scrollOffset ? '0s' : ''
         }}
       >
-        {shouldAutoPan && isInteractive && <style>{animationCSS(this.id, this.scrollMax)}</style>}
+        {shouldAutoPan && isInteractive && <style>{autoPanStyles}</style>}
         <div className={styles.base}>
           {video ? (
             <video
               src={video.url}
-              poster={SMALLEST_TRANSPARENT_IMAGE}
+              poster={image ? image.url : null}
               autoplay
               loop
               muted
@@ -265,11 +260,12 @@ class Scene extends Component {
   }
 }
 
-const animationCSS = (id, scrollMax = 0) => {
-  const name = `${id}__scrollMax${String(scrollMax).split('.')[0]}`;
+const createAutoPan = (scrollMax = 0) => {
+  const className = `${styles.root}_autoPan__scrollMax${scrollMax}`;
+  const animationName = `${className}__animation`;
 
-  return `
-@keyframes ${name} {
+  const style = `
+@keyframes ${animationName} {
   0%, 100% {
     transform: translate3d(0, 0, 0);
   }
@@ -280,10 +276,13 @@ const animationCSS = (id, scrollMax = 0) => {
     transform: translate3d(${scrollMax}px, 0, 0);
   }
 }
-#${id} {
-  animation: ${name} ${Math.round(scrollMax / 5)}s linear 0s infinite alternate both;
+
+.${className} {
+  animation: ${animationName} ${Math.round(scrollMax / 5)}s linear 0s infinite alternate both;
 }
   `;
+
+  return [className, style];
 };
 
 module.exports = Scene;
