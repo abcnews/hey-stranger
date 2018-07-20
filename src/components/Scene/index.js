@@ -1,51 +1,21 @@
 const cn = require('classnames');
-const debounce = require('debounce');
 const { h, Component } = require('preact');
 const styles = require('./styles.css');
-
-let viewportHeight;
-let viewportWidth;
-let viewportRatio;
-const mountedComponents = new Map();
-
-const measureViewport = () => {
-  viewportHeight = window.innerHeight;
-  viewportWidth = window.innerWidth;
-  viewportRatio = viewportWidth / viewportHeight;
-};
-
-const invalidateViewport = debounce(() => {
-  measureViewport();
-  mountedComponents.forEach((_, component) => component.forceUpdate());
-}, 50);
-
-measureViewport();
-window.addEventListener('resize', invalidateViewport);
-window.addEventListener('orientationchange', invalidateViewport);
 
 class Scene extends Component {
   constructor(props) {
     super(props);
 
-    this.actorsBackToFront = props.actors.slice().sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
-    this.actorsFrontToBack = this.actorsBackToFront.slice().reverse();
-    this.actorBodiesSceneBoxes = props.actors.map(actor => ({
-      x1: actor.body.x - actor.body.width / 2,
-      x2: actor.body.x + actor.body.width / 2,
-      y1: actor.body.y,
-      y2: actor.body.y + actor.body.height
-    }));
-    this.clickCanvas = document.createElement('canvas');
-    this.clickCanvas.width = this.props.width;
-    this.clickCanvas.height = this.props.height;
-    this.clickCanvasCTX = this.clickCanvas.getContext('2d');
     this.imageRefs = {};
+    this.updateViewportDependentProps();
 
     this.state = {
       shouldAutoPan: true
     };
 
     this.firstInteraction = this.firstInteraction.bind(this);
+    this.invalidateViewportDependentProps = this.invalidateViewportDependentProps.bind(this);
+    this.invalidateVDPOnceOriented = this.invalidateVDPOnceOriented.bind(this);
     this.pickActor = this.pickActor.bind(this);
     this.saveImageRef = this.saveImageRef.bind(this);
     this.scrollBegin = this.scrollBegin.bind(this);
@@ -55,12 +25,31 @@ class Scene extends Component {
   }
 
   clampScrollOffset(scrollOffset) {
-    return Math.min(this.scrollMax, Math.max(-this.scrollMax, scrollOffset));
+    return Math.min(
+      this.viewportDependentProps.scrollMax,
+      Math.max(-this.viewportDependentProps.scrollMax, scrollOffset)
+    );
   }
 
   firstInteraction() {
     this.hasMadeFirstInteraction = true;
     this.setState({ scrollOffset: this.measureScrollOffset(), shouldAutoPan: false });
+  }
+
+  invalidateViewportDependentProps() {
+    this.updateViewportDependentProps();
+    this.setState({ scrollOffset: null });
+  }
+
+  invalidateVDPOnceOriented() {
+    const before = this.viewportDependentProps.viewportRatio;
+    const after = measureViewport().ratio;
+
+    if ((before >= 1 && after >= 1) || (before < 1 && after < 1)) {
+      return window.requestAnimationFrame(this.invalidateVDPOnceOriented);
+    }
+
+    this.invalidateViewportDependentProps();
   }
 
   measureScrollOffset() {
@@ -79,29 +68,34 @@ class Scene extends Component {
     const sceneX = (event.pageX - sceneBox.x) / sceneScale;
     const sceneY = (event.pageY - sceneBox.y) / sceneScale;
 
-    const candidateActors = this.actorBodiesSceneBoxes
-      .reduce((memo, box, index) => {
-        if (sceneX >= box.x1 && sceneX <= box.x2 && sceneY >= box.y1 && sceneY <= box.y2) {
-          memo.push(this.props.actors[index]);
-        }
+    const candidateActors = this.props.actors
+      .filter(
+        actor =>
+          sceneX >= actor.body.x &&
+          sceneX <= actor.body.x + actor.body.width &&
+          sceneY >= actor.body.y &&
+          sceneY <= actor.body.y + actor.body.height
+      )
+      .sort((a, b) => b.body.y + b.body.height - (a.body.y + a.body.height));
 
-        return memo;
-      }, [])
-      .sort((a, b) => this.actorsFrontToBack.indexOf(a) - this.actorsFrontToBack.indexOf(b));
+    const canvas = document.createElement('canvas');
+
+    canvas.width = this.props.width;
+    canvas.height = this.props.height;
+
+    const ctx = canvas.getContext('2d');
 
     const nextFocus = candidateActors.find(actor => {
-      const box = this.actorBodiesSceneBoxes[this.props.actors.indexOf(actor)];
-
-      this.clickCanvasCTX.clearRect(0, 0, this.props.width, this.props.height);
-      this.clickCanvasCTX.drawImage(
+      ctx.clearRect(0, 0, this.props.width, this.props.height);
+      ctx.drawImage(
         this.imageRefs[actor.body.image.url],
-        box.x1,
-        box.y1,
+        actor.body.x,
+        actor.body.y,
         actor.body.width,
         actor.body.height
       );
 
-      return this.clickCanvasCTX.getImageData(sceneX, sceneY, 1, 1).data[3] >= 128;
+      return ctx.getImageData(sceneX, sceneY, 1, 1).data[3] >= 128;
     });
 
     if (!nextFocus && !this.props.focused) {
@@ -173,26 +167,44 @@ class Scene extends Component {
     });
   }
 
-  componentDidMount() {
-    mountedComponents.set(this, true);
-    invalidateViewport();
+  updateViewportDependentProps(nextProps) {
+    const { width, height } = nextProps || this.props;
+    const viewport = measureViewport();
+    const ratioDiff = width / height - viewport.ratio;
+    const scaledWidth = ratioDiff > 0 ? (viewport.height / height) * width : viewport.width;
+    const scaledHeight = ratioDiff > 0 ? viewport.height : (viewport.width / width) * height;
+    const scrollMax = Math.max(0, Math.round((scaledWidth - viewport.width) / 2));
+    const [autoPanClassName, autoPanStyles] = createAutoPan(scrollMax);
 
-    this.lastBaseOffsetWidth;
+    this.viewportDependentProps = {
+      viewportRatio: viewport.ratio,
+      scaledWidth,
+      scaledHeight,
+      scrollMax,
+      autoPanClassName,
+      autoPanStyles
+    };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.invalidateViewportDependentProps);
+    window.addEventListener('orientationchange', this.invalidateVDPOnceOriented);
+  }
+
+  componentWillReceiveProps({ width, height }) {
+    if (this.props.width !== width || this.props.height !== height) {
+      this.updateViewportDependentProps();
+    }
   }
 
   componentWillUnmount() {
-    mountedComponents.delete(this, true);
+    window.removeEventListener('resize', this.invalidateViewportDependentProps);
+    window.removeEventListener('orientationchange', this.invalidateVDPOnceOriented);
   }
 
-  render({ isInteractive, width, height, image, video, focused }, { scrollOffset, shouldAutoPan }) {
-    const ratio = width / height;
-    const ratioDiff = ratio - viewportRatio;
-    const scaledWidth = ratioDiff > 0 ? (viewportHeight / height) * width : viewportWidth;
-    const scaledHeight = ratioDiff > 0 ? viewportHeight : (viewportWidth / width) * height;
-
-    this.scrollMax = Math.max(0, Math.round((scaledWidth - viewportWidth) / 2));
-
-    const [autoPanClassName, autoPanStyles] = createAutoPan(this.scrollMax);
+  render({ isInteractive, width, height, image, video, actors, focused }, { scrollOffset, shouldAutoPan }) {
+    const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } = this.viewportDependentProps;
+    const actorsBackToFront = actors.sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
 
     return (
       <div
@@ -212,10 +224,12 @@ class Scene extends Component {
         style={{
           width: `${scaledWidth}px`,
           height: `${scaledHeight}px`,
-          transformOrigin: focused ? `${(focused.body.x / width) * 100}% ${(focused.body.y / height) * 100}%` : '',
+          transformOrigin: focused
+            ? `${(focused.body.focus.x / width) * 100}% ${(focused.body.focus.y / height) * 100}%`
+            : '',
           transform: focused
-            ? `translate3d(${50 - (focused.body.x / width) * 100}% , ${66 -
-                (focused.body.y / height) * 100}%, 0) scale(${focused.body.scale / 100})`
+            ? `translate3d(${50 - (focused.body.focus.x / width) * 100}% , ${66 -
+                (focused.body.focus.y / height) * 100}%, 0) scale(${focused.body.focus.scale / 100})`
             : scrollOffset !== null
               ? `translate3d(${scrollOffset}px, 0, 0)`
               : '',
@@ -239,12 +253,13 @@ class Scene extends Component {
           ) : null}
         </div>
         <div className={styles.bodies}>
-          {this.actorsBackToFront.map(actor => (
+          {actorsBackToFront.map((actor, index) => (
             <div
               className={cn(styles.body, {
                 [styles.isFocused]: focused === actor
               })}
               style={{
+                transform: `translateZ(${index}px)`,
                 left: `${(actor.body.x / width) * 100}%`,
                 top: `${(actor.body.y / height) * 100}%`,
                 width: `${(actor.body.width / width) * 100}%`
@@ -254,7 +269,6 @@ class Scene extends Component {
             </div>
           ))}
         </div>
-        {/* <div className={styles.content} dangerouslySetInnerHTML={{ __html: cmDocuments[0].textXML.text }} /> */}
       </div>
     );
   }
@@ -283,6 +297,17 @@ const createAutoPan = (scrollMax = 0) => {
   `;
 
   return [className, style];
+};
+
+const measureViewport = () => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  return {
+    width,
+    height,
+    ratio: width / height
+  };
 };
 
 module.exports = Scene;

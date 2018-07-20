@@ -1,5 +1,5 @@
 .root {
-  transform: translate3d(-50%, 25%, 0);
+  transform: translate(-50%, 25%);
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -7,5 +7,5 @@
 }
 
 .isUnveiled {
-  transform: translate3d(-50%, 0, 0);
+  transform: translate(-50%, 0);
 }

@@ -8,41 +8,42 @@ class AspectRatioRegulator extends Component {
 
     this.update = this.update.bind(this);
 
-    if (this.props.min) {
-      this.minMQL = window.matchMedia(`(max-width: 150mm) and (max-aspect-ratio: ${this.props.min})`);
-      this.minMQL.addListener(this.update);
-    }
-
     if (this.props.max) {
       this.maxMQL = window.matchMedia(`(max-height: 150mm) and (min-aspect-ratio: ${this.props.max})`);
       this.maxMQL.addListener(this.update);
     }
 
-    this.state = {
-      isMinInvalid: false,
-      isMaxInvalid: false
+    if (this.props.min) {
+      this.minMQL = window.matchMedia(`(max-width: 150mm) and (max-aspect-ratio: ${this.props.min})`);
+      this.minMQL.addListener(this.update);
+    }
+
+    this.state = this.inferState();
+  }
+
+  inferState() {
+    return {
+      isCounterClockwise: window.orientation === -90,
+      isMaxInvalid: this.maxMQL && this.maxMQL.matches,
+      isMinInvalid: this.minMQL && this.minMQL.matches
     };
   }
 
   update() {
-    this.setState({
-      isMinInvalid: this.minMQL && this.minMQL.matches,
-      isMaxInvalid: this.maxMQL && this.maxMQL.matches
-    });
+    this.setState(this.inferState());
   }
 
-  componentDidMount() {
-    this.update();
-  }
+  render() {
+    const { children } = this.props;
+    const { isCounterClockwise, isMaxInvalid, isMinInvalid } = this.state;
 
-  render({ children }, { isMinInvalid, isMaxInvalid }) {
     return (
       <div
         className={cn(styles.root, {
           [styles.invalid]: isMinInvalid || isMaxInvalid,
           [styles.minInvalid]: isMinInvalid,
           [styles.maxInvalid]: isMaxInvalid,
-          [styles.isCounterClockwise]: window.orientation === -90
+          [styles.isCounterClockwise]: isCounterClockwise
         })}
       >
         <div className={styles.children}>{children}</div>

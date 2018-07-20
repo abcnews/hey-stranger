@@ -43,6 +43,9 @@ class App extends Component {
               Start
             </Button>
           </Curtain>
+          <div style={{ position: 'absolute', top: 0, left: 0 }}>
+            {focused && <img src={focused.phone.image.url} />}
+          </div>
           <Stage isUnveiled={hasStarted}>
             <Scene isInteractive={isInteractive} focused={focused} changeFocus={this.changeFocus} {...scene} />
           </Stage>

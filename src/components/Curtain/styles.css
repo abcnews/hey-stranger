@@ -1,5 +1,5 @@
 .root {
-  transform: translate3d(-50%, 0, 0);
+  transform: translate(-50%, 0);
   z-index: 1;
   position: absolute;
   top: 2rem;
@@ -11,7 +11,7 @@
 
 .isRaised {
   opacity: 0;
-  transform: translate3d(-50%, -50%, 0);
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
@@ -26,7 +26,7 @@
 
 @media (max-width: 30rem) {
   .root > :not(:first-child) {
-    transform: translate3d(-50%, 0, 0);
+    transform: translate(-50%, 0);
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -34,7 +34,7 @@
   }
 
   .isRaised > :not(:first-child) {
-    transform: translate3d(-50%, 150vh, 0);
+    transform: translate(-50%, 150vh);
     transition: transform 2s;
   }
 }

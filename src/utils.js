@@ -105,13 +105,19 @@ module.exports.getProps = async articleCMID => {
 
       actor = {
         body: {
-          width: config.w,
-          height: config.h,
           x: config.x,
           y: config.y,
-          scale: config.s
+          width: config.w,
+          height: config.h,
+          focus: {
+            x: config.fx || config.x + config.w / 2,
+            y: config.fy || config.y,
+            scale: config.fs || 100
+          }
         },
-        phone: {},
+        phone: {
+          /* TODO */
+        },
         html: ''
       };
 

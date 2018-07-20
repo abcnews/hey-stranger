@@ -22,7 +22,6 @@
   "dependencies": {
     "@abcnews/alternating-case-to-object": "^2.0.0",
     "classnames": "^2.2.6",
-    "debounce": "^1.1.0",
     "preact": "^8.2.9",
     "preact-compat": "^3.18.0",
     "xhr": "^2.5.0"

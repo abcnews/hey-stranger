@@ -19,19 +19,18 @@
 }
 
 .base {
-  background-color: #000;
+  transition: opacity 0.5s 0.25s;
+}
+
+.hasFocused .base {
+  opacity: 0;
+  transition: opacity 0.25s 0s;
 }
 
 .base > * {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.5s 0.25s;
-}
-
-.hasFocused .base > * {
-  opacity: 0;
-  transition-duration: 0s;
 }
 
 .base::after {
@@ -60,24 +59,14 @@
 
 .body {
   position: absolute;
-}
-
-.body img {
-  transform: translate3d(-50%, 0, 0);
-  width: 100%;
-  height: auto;
   transition: filter 0.5s;
 }
 
-.hasFocused .body:not(.isFocused) img {
+.hasFocused .body:not(.isFocused) {
   filter: brightness(0.25) blur(1px);
 }
 
-/* TODO: Move to new component */
-
-.content {
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
+.body img {
   width: 100%;
-  height: 100%;
+  height: auto;
 }
