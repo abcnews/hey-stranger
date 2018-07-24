@@ -225,11 +225,13 @@ class Scene extends Component {
           width: `${scaledWidth}px`,
           height: `${scaledHeight}px`,
           transformOrigin: focused
-            ? `${(focused.body.focus.x / width) * 100}% ${(focused.body.focus.y / height) * 100}%`
+            ? `${((focused.body.x + focused.body.focus.x) / width) * 100}% ${((focused.body.y + focused.body.focus.y) /
+                height) *
+                100}%`
             : '',
           transform: focused
-            ? `translate3d(${50 - (focused.body.focus.x / width) * 100}% , ${66 -
-                (focused.body.focus.y / height) * 100}%, 0) scale(${focused.body.focus.scale / 100})`
+            ? `translate3d(${50 - ((focused.body.x + focused.body.focus.x) / width) * 100}% , ${66 -
+                ((focused.body.y + focused.body.focus.y) / height) * 100}%, 0) scale(${focused.body.focus.scale / 100})`
             : scrollOffset !== null
               ? `translate3d(${scrollOffset}px, 0, 0)`
               : '',

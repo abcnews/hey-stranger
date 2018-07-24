@@ -110,8 +110,8 @@ module.exports.getProps = async articleCMID => {
           width: config.w,
           height: config.h,
           focus: {
-            x: config.fx || config.x + config.w / 2,
-            y: config.fy || config.y,
+            x: config.fx || config.w / 2,
+            y: config.fy || 0,
             scale: config.fs || 100
           }
         },
