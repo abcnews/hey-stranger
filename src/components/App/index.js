@@ -3,6 +3,7 @@ const ABCNewsNav = require('../ABCNewsNav');
 const AspectRatioRegulator = require('../AspectRatioRegulator');
 const Button = require('../Button');
 const Curtain = require('../Curtain');
+const Loader = require('../Loader');
 const Meta = require('../Meta');
 const Scene = require('../Scene');
 const Stage = require('../Stage');
@@ -36,21 +37,25 @@ class App extends Component {
   render({ meta, scene }, { focused, hasStarted, isInteractive }) {
     return (
       <main role="main" className={styles.root}>
-        <AspectRatioRegulator min="4/9" max="3/2">
-          <Curtain isRaised={hasStarted}>
-            <Meta {...meta} />
-            <Button primary onClick={this.start}>
-              Start
-            </Button>
-          </Curtain>
-          <div style={{ position: 'absolute', top: 0, left: 0 }}>
-            {focused && <img src={focused.phone.image.url} />}
-          </div>
-          <Stage isUnveiled={hasStarted}>
-            <Scene isInteractive={isInteractive} focused={focused} changeFocus={this.changeFocus} {...scene} />
-          </Stage>
-          <ABCNewsNav isUnavailable={!!focused} />
-        </AspectRatioRegulator>
+        <Loader />
+        {meta &&
+          scene && (
+            <AspectRatioRegulator min="4/9" max="3/2">
+              <Curtain isRaised={hasStarted}>
+                <Meta {...meta} />
+                <Button primary onClick={this.start}>
+                  Start
+                </Button>
+              </Curtain>
+              <div style={{ position: 'absolute', top: 0, left: 0 }}>
+                {focused && <img src={focused.phone.image.url} />}
+              </div>
+              <Stage isUnveiled={hasStarted}>
+                <Scene isInteractive={isInteractive} focused={focused} changeFocus={this.changeFocus} {...scene} />
+              </Stage>
+              <ABCNewsNav isUnavailable={!!focused} />
+            </AspectRatioRegulator>
+          )}
       </main>
     );
   }

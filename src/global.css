@@ -61,7 +61,7 @@ body {
   color: #fff;
 }
 
-[role='main'] ~ * {
+[data-app-root] ~ * {
   display: none;
 }
 
@@ -74,10 +74,4 @@ a:visited {
 
 a:not(:hover):not(:active) {
   text-decoration: none;
-}
-
-/* Todo: move to component */
-
-blockquote p:not([class]) {
-  font-family: ABCSerif, serif;
 }

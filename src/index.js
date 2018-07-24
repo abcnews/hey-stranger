@@ -7,19 +7,25 @@ if (!metaEl) {
   throw new Error('dynamic-content is not specified in meta');
 }
 
-let props;
+const rootEl = document.createElement('div');
+
+rootEl.setAttribute('data-app-root', '');
+document.body.insertBefore(rootEl, document.body.firstChild);
+
+let appProps = {};
 
 function load() {
   const App = require('./components/App');
-  render(<App meta={props.meta} scene={props.scene} />, document.body, document.body.firstChild);
+  render(<App meta={appProps.meta} scene={appProps.scene} />, rootEl, rootEl.firstChild);
 }
 
-(async () => {
-  props = await getProps(metaEl.getAttribute('content'));
-  reset();
+reset();
+load();
+window.dispatchEvent(new CustomEvent('unveil'));
+getProps(metaEl.getAttribute('content')).then(props => {
+  appProps = props;
   load();
-  window.dispatchEvent(new CustomEvent('unveil'));
-})();
+});
 
 if (module.hot) {
   module.hot.accept('./components/App', () => {

@@ -18,5 +18,7 @@
 }
 
 .root svg {
+  opacity: 0.5;
+  fill: #fff;
   vertical-align: top;
 }
