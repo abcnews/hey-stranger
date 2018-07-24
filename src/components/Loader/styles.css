@@ -1,3 +1,13 @@
+@keyframes enter {
+  0%,
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .root {
   position: absolute;
   z-index: 0;
@@ -7,12 +17,13 @@
   width: 6rem;
   height: 6rem;
   color: currentColor;
-  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 1s, transform 1s;
+  animation: enter 0.5s;
 }
 
 .root:not(:last-child) {
   opacity: 0;
-  transform: scale(0.5);
+  transform: scale(0);
 }
 
 .done {
@@ -59,8 +70,10 @@
     opacity: 0;
     transform: scale(1.25);
   }
-  to {
+  50% {
     opacity: 1;
+  }
+  100% {
     transform: none;
   }
 }
