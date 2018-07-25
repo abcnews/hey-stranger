@@ -1,0 +1,20 @@
+.root {
+  position: absolute;
+}
+
+.root > * {
+  width: 100%;
+  height: auto;
+}
+
+.silhouette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: brightness(0.25) blur(1px) drop-shadow(0 0 0 #000);
+  transition: opacity 0.5s;
+}
+
+.root.isInFocus .silhouette {
+  opacity: 0;
+}

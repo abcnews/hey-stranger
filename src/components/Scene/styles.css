@@ -60,17 +60,3 @@
   height: 100%;
   background-image: linear-gradient(rgba(0, 0, 0, 0) 85%, rgba(0, 0, 0, 0.6));
 }
-
-.body {
-  position: absolute;
-  transition: filter 0.5s;
-}
-
-.hasFocused .body:not(.isFocused) {
-  filter: brightness(0.25) blur(1px);
-}
-
-.body img {
-  width: 100%;
-  height: auto;
-}

@@ -1,5 +1,6 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
+const Body = require('../Body');
 const styles = require('./styles.css');
 
 class Scene extends Component {
@@ -256,19 +257,15 @@ class Scene extends Component {
         </div>
         <div className={styles.bodies}>
           {actorsBackToFront.map((actor, index) => (
-            <div
-              className={cn(styles.body, {
-                [styles.isFocused]: focused === actor
-              })}
-              style={{
-                transform: `translateZ(${index}px)`,
-                left: `${(actor.body.x / width) * 100}%`,
-                top: `${(actor.body.y / height) * 100}%`,
-                width: `${(actor.body.width / width) * 100}%`
-              }}
-            >
-              <img src={actor.body.image.url} onLoad={this.saveImageRef} />
-            </div>
+            <Body
+              xPct={actor.body.x / width}
+              yPct={actor.body.y / height}
+              widthPct={actor.body.width / width}
+              depthIndex={index}
+              src={actor.body.image.url}
+              isInFocus={!focused || focused === actor}
+              onLoadImage={this.saveImageRef}
+            />
           ))}
         </div>
       </div>
