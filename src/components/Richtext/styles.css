@@ -1,0 +1,44 @@
+.root {
+  font-size: 1rem;
+}
+
+@media (min-width: 30rem) and (min-height: 30rem) {
+  .root {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 60rem) and (min-height: 60rem) {
+  .root {
+    font-size: 1.25rem;
+  }
+}
+
+.root > * {
+  margin: 0 auto;
+  padding: 0 1.25rem 2em;
+  max-width: 25rem;
+  font-size: 1em;
+}
+
+.root > :last-child {
+  margin-bottom: 0;
+}
+
+.root > blockquote > p:not([class]) {
+  margin: 0 0 0.75em;
+  font-family: ABCSerif;
+  font-size: 1.5em;
+  font-style: italic;
+  hanging-punctuation: first;
+}
+
+.root > blockquote > p[class] {
+  margin: 0;
+  font-size: 2em;
+  font-style: italic;
+}
+
+.root > blockquote > p[class]::before {
+  content: '— ';
+}

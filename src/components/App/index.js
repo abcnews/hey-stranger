@@ -65,7 +65,7 @@ class App extends Component {
                 </Button>
               </Curtain>
               <Reader focused={actor} navigate={this.navigate} />
-              <Stage isUnveiled={hasStarted}>
+              <Stage hasFocus={!!actor} isUnveiled={hasStarted}>
                 <Scene isInteractive={isInteractive} focused={actor} navigate={this.navigate} {...scene} />
               </Stage>
               <ABCNewsNav isUnavailable={!!current} />

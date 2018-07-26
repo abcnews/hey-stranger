@@ -2,7 +2,7 @@
 .stories,
 .story,
 .phone,
-.text,
+.richtext,
 .nav,
 .root::after {
   position: absolute;
@@ -61,7 +61,7 @@
 }
 
 .phone,
-.text {
+.richtext {
 }
 
 .phone {
@@ -77,12 +77,39 @@
 
 @media (min-width: 60rem) and (min-height: 60rem) {
   .phone {
-    left: calc(50% - 15rem);
-    top: 35%;
+    left: calc(50% - 10rem);
   }
 }
 
-.text {
+.richtext {
+  overflow: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  transform: translate(-50%, 0);
+  left: 50%;
+  width: 100%;
+  height: 100vh;
+}
+
+.richtext::before,
+.richtext::after {
+  content: '';
+  display: block;
+  width: 100%;
+}
+
+.richtext::before,
+.richtext > * {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.richtext::before {
+  height: 4rem;
+}
+
+.richtext::after {
+  height: 125vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 20%);
 }
 
 .nav {
@@ -95,4 +122,20 @@
   height: 33.33%;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50%);
   pointer-events: none;
+}
+
+@media (min-width: 60rem) and (min-height: 60rem) {
+  .richtext {
+    overflow: visible;
+    top: 10%;
+    left: calc(50% + 20rem);
+    width: auto;
+    height: auto;
+  }
+
+  .richtext::after {
+    height: 4rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: none;
+  }
 }

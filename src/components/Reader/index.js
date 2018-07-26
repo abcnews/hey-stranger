@@ -3,6 +3,7 @@ const { h, Component } = require('preact');
 const Arrow = require('../Arrow');
 const Button = require('../Button');
 const Phone = require('../Phone');
+const Richtext = require('../Richtext');
 const styles = require('./styles.css');
 
 class Reader extends Component {
@@ -35,7 +36,9 @@ class Reader extends Component {
               <div className={styles.phone}>
                 <Phone {...this.lastFocused.phone} />
               </div>
-              <div className={styles.text} dangerouslySetInnerHTML={{ __html: this.lastFocused.html }} />
+              <div className={styles.text}>
+                <Richtext html={this.lastFocused.html} />
+              </div>
             </div>
           )}
           {focused && (
@@ -43,7 +46,9 @@ class Reader extends Component {
               <div className={styles.phone}>
                 <Phone {...focused.phone} />
               </div>
-              <div className={styles.text} dangerouslySetInnerHTML={{ __html: focused.html }} />
+              <div className={styles.richtext}>
+                <Richtext html={focused.html} />
+              </div>
             </div>
           )}
         </div>
