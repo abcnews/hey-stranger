@@ -132,12 +132,12 @@ module.exports.getProps = async articleCMID => {
 
       switch (embed.docType) {
         case 'Video':
-          scene.video = embed.renditions.slice().sort((a, b) => b.width - a.width)[0];
+          scene.video = { ...embed.renditions.slice().sort((a, b) => b.width - a.width)[0] };
           scene.video.url = uncrossDomain(scene.video.url);
           break;
         case 'CustomImage':
         case 'Image':
-          const image = embed.media.slice().sort((a, b) => b.width - a.width)[0];
+          const image = { ...embed.media.slice().sort((a, b) => b.width - a.width)[0] };
 
           image.url = uncrossDomain(image.url);
 
