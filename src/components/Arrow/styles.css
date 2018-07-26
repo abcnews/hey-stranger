@@ -4,3 +4,12 @@
   stroke-linecap: square;
   stroke-width: 2;
 }
+
+.flipped g {
+  transform: scale(-1, 1);
+  transform-origin: 50% 50%;
+}
+
+.flipped.vertical g {
+  transform: scale(1, -1);
+}

@@ -1,3 +1,4 @@
+const cn = require('classnames');
 const { h } = require('preact');
 const styles = require('./styles.css');
 
@@ -10,13 +11,16 @@ module.exports = ({ direction, hasTail }) => {
 
   return (
     <svg
-      className={styles.root}
+      className={cn(styles.root, {
+        [styles.vertical]: isVertical,
+        [styles.flipped]: isFlipped
+      })}
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}
     >
-      <g transform={isFlipped ? `scale(${isVertical ? '1 -1' : '-1 1'})` : ''} transform-origin="50% 50%">
+      <g>
         <line
           x1={isVertical ? 6.5 : 1.5}
           y1={isVertical ? 1.5 : 6.5}
