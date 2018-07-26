@@ -2,13 +2,13 @@
   font-size: 1rem;
 }
 
-@media (min-width: 30rem) and (min-height: 30rem) {
+@media (min-width: 30rem) and (min-height: 20rem) {
   .root {
     font-size: 1.125rem;
   }
 }
 
-@media (min-width: 60rem) and (min-height: 60rem) {
+@media (min-width: 60rem) and (min-height: 40rem) {
   .root {
     font-size: 1.25rem;
   }

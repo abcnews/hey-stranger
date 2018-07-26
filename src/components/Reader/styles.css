@@ -28,12 +28,6 @@
   transition-delay: 0.25s;
 }
 
-.stories {
-}
-
-.story {
-}
-
 @keyframes enter {
   from {
     transform: translate(0, 100%);
@@ -60,22 +54,18 @@
   animation: exit 0.5s forwards;
 }
 
-.phone,
-.richtext {
-}
-
 .phone {
   left: 50%;
   top: 45%;
 }
 
-@media (min-width: 30rem) and (min-height: 30rem) {
+@media (min-width: 30rem) and (min-height: 20rem) {
   .phone {
     top: 40%;
   }
 }
 
-@media (min-width: 60rem) and (min-height: 60rem) {
+@media (min-width: 60rem) and (min-height: 40rem) {
   .phone {
     left: calc(50% - 10rem);
   }
@@ -124,7 +114,7 @@
   pointer-events: none;
 }
 
-@media (min-width: 60rem) and (min-height: 60rem) {
+@media (min-width: 60rem) and (min-height: 40rem) {
   .richtext {
     overflow: visible;
     top: 10%;
