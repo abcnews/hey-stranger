@@ -106,6 +106,10 @@
   z-index: 1;
 }
 
+.nav > :first-child {
+  border-bottom-right-radius: 0.75rem;
+}
+
 .root::after {
   content: '';
   top: 66.67%;
@@ -116,15 +120,19 @@
 
 @media (min-width: 60rem) and (min-height: 40rem) {
   .richtext {
-    overflow: visible;
     top: 10%;
     left: calc(50% + 20rem);
+    border-radius: 0.5rem;
     width: auto;
     height: auto;
   }
 
+  .richtext::before,
   .richtext::after {
-    height: 4rem;
+    height: 2rem;
+  }
+
+  .richtext::after {
     background-color: rgba(0, 0, 0, 0.5);
     background-image: none;
   }

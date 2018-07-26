@@ -20,10 +20,6 @@
   margin: 0 auto;
 }
 
-.root button {
-  outline: 0;
-}
-
 @media (max-width: 30rem) {
   .root > :not(:first-child) {
     transform: translate(-50%, 0);

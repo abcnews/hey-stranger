@@ -2,7 +2,7 @@
   border-color: currentColor;
   border-style: solid;
   border-width: 0;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   background-color: rgba(0, 0, 0, 0.5);
   color: inherit;
   font-size: 0.75rem;
@@ -11,9 +11,20 @@
   cursor: pointer;
 }
 
+@media (min-width: 60rem) and (min-height: 40rem) {
+  .root {
+    font-size: 1rem;
+  }
+}
+
 .isPrimary {
   border-width: 0.0625rem;
   padding: 0.75rem 3rem;
+}
+
+.isTransparent {
+  background-color: transparent;
+  text-shadow: 0 0 0.125rem rgba(0, 0, 0, 0.5);
 }
 
 .root > * {

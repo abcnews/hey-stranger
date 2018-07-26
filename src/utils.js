@@ -131,6 +131,10 @@ module.exports.getProps = async articleCMID => {
       scene.cmDocuments.push(embed);
 
       switch (embed.docType) {
+        case 'Audio':
+          scene.audio = { ...embed.renditions[0] };
+          scene.audio.url = uncrossDomain(scene.audio.url);
+          break;
         case 'Video':
           scene.video = { ...embed.renditions.slice().sort((a, b) => b.width - a.width)[0] };
           scene.video.url = uncrossDomain(scene.video.url);

@@ -25,7 +25,6 @@
 @media (min-width: 60rem) and (min-height: 40rem) {
   .root > * {
     margin: 1rem;
-    font-size: 1rem;
   }
 }
 

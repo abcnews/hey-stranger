@@ -1,0 +1,20 @@
+.root {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: opacity 0.5s 0.5s;
+}
+
+.isUnavailable {
+  opacity: 0;
+  transition-delay: 0s;
+  pointer-events: none;
+}
+
+.root svg {
+  fill: currentColor;
+}
+
+.offIcon {
+  opacity: 0.5;
+}

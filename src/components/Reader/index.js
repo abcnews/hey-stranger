@@ -36,7 +36,7 @@ class Reader extends Component {
               <div className={styles.phone}>
                 <Phone {...this.lastFocused.phone} />
               </div>
-              <div className={styles.text}>
+              <div className={styles.richtext}>
                 <Richtext html={this.lastFocused.html} />
               </div>
             </div>

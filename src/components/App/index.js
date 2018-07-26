@@ -1,6 +1,7 @@
 const { h, Component } = require('preact');
 const ABCNewsNav = require('../ABCNewsNav');
 const AspectRatioRegulator = require('../AspectRatioRegulator');
+const AudioPlayer = require('../AudioPlayer');
 const Button = require('../Button');
 const Curtain = require('../Curtain');
 const Loader = require('../Loader');
@@ -16,6 +17,7 @@ class App extends Component {
     super(props);
 
     this.navigate = this.navigate.bind(this);
+    this.saveAudioRef = this.saveAudioRef.bind(this);
     this.start = this.start.bind(this);
 
     this.state = {
@@ -42,8 +44,17 @@ class App extends Component {
     this.setState({ current, prev, next });
   }
 
+  saveAudioRef(el) {
+    this.audio = el;
+  }
+
   start() {
     this.setState({ hasStarted: true });
+
+    if (this.audio) {
+      this.audio.play();
+    }
+
     setTimeout(() => {
       this.setState({ isInteractive: true });
     }, 1500);
@@ -70,6 +81,7 @@ class App extends Component {
               </Stage>
               <ABCNewsNav isUnavailable={!!current} />
               <InfiniteNav prev={prev} next={next} isUnavailable={!actor} navigate={this.navigate} />
+              <AudioPlayer audio={scene.audio} isUnavailable={!hasStarted} onAudio={this.saveAudioRef} />
             </AspectRatioRegulator>
           )}
       </main>
