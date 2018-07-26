@@ -2,6 +2,7 @@ const cn = require('classnames');
 const { h, Component } = require('preact');
 const Arrow = require('../Arrow');
 const Button = require('../Button');
+const Phone = require('../Phone');
 const styles = require('./styles.css');
 
 class Reader extends Component {
@@ -32,7 +33,7 @@ class Reader extends Component {
           {this.lastFocused && (
             <div key={this.lastFocused} className={cn(styles.story, styles.wasFocused)}>
               <div className={styles.phone}>
-                <img src={this.lastFocused.phone.image.url} />
+                <Phone {...this.lastFocused.phone} />
               </div>
               <div className={styles.text} dangerouslySetInnerHTML={{ __html: this.lastFocused.html }} />
             </div>
@@ -40,7 +41,7 @@ class Reader extends Component {
           {focused && (
             <div key={focused} className={cn(styles.story, styles.isFocused)}>
               <div className={styles.phone}>
-                <img src={focused.phone.image.url} />
+                <Phone {...focused.phone} />
               </div>
               <div className={styles.text} dangerouslySetInnerHTML={{ __html: focused.html }} />
             </div>

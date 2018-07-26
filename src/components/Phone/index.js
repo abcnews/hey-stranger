@@ -1,14 +1,19 @@
 const { h } = require('preact');
 const styles = require('./styles.css');
 
-module.exports = ({ image, center }) => (
+module.exports = ({ image, screen }) => (
   <div
     className={styles.root}
     style={{
-      transform: `translate${-center}%, 0)`
+      transform: `translate(${-screen.x}px, ${-screen.y}px)`
     }}
   >
-    <img src={image.url} />
+    <img
+      src={image.url}
+      style={{
+        transformOrigin: `${screen.x}px ${screen.y}px`
+      }}
+    />
   </div>
 );
 

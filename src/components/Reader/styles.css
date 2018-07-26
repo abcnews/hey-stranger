@@ -65,6 +65,21 @@
 }
 
 .phone {
+  left: 50%;
+  top: 45%;
+}
+
+@media (min-width: 30rem) and (min-height: 30rem) {
+  .phone {
+    top: 40%;
+  }
+}
+
+@media (min-width: 60rem) and (min-height: 60rem) {
+  .phone {
+    left: calc(50% - 15rem);
+    top: 35%;
+  }
 }
 
 .text {
@@ -76,8 +91,8 @@
 
 .root::after {
   content: '';
-  top: 60%;
-  height: 40%;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  top: 66.67%;
+  height: 33.33%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50%);
   pointer-events: none;
 }

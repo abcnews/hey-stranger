@@ -116,7 +116,10 @@ module.exports.getProps = async articleCMID => {
           }
         },
         phone: {
-          /* TODO */
+          screen: {
+            x: config.sx || 0,
+            y: config.sy || 0
+          }
         },
         html: ''
       };

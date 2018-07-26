@@ -1,2 +1,18 @@
 .root {
 }
+
+.root img {
+  transform: scale(0.6);
+}
+
+@media (min-width: 30rem) and (min-height: 30rem) {
+  .root img {
+    transform: scale(0.8);
+  }
+}
+
+@media (min-width: 60rem) and (min-height: 60rem) {
+  .root img {
+    transform: none;
+  }
+}

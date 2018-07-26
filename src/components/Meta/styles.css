@@ -47,7 +47,7 @@
   line-height: 1.5;
 }
 
-@media (min-width: 30rem) {
+@media (min-width: 30rem) and (min-height: 30rem) {
   .root > * {
     margin: 0 2rem 2rem;
   }
@@ -62,7 +62,7 @@
   }
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 60rem) and (min-height: 60rem) {
   .root {
     max-width: 50rem;
   }
