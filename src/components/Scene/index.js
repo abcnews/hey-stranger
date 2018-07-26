@@ -103,12 +103,12 @@ class Scene extends Component {
       return;
     }
 
-    this.props.changeFocus(nextFocus === this.props.focused ? null : nextFocus);
+    this.props.navigate(nextFocus === this.props.focused ? null : nextFocus);
     this.setState({ scrollOffset: null });
   }
 
-  saveImageRef(event) {
-    this.imageRefs[event.target.src] = event.target;
+  saveImageRef(el) {
+    this.imageRefs[el.src] = el;
   }
 
   scrollBegin(event) {
@@ -205,7 +205,7 @@ class Scene extends Component {
 
   render({ isInteractive, width, height, image, video, actors, focused }, { scrollOffset, shouldAutoPan }) {
     const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } = this.viewportDependentProps;
-    const actorsBackToFront = actors.sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
+    const actorsBackToFront = actors.slice().sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
 
     return (
       <div
@@ -264,7 +264,7 @@ class Scene extends Component {
               depthIndex={index}
               src={actor.body.image.url}
               isInFocus={!focused || focused === actor}
-              onLoadImage={this.saveImageRef}
+              onImage={this.saveImageRef}
             />
           ))}
         </div>
@@ -283,10 +283,10 @@ const createAutoPan = (scrollMax = 0) => {
     transform: translate3d(0, 0, 0);
   }
   25% {
-    transform: translate3d(${-scrollMax}px, 0, 0);
+    transform: translate3d(${scrollMax}px, 0, 0);
   }
   75% {
-    transform: translate3d(${scrollMax}px, 0, 0);
+    transform: translate3d(${-scrollMax}px, 0, 0);
   }
 }
 

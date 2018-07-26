@@ -157,6 +157,8 @@ module.exports.getProps = async articleCMID => {
     }
   }
 
+  scene.actors.sort((a, b) => a.body.x + a.body.focus.x - (b.body.x + b.body.focus.x));
+
   await blockingImages.load();
   nonBlockingImages.load();
 

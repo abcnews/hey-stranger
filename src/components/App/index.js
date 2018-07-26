@@ -4,7 +4,9 @@ const AspectRatioRegulator = require('../AspectRatioRegulator');
 const Button = require('../Button');
 const Curtain = require('../Curtain');
 const Loader = require('../Loader');
+const InfiniteNav = require('../InfiniteNav');
 const Meta = require('../Meta');
+const Reader = require('../Reader');
 const Scene = require('../Scene');
 const Stage = require('../Stage');
 const styles = require('./styles.css');
@@ -13,18 +15,31 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.changeFocus = this.changeFocus.bind(this);
+    this.navigate = this.navigate.bind(this);
     this.start = this.start.bind(this);
 
     this.state = {
-      focused: null,
+      current: null,
+      prev: null,
+      next: null,
       hasStarted: false,
       isInteractive: false
     };
   }
 
-  changeFocus(focused) {
-    this.setState({ focused });
+  navigate(target) {
+    const { actors } = this.props.scene;
+    const current = target;
+    const currentIndex = actors.indexOf(current);
+    let prev = null;
+    let next = null;
+
+    if (currentIndex !== -1) {
+      prev = actors[(actors.length + currentIndex - 1) % actors.length];
+      next = actors[(actors.length + currentIndex + 1) % actors.length];
+    }
+
+    this.setState({ current, prev, next });
   }
 
   start() {
@@ -34,7 +49,9 @@ class App extends Component {
     }, 1500);
   }
 
-  render({ meta, scene }, { focused, hasStarted, isInteractive }) {
+  render({ meta, scene }, { current, prev, next, hasStarted, isInteractive }) {
+    const actor = scene && scene.actors.indexOf(current) !== -1 ? current : null;
+
     return (
       <main role="main" className={styles.root}>
         <Loader />
@@ -47,13 +64,12 @@ class App extends Component {
                   Start
                 </Button>
               </Curtain>
-              <div style={{ position: 'absolute', top: 0, left: 0 }}>
-                {focused && <img src={focused.phone.image.url} />}
-              </div>
+              <Reader focused={actor} navigate={this.navigate} />
               <Stage isUnveiled={hasStarted}>
-                <Scene isInteractive={isInteractive} focused={focused} changeFocus={this.changeFocus} {...scene} />
+                <Scene isInteractive={isInteractive} focused={actor} navigate={this.navigate} {...scene} />
               </Stage>
-              <ABCNewsNav isUnavailable={!!focused} />
+              <ABCNewsNav isUnavailable={!!current} />
+              <InfiniteNav prev={prev} next={next} isUnavailable={!actor} navigate={this.navigate} />
             </AspectRatioRegulator>
           )}
       </main>

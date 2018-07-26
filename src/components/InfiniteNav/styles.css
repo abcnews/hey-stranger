@@ -1,0 +1,43 @@
+.root {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  transition: opacity 0.5s;
+}
+
+/* @media (max-width: 60rem) {
+  .root {
+    display: none;
+  }
+} */
+
+.isUnavailable {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.root > * {
+  margin: 0.5rem;
+}
+
+@media (min-width: 60rem) {
+  .root > * {
+    margin: 1rem;
+    font-size: 1rem;
+  }
+}
+
+.root svg {
+  width: 1.5em;
+  height: auto;
+}
+
+.root svg:first-child:not(:last-child) {
+  margin-right: 1.5em;
+}
+
+.root svg:last-child:not(:first-child) {
+  margin-left: 1.5em;
+}

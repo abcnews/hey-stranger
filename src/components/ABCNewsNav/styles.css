@@ -4,11 +4,12 @@
   left: 0;
   border-bottom-right-radius: 0.75rem;
   background-color: rgba(0, 0, 0, 0.25);
-  transition: opacity 0.5s;
+  transition: opacity 0.5s 0.5s;
 }
 
 .isUnavailable {
   opacity: 0;
+  transition-delay: 0s;
   pointer-events: none;
 }
 

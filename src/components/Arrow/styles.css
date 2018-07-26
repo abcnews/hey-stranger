@@ -1,0 +1,6 @@
+.root {
+  display: inline-block;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-width: 2;
+}

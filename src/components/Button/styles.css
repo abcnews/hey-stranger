@@ -1,10 +1,9 @@
 .root {
-  margin: 0;
   border-color: currentColor;
   border-style: solid;
   border-width: 0;
-  padding: 0.25rem 1rem;
-  background-color: transparent;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
   color: inherit;
   font-size: 0.75rem;
   line-height: 1rem;
@@ -15,5 +14,16 @@
 .isPrimary {
   border-width: 0.0625rem;
   padding: 0.75rem 3rem;
-  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.root > * {
+  vertical-align: middle;
+}
+
+.root > svg:first-child:not(:last-child) {
+  margin-right: 1em;
+}
+
+.root > svg:last-child:not(:first-child) {
+  margin-left: 1em;
 }

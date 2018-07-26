@@ -5,6 +5,7 @@
 
 .hasFocused {
   transition-duration: 0.75s, 0.5s;
+  pointer-events: none;
 }
 
 @media (orientation: landscape) {
