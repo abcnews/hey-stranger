@@ -3,7 +3,7 @@
   z-index: 1;
   position: absolute;
   top: 2rem;
-  bottom: 2rem;
+  bottom: 2.5rem;
   left: 50%;
   width: 100%;
   transition: opacity 0.5s 0.5s, transform 2s;

@@ -46,6 +46,7 @@ class AudioPlayer extends Component {
           <audio
             ref={this.getAudioRef}
             src={audio.url}
+            loop
             onPause={this.updatePlaybackState}
             onPlaying={this.updatePlaybackState}
           />
