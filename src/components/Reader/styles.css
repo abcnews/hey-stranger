@@ -1,8 +1,8 @@
 .root,
 .stories,
 .story,
-.phone,
-.richtext,
+.hand,
+.text,
 .nav,
 .root::after {
   position: absolute;
@@ -54,19 +54,19 @@
   animation: exit 0.75s forwards;
 }
 
-.phone {
+.hand {
   left: 50%;
   top: 45%;
 }
 
 @media (min-width: 30rem) and (min-height: 20rem) {
-  .phone {
+  .hand {
     top: 40%;
   }
 }
 
 @media (min-width: 60rem) and (min-height: 40rem) {
-  .phone {
+  .hand {
     left: calc(50% - 10rem);
   }
 }
@@ -85,7 +85,7 @@
 }
 
 .isFocused .leftHand {
-  animation: enterLeftHand 0.75s 0.5s backwards;
+  animation: enterLeftHand 0.75s 0.75s backwards;
 }
 
 .rightHand {
@@ -102,10 +102,10 @@
 }
 
 .isFocused .rightHand {
-  animation: enterRightHand 0.75s 0.5s backwards;
+  animation: enterRightHand 0.75s 0.75s backwards;
 }
 
-.richtext {
+.text {
   overflow: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -115,29 +115,29 @@
   height: 100vh;
 }
 
-.richtext::before,
-.richtext::after {
+.text::before,
+.text::after {
   content: '';
   display: block;
   width: 100%;
 }
 
-.richtext::before,
-.richtext > * {
+.text::before,
+.text > * {
   background-color: rgba(0, 0, 0, 0.55);
 }
 
-.richtext::before {
+.text::before {
   height: 4rem;
 }
 
-.richtext::after {
+.text::after {
   height: 125vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 20%);
 }
 
 @media (max-width: 60rem), (max-height: 40rem) {
-  .richtext {
+  .text {
     /* Hide scrollbar */
     padding: 0 2rem 0 0;
     width: calc(100% + 2rem);
@@ -146,7 +146,7 @@
 }
 
 @media (min-width: 60rem) and (min-height: 40rem) {
-  .richtext {
+  .text {
     top: 10%;
     left: calc(50% + 20rem);
     border-radius: 0.5rem;
@@ -154,12 +154,12 @@
     height: auto;
   }
 
-  .richtext::before,
-  .richtext::after {
+  .text::before,
+  .text::after {
     height: 2rem;
   }
 
-  .richtext::after {
+  .text::after {
     background-color: rgba(0, 0, 0, 0.55);
     background-image: none;
   }
