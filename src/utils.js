@@ -118,7 +118,8 @@ module.exports.getProps = async articleCMID => {
         phone: {
           screen: {
             x: config.sx || 0,
-            y: config.sy || 0
+            y: config.sy || 0,
+            hand: config.sh || 'right'
           }
         },
         html: ''

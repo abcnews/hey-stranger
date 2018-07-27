@@ -38,7 +38,7 @@
 }
 
 .isFocused {
-  animation: enter 0.5s 0.25s backwards;
+  animation: enter 0.75s 0.5s backwards;
 }
 
 @keyframes exit {
@@ -51,7 +51,7 @@
 }
 
 .wasFocused {
-  animation: exit 0.5s forwards;
+  animation: exit 0.75s forwards;
 }
 
 .phone {
@@ -69,6 +69,40 @@
   .phone {
     left: calc(50% - 10rem);
   }
+}
+
+.leftHand {
+  transform-origin: 0% 50%;
+}
+
+@keyframes enterLeftHand {
+  from {
+    transform: translate(-50%, 50%) scale(2) rotate(30deg);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.isFocused .leftHand {
+  animation: enterLeftHand 0.75s 0.5s backwards;
+}
+
+.rightHand {
+  transform-origin: 100% 50%;
+}
+
+@keyframes enterRightHand {
+  from {
+    transform: translate(50%, 50%) scale(2) rotate(-30deg);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.isFocused .rightHand {
+  animation: enterRightHand 0.75s 0.5s backwards;
 }
 
 .richtext {

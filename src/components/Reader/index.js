@@ -33,7 +33,7 @@ class Reader extends Component {
         <div className={styles.stories}>
           {this.lastFocused && (
             <div key={this.lastFocused} className={cn(styles.story, styles.wasFocused)}>
-              <div className={styles.phone}>
+              <div className={cn(styles.phone, styles[`${this.lastFocused.phone.screen.hand}Hand`])}>
                 <Phone {...this.lastFocused.phone} />
               </div>
               <div className={styles.richtext}>
@@ -43,7 +43,7 @@ class Reader extends Component {
           )}
           {focused && (
             <div key={focused} className={cn(styles.story, styles.isFocused)}>
-              <div className={styles.phone}>
+              <div className={cn(styles.phone, styles[`${focused.phone.screen.hand}Hand`])}>
                 <Phone {...focused.phone} />
               </div>
               <div className={styles.richtext}>

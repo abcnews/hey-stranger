@@ -239,7 +239,7 @@ class Scene extends Component {
           transitionDuration: scrollOffset ? '0s' : ''
         }}
       >
-        {shouldAutoPan && isInteractive && <style>{autoPanStyles}</style>}
+        {shouldAutoPan && isInteractive && !focused && <style>{autoPanStyles}</style>}
         <div className={styles.base}>
           {video ? (
             <video
