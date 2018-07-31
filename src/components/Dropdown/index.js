@@ -19,14 +19,18 @@ class Dropdown extends Component {
   render({ isUnavailable, actors, current }) {
     return (
       <nav className={styles.root}>
-        <label for="dropdown">Choose somebody:</label>
+        <label id="dropdown-label" for="dropdown-select">
+          Choose somebody:
+        </label>
         <select
-          name="dropdown"
+          id="dropdown-select"
+          aria-controls="reader-stories"
+          aria-describedby="dropdown-label"
           tabindex={isUnavailable ? -1 : 0}
           value={current ? actors.indexOf(current) : ''}
           onChange={this.pickActor}
         >
-          {[<option value="">—</option>].concat(
+          {[<option value="">Nobody</option>].concat(
             actors.map((actor, index) => <option value={index}>{actor.name}</option>)
           )}
         </select>

@@ -32,11 +32,11 @@ class InfiniteNav extends Component {
         })}
         aria-hidden={isUnavailable ? '' : null}
       >
-        <Button tabindex={isUnavailable ? -1 : 0} onClick={this.prev}>
+        <Button tabindex={isUnavailable ? -1 : 0} aria-controls="reader-stories" onClick={this.prev}>
           <Arrow direction="left" hasTail />
           <span>Previous</span>
         </Button>
-        <Button tabindex={isUnavailable ? -1 : 0} onClick={this.next}>
+        <Button tabindex={isUnavailable ? -1 : 0} aria-controls="reader-stories" onClick={this.next}>
           <span>Next</span>
           <Arrow direction="right" hasTail />
         </Button>

@@ -30,9 +30,9 @@ class Reader extends Component {
           [styles.hasFocused]: focused
         })}
       >
-        <div className={styles.stories}>
+        <div id="reader-stories" className={styles.stories} aria-live="assertive" aria-atomic="true">
           {this.lastFocused && (
-            <div key={this.lastFocused} className={cn(styles.story, styles.wasFocused)} role="presentation">
+            <div key={this.lastFocused} className={cn(styles.story, styles.wasFocused)} aria-hidden="true">
               <div className={cn(styles.hand, styles[`${this.lastFocused.phone.screen.hand}Hand`])}>
                 <Phone name={this.lastFocused.name} {...this.lastFocused.phone} />
               </div>
@@ -42,7 +42,7 @@ class Reader extends Component {
             </div>
           )}
           {focused && (
-            <div key={focused} className={cn(styles.story, styles.isFocused)}>
+            <div key={focused} className={cn(styles.story, styles.isFocused)} role="dialog">
               <div className={cn(styles.hand, styles[`${focused.phone.screen.hand}Hand`])}>
                 <Phone name={focused.name} {...focused.phone} />
               </div>

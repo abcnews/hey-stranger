@@ -11,13 +11,19 @@
 }
 
 .root label {
+  display: block;
   font-size: 0.75rem;
   text-transform: uppercase;
+  letter-spacing: 0.0625rem;
 }
 
 .root select {
   display: block;
   margin-top: 0.25rem;
+  border-radius: 0;
+  padding: 0.125rem;
   width: 100%;
+  background-color: #fff;
+  font-family: inherit;
   font-size: 16px;
 }
