@@ -59,15 +59,15 @@
   top: 45%;
 }
 
-@media (min-width: 30rem) and (min-height: 20rem) {
+@media (min-width: 32rem) and (min-height: 24rem) {
   .hand {
     top: 40%;
   }
 }
 
-@media (min-width: 60rem) and (min-height: 40rem) {
+@media (min-width: 64rem) and (min-height: 48rem) {
   .hand {
-    left: calc(50% - 10rem);
+    left: calc(50% - 16rem);
   }
 }
 
@@ -77,7 +77,7 @@
 
 @keyframes enterLeftHand {
   from {
-    transform: translate(-50%, 50%) scale(2) rotate(30deg);
+    transform: translate(-25%, 50%) scale(1.5) rotate(30deg);
   }
   to {
     transform: none;
@@ -94,7 +94,7 @@
 
 @keyframes enterRightHand {
   from {
-    transform: translate(50%, 50%) scale(2) rotate(-30deg);
+    transform: translate(25%, 50%) scale(1.5) rotate(-30deg);
   }
   to {
     transform: none;
@@ -110,8 +110,9 @@
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   transform: translate(-50%, 0);
-  left: 50%;
-  width: 100%;
+  left: calc(50% + 1rem);
+  padding: 0 2rem 0 0;
+  width: calc(100% + 2rem);
   height: 100vh;
 }
 
@@ -123,45 +124,41 @@
 }
 
 .text::before,
+.text::after,
 .text > * {
   background-color: rgba(0, 0, 0, 0.55);
 }
 
 .text::before {
-  height: 4rem;
+  height: 18.75vh;
 }
 
 .text::after {
-  height: 125vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 20%);
+  height: 50vh;
 }
 
-@media (max-width: 60rem), (max-height: 40rem) {
-  .text {
-    /* Hide scrollbar */
-    padding: 0 2rem 0 0;
-    width: calc(100% + 2rem);
-    left: calc(50% + 1rem);
-  }
-}
-
-@media (min-width: 60rem) and (min-height: 40rem) {
-  .text {
-    top: 10%;
-    left: calc(50% + 20rem);
-    border-radius: 0.5rem;
-    width: auto;
-    height: auto;
-  }
-
-  .text::before,
-  .text::after {
-    height: 2rem;
+@media (max-width: 63.999rem), (max-height: 47.999rem) {
+  .text::before {
+    height: 4rem;
   }
 
   .text::after {
-    background-color: rgba(0, 0, 0, 0.55);
-    background-image: none;
+    height: 125vh;
+    background-color: transparent;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 20%);
+  }
+}
+
+@media (min-width: 64rem) and (min-height: 48rem) {
+  .text {
+    transform: none;
+    left: calc(50% + 2rem);
+    width: 50%;
+    box-shadow: 0 0 2rem 2rem rgba(0, 0, 0, 0.55);
+  }
+
+  .text > * > * {
+    margin-left: 0;
   }
 }
 

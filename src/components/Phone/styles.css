@@ -5,13 +5,13 @@
   transform: scale(0.6);
 }
 
-@media (min-width: 30rem) and (min-height: 20rem) {
+@media (min-width: 32rem) and (min-height: 24rem) {
   .root img {
     transform: scale(0.8);
   }
 }
 
-@media (min-width: 60rem) and (min-height: 40rem) {
+@media (min-width: 64rem) and (min-height: 48rem) {
   .root img {
     transform: none;
   }

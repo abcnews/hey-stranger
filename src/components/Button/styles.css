@@ -11,7 +11,7 @@
   cursor: pointer;
 }
 
-@media (min-width: 60rem) and (min-height: 40rem) {
+@media (min-width: 64rem) and (min-height: 48rem) {
   .root {
     font-size: 1rem;
   }

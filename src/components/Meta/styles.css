@@ -47,7 +47,7 @@
   line-height: 1.5;
 }
 
-@media (min-width: 30rem) and (min-height: 20rem) {
+@media (min-width: 32rem) and (min-height: 24rem) {
   .root > * {
     margin: 0 2rem 2rem;
   }
@@ -62,9 +62,9 @@
   }
 }
 
-@media (min-width: 60rem) and (min-height: 40rem) {
+@media (min-width: 64rem) and (min-height: 48rem) {
   .root {
-    max-width: 50rem;
+    max-width: 48rem;
   }
 
   .title svg {
@@ -72,7 +72,7 @@
   }
 
   .title svg + svg {
-    max-width: 32.25rem;
+    max-width: 32rem;
   }
 
   .standfirst {

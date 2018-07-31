@@ -2,13 +2,13 @@
   font-size: 1rem;
 }
 
-@media (min-width: 30rem) and (min-height: 20rem) {
+@media (min-width: 32rem) and (min-height: 24rem) {
   .root {
     font-size: 1.125rem;
   }
 }
 
-@media (min-width: 60rem) and (min-height: 40rem) {
+@media (min-width: 64rem) and (min-height: 48rem) {
   .root {
     font-size: 1.25rem;
   }
@@ -17,8 +17,9 @@
 .root > * {
   margin: 0 auto;
   padding: 0 1.25rem 2em;
-  max-width: 25rem;
+  max-width: 28rem;
   font-size: 1.125em;
+  line-height: 1.5;
 }
 
 .root > :last-child {
@@ -28,14 +29,14 @@
 .root > blockquote > p:not([class]) {
   margin: 0 0 0.75em;
   font-family: ABCSerif;
-  font-size: 1.5em;
+  font-size: 1.25em;
   font-style: italic;
   hanging-punctuation: first;
 }
 
 .root > blockquote > p[class] {
   margin: 0;
-  font-size: 2em;
+  font-size: 1.875em;
   font-style: italic;
 }
 
