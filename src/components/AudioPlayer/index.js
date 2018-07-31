@@ -50,7 +50,7 @@ class AudioPlayer extends Component {
             onPause={this.updatePlaybackState}
             onPlaying={this.updatePlaybackState}
           />
-          <Button transparent className={styles.toggle} onClick={this.toggle}>
+          <Button transparent className={styles.toggle} disabled={isUnavailable ? '' : null} onClick={this.toggle}>
             {!on && (
               <svg className={styles.offIcon} width="17" height="16" viewBox="0 0 17 16">
                 <path d="M9.778 5.833l1.333-1.389 2.222 2.315 2.223-2.315 1.333 1.39-2.222 2.314 2.222 2.315-1.333 1.389-2.223-2.315-2.222 2.315-1.333-1.389L12 8.148 9.778 5.833zM0 10.667V5.333h3.555L8 0v16l-4.445-5.333H0z" />

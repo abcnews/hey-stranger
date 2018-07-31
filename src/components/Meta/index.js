@@ -1,7 +1,7 @@
 const { h } = require('preact');
 const styles = require('./styles.css');
 
-module.exports = ({ title, bylineHTML, infoSource, infoSourceURL, standfirst }) => (
+module.exports = ({ isUnavailable, title, bylineHTML, infoSource, infoSourceURL, standfirst }) => (
   <header className={styles.root}>
     <div className={styles.title} role="heading" aria-level="1">
       <span>{title}</span>
@@ -14,10 +14,23 @@ module.exports = ({ title, bylineHTML, infoSource, infoSourceURL, standfirst }) 
     </div>
     {(bylineHTML || infoSource) && (
       <div>
-        {bylineHTML && <div className={styles.byline} dangerouslySetInnerHTML={{ __html: bylineHTML }} />}
+        {bylineHTML && (
+          <div
+            className={styles.byline}
+            dangerouslySetInnerHTML={{
+              __html: bylineHTML.replace(/(<a )/g, isUnavailable ? '$1tabindex="-1" ' : '$1')
+            }}
+          />
+        )}
         {infoSource && (
           <div className={styles.infoSource}>
-            {infoSourceURL ? <a href={infoSourceURL}>{infoSource}</a> : infoSource}
+            {infoSourceURL ? (
+              <a tabindex={isUnavailable ? -1 : 0} href={infoSourceURL}>
+                {infoSource}
+              </a>
+            ) : (
+              infoSource
+            )}
           </div>
         )}
       </div>

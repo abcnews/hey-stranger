@@ -1,5 +1,7 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
+const Arrow = require('../Arrow');
+const Button = require('../Button');
 const styles = require('./styles.css');
 
 class Body extends Component {
@@ -19,7 +21,7 @@ class Body extends Component {
     }
   }
 
-  render({ xPct, yPct, widthPct, depthIndex, src, isInFocus }) {
+  render({ xPct, yPct, widthPct, depthIndex, src, name, isInFocus }) {
     return (
       <div
         className={cn(styles.root, {
@@ -32,8 +34,8 @@ class Body extends Component {
           width: `${widthPct * 100}%`
         }}
       >
-        <img ref={this.getImageRef} src={src} />
-        <img className={styles.silhouette} src={src} />
+        <img ref={this.getImageRef} src={src} alt={name} />
+        <img className={styles.silhouette} src={src} role="presentation" />
       </div>
     );
   }

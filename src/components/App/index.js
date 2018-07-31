@@ -4,6 +4,7 @@ const AspectRatioRegulator = require('../AspectRatioRegulator');
 const AudioPlayer = require('../AudioPlayer');
 const Button = require('../Button');
 const Curtain = require('../Curtain');
+const Dropdown = require('../Dropdown');
 const Loader = require('../Loader');
 const InfiniteNav = require('../InfiniteNav');
 const Meta = require('../Meta');
@@ -54,7 +55,6 @@ class App extends Component {
     if (this.audio) {
       this.audio.play();
     }
-
     setTimeout(() => {
       this.setState({ isInteractive: true });
     }, 1500);
@@ -70,8 +70,8 @@ class App extends Component {
           scene && (
             <AspectRatioRegulator min="4/9" max="3/2">
               <Curtain isRaised={hasStarted}>
-                <Meta {...meta} />
-                <Button primary onClick={this.start}>
+                <Meta isUnavailable={hasStarted} {...meta} />
+                <Button primary tabindex={hasStarted ? -1 : 0} onClick={this.start}>
                   Start
                 </Button>
               </Curtain>
@@ -79,6 +79,7 @@ class App extends Component {
               <Stage hasFocus={!!actor} isUnveiled={hasStarted}>
                 <Scene isInteractive={isInteractive} focused={actor} navigate={this.navigate} {...scene} />
               </Stage>
+              <Dropdown actors={scene.actors} current={current} isUnavailable={!hasStarted} navigate={this.navigate} />
               <ABCNewsNav isUnavailable={!!current} />
               <InfiniteNav prev={prev} next={next} isUnavailable={!actor} navigate={this.navigate} />
               <AudioPlayer audio={scene.audio} isUnavailable={!hasStarted} onAudio={this.saveAudioRef} />

@@ -32,9 +32,9 @@ class Reader extends Component {
       >
         <div className={styles.stories}>
           {this.lastFocused && (
-            <div key={this.lastFocused} className={cn(styles.story, styles.wasFocused)}>
+            <div key={this.lastFocused} className={cn(styles.story, styles.wasFocused)} role="presentation">
               <div className={cn(styles.hand, styles[`${this.lastFocused.phone.screen.hand}Hand`])}>
-                <Phone {...this.lastFocused.phone} />
+                <Phone name={this.lastFocused.name} {...this.lastFocused.phone} />
               </div>
               <div className={styles.text}>
                 <Richtext html={this.lastFocused.html} />
@@ -44,7 +44,7 @@ class Reader extends Component {
           {focused && (
             <div key={focused} className={cn(styles.story, styles.isFocused)}>
               <div className={cn(styles.hand, styles[`${focused.phone.screen.hand}Hand`])}>
-                <Phone {...focused.phone} />
+                <Phone name={focused.name} {...focused.phone} />
               </div>
               <div className={styles.text}>
                 <Richtext html={focused.html} />
@@ -53,7 +53,7 @@ class Reader extends Component {
           )}
         </div>
         <nav className={styles.nav}>
-          <Button onClick={this.back}>
+          <Button tabindex={focused ? 0 : -1} onClick={this.back}>
             <Arrow direction="left" />
             <span>Back</span>
           </Button>

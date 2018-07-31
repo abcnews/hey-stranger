@@ -192,7 +192,7 @@ class Scene extends Component {
     window.addEventListener('orientationchange', this.invalidateVDPOnceOriented);
   }
 
-  componentWillReceiveProps({ width, height }) {
+  componentWillReceiveProps({ focused, width, height }) {
     if (this.props.width !== width || this.props.height !== height) {
       this.updateViewportDependentProps();
     }
@@ -263,6 +263,7 @@ class Scene extends Component {
               widthPct={actor.body.width / width}
               depthIndex={index}
               src={actor.body.image.url}
+              name={actor.name}
               isInFocus={!focused || focused === actor}
               onImage={this.saveImageRef}
             />

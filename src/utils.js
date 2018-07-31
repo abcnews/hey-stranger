@@ -161,7 +161,11 @@ module.exports.getProps = async articleCMID => {
           break;
       }
     } else if (actor) {
-      actor.html += node.outerHTML;
+      if (node.className === 'p--heading-1') {
+        actor.name = node.textContent;
+      } else {
+        actor.html += node.outerHTML;
+      }
     }
   }
 
