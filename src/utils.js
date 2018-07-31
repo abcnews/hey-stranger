@@ -145,6 +145,7 @@ module.exports.getProps = async articleCMID => {
           const image = { ...embed.media.slice().sort((a, b) => b.width - a.width)[0] };
 
           image.url = uncrossDomain(image.url);
+          image.description = embed.alt;
 
           if (!actor) {
             scene.image = image;
