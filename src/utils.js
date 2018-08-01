@@ -78,7 +78,8 @@ module.exports.getProps = async articleCMID => {
   const blockingImages = new ImagesPreloader();
   const nonBlockingImages = new ImagesPreloader();
   const scene = {
-    actors: []
+    actors: [],
+    creditsHTML: ''
   };
   let actor;
 
@@ -121,7 +122,7 @@ module.exports.getProps = async articleCMID => {
             hand: config.sh || 'right'
           }
         },
-        html: ''
+        storyHTML: ''
       };
 
       scene.actors.push(actor);
@@ -162,8 +163,10 @@ module.exports.getProps = async articleCMID => {
       if (node.className === 'p--heading-1') {
         actor.name = node.textContent;
       } else {
-        actor.html += node.outerHTML;
+        actor.storyHTML += node.outerHTML;
       }
+    } else {
+      scene.creditsHTML += node.outerHTML;
     }
   }
 
