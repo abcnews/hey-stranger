@@ -55,6 +55,8 @@ class AudioPlayer extends Component {
             transparent
             className={styles.toggle}
             disabled={isUnavailable ? '' : null}
+            aria-label={`Audio is ${on ? 'on' : 'off'}`}
+            aria-pressed={on ? 'true' : 'false'}
             aria-controls="soundtrack"
             onClick={this.toggle}
           >

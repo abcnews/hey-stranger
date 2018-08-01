@@ -1,7 +1,7 @@
 const { h } = require('preact');
 const styles = require('./styles.css');
 
-module.exports = ({ image, screen, name }) => (
+module.exports = ({ name, screen, image }) => (
   <div
     className={styles.root}
     style={{
@@ -10,7 +10,7 @@ module.exports = ({ image, screen, name }) => (
   >
     <img
       src={image.url}
-      alt={`${name}'s screen`}
+      alt={image.description || `${name}'s screen`}
       style={{
         transformOrigin: `${screen.x}px ${screen.y}px`
       }}

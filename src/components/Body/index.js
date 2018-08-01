@@ -21,7 +21,7 @@ class Body extends Component {
     }
   }
 
-  render({ xPct, yPct, widthPct, depthIndex, src, name, isInFocus }) {
+  render({ xPct, yPct, widthPct, depthIndex, src, alt, isInFocus }) {
     return (
       <div
         className={cn(styles.root, {
@@ -34,7 +34,7 @@ class Body extends Component {
           width: `${widthPct * 100}%`
         }}
       >
-        <img ref={this.getImageRef} src={src} alt={name} />
+        <img ref={this.getImageRef} src={src} alt={alt} />
         <img className={styles.silhouette} src={src} role="presentation" />
       </div>
     );

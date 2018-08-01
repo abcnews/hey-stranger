@@ -245,6 +245,7 @@ class Scene extends Component {
             <video
               src={video.url}
               poster={image ? image.url : null}
+              alt={image ? image.description : null}
               autoplay
               loop
               muted
@@ -252,7 +253,7 @@ class Scene extends Component {
               webkit-playsinline
             />
           ) : image ? (
-            <img src={image.url} />
+            <img src={image.url} alt={image.description} />
           ) : null}
         </div>
         <div className={styles.bodies}>
@@ -263,7 +264,7 @@ class Scene extends Component {
               widthPct={actor.body.width / width}
               depthIndex={index}
               src={actor.body.image.url}
-              name={actor.name}
+              alt={actor.body.image.description || actor.name}
               isInFocus={!focused || focused === actor}
               onImage={this.saveImageRef}
             />

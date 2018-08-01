@@ -80,9 +80,9 @@ class App extends Component {
                 <Scene isInteractive={isInteractive} focused={actor} navigate={this.navigate} {...scene} />
               </Stage>
               <Dropdown actors={scene.actors} current={current} isUnavailable={!hasStarted} navigate={this.navigate} />
-              <ABCNewsNav isUnavailable={!!current} />
               <InfiniteNav prev={prev} next={next} isUnavailable={!actor} navigate={this.navigate} />
               <AudioPlayer audio={scene.audio} isUnavailable={!hasStarted} onAudio={this.saveAudioRef} />
+              <ABCNewsNav isUnavailable={!!current} />
             </AspectRatioRegulator>
           )}
       </main>
