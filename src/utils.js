@@ -78,7 +78,6 @@ module.exports.getProps = async articleCMID => {
   const blockingImages = new ImagesPreloader();
   const nonBlockingImages = new ImagesPreloader();
   const scene = {
-    cmDocuments: [article],
     actors: []
   };
   let actor;
@@ -128,8 +127,6 @@ module.exports.getProps = async articleCMID => {
       scene.actors.push(actor);
     } else if (isEmbed(node)) {
       const embed = cmEmbedsById[getEmbedCMID(node.firstElementChild)];
-
-      scene.cmDocuments.push(embed);
 
       switch (embed.docType) {
         case 'Audio':
