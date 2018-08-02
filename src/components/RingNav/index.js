@@ -1,10 +1,9 @@
-const cn = require('classnames');
 const { h, Component } = require('preact');
 const Arrow = require('../Arrow');
 const Button = require('../Button');
 const styles = require('./styles.css');
 
-class InfiniteNav extends Component {
+class RingNav extends Component {
   constructor(props) {
     super(props);
 
@@ -26,12 +25,7 @@ class InfiniteNav extends Component {
 
   render({ isUnavailable }) {
     return (
-      <nav
-        className={cn(styles.root, {
-          [styles.isUnavailable]: isUnavailable
-        })}
-        aria-hidden={isUnavailable ? '' : null}
-      >
+      <nav className={styles.root} aria-hidden={isUnavailable ? 'true' : 'false'}>
         <Button tabindex={isUnavailable ? -1 : 0} aria-controls="reader-stories" onClick={this.prev}>
           <Arrow direction="left" hasTail />
           <span>Previous</span>
@@ -45,4 +39,4 @@ class InfiniteNav extends Component {
   }
 }
 
-module.exports = InfiniteNav;
+module.exports = RingNav;

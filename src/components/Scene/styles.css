@@ -3,6 +3,10 @@
   transition: transform 0.5s, transform-origin 0.75s;
 }
 
+.root[aria-hidden='true'] {
+  pointer-events: none;
+}
+
 .hasFocused {
   transition-duration: 0.75s, 0.5s;
 }

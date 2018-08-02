@@ -1,16 +1,10 @@
-const cn = require('classnames');
 const { h, Component } = require('preact');
 const styles = require('./styles.css');
 
 class Curtain extends Component {
-  render({ isRaised, children }) {
+  render({ isUnavailable, children }) {
     return (
-      <div
-        className={cn(styles.root, {
-          [styles.isRaised]: isRaised
-        })}
-        aria-hidden={isRaised ? '' : null}
-      >
+      <div className={styles.root} aria-hidden={isUnavailable ? 'true' : 'false'}>
         {children}
       </div>
     );

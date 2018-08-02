@@ -25,11 +25,7 @@ class Reader extends Component {
 
   render({ focused }) {
     return (
-      <div
-        className={cn(styles.root, {
-          [styles.hasFocused]: focused
-        })}
-      >
+      <div className={styles.root} aria-hidden={focused ? 'false' : 'true'}>
         <div id="reader-stories" className={styles.stories} aria-live="assertive" aria-atomic="true">
           {this.lastFocused && (
             <div key={this.lastFocused} className={cn(styles.story, styles.wasFocused)} aria-hidden="true">

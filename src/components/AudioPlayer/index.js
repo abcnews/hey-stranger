@@ -1,4 +1,3 @@
-const cn = require('classnames');
 const { h, Component } = require('preact');
 const Button = require('../Button');
 const styles = require('./styles.css');
@@ -37,12 +36,7 @@ class AudioPlayer extends Component {
   render({ audio, isUnavailable }, { on }) {
     return (
       audio && (
-        <div
-          className={cn(styles.root, {
-            [styles.isUnavailable]: isUnavailable
-          })}
-          aria-hidden={isUnavailable ? '' : null}
-        >
+        <div className={styles.root} aria-hidden={isUnavailable ? 'true' : 'false'}>
           <audio
             id="soundtrack"
             ref={this.getAudioRef}

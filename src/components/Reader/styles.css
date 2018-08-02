@@ -19,13 +19,12 @@
 }
 
 .root {
-  opacity: 0;
-  transition: opacity 1s;
+  transition: opacity 1s 0.25s;
 }
 
-.hasFocused {
-  opacity: 1;
-  transition-delay: 0.25s;
+.root[aria-hidden='true'] {
+  opacity: 0;
+  transition-delay: 0s;
 }
 
 @keyframes enter {

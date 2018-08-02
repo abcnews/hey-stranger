@@ -6,7 +6,7 @@ const Button = require('../Button');
 const Curtain = require('../Curtain');
 const Dropdown = require('../Dropdown');
 const Loader = require('../Loader');
-const InfiniteNav = require('../InfiniteNav');
+const RingNav = require('../RingNav');
 const Meta = require('../Meta');
 const Reader = require('../Reader');
 const Scene = require('../Scene');
@@ -21,6 +21,8 @@ class App extends Component {
     this.saveAudioRef = this.saveAudioRef.bind(this);
     this.start = this.start.bind(this);
 
+    this.updateRing(props.scene);
+
     this.state = {
       current: null,
       prev: null,
@@ -31,15 +33,15 @@ class App extends Component {
   }
 
   navigate(target) {
-    const { actors } = this.props.scene;
     const current = target;
-    const currentIndex = actors.indexOf(current);
+    const ringLength = this.ring.length;
+    const ringIndex = this.ring.indexOf(current);
     let prev = null;
     let next = null;
 
-    if (currentIndex !== -1) {
-      prev = actors[(actors.length + currentIndex - 1) % actors.length];
-      next = actors[(actors.length + currentIndex + 1) % actors.length];
+    if (ringIndex !== -1) {
+      prev = this.ring[(ringLength + ringIndex - 1) % ringLength];
+      next = this.ring[(ringLength + ringIndex + 1) % ringLength];
     }
 
     this.setState({ current, prev, next });
@@ -60,8 +62,21 @@ class App extends Component {
     }, 1500);
   }
 
+  updateRing({ actors, creditsHTML } = {}) {
+    this.ring = actors ? [...actors] : [];
+
+    if (creditsHTML) {
+      this.ring.push(creditsHTML);
+    }
+  }
+
+  componentDidUpdate() {
+    this.updateRing(this.props.scene);
+  }
+
   render({ meta, scene }, { current, prev, next, hasStarted, isInteractive }) {
-    const actor = scene && scene.actors.indexOf(current) !== -1 ? current : null;
+    const currentActor = scene && scene.actors.indexOf(current) !== -1 ? current : null;
+    // const currentCreditsHTML = scene && scene.creditsHTML === current ? current : null;
 
     return (
       <main role="main" className={styles.root}>
@@ -69,20 +84,28 @@ class App extends Component {
         {meta &&
           scene && (
             <AspectRatioRegulator min="4/9" max="3/2">
-              <Curtain isRaised={hasStarted}>
+              <Curtain isUnavailable={hasStarted}>
                 <Meta isUnavailable={hasStarted} {...meta} />
                 <Button primary tabindex={hasStarted ? -1 : 0} onClick={this.start}>
                   Start
                 </Button>
               </Curtain>
-              <Reader focused={actor} navigate={this.navigate} />
-              <Stage hasFocus={!!actor} isUnveiled={hasStarted}>
-                <Scene isInteractive={isInteractive} focused={actor} navigate={this.navigate} {...scene} />
+              <Reader focused={currentActor} navigate={this.navigate} />
+              <Stage hasFocus={!!currentActor} isUnavailable={!hasStarted}>
+                <Scene isUnavailable={!isInteractive} focused={currentActor} navigate={this.navigate} {...scene} />
               </Stage>
-              <Dropdown actors={scene.actors} current={current} isUnavailable={!hasStarted} navigate={this.navigate} />
-              <InfiniteNav prev={prev} next={next} isUnavailable={!actor} navigate={this.navigate} />
+              {/* <Credits html={creditsHTML} isUnavailable={!currentCreditsHTML} /> */}
+              <Dropdown
+                actors={scene.actors}
+                current={currentActor}
+                isUnavailable={!hasStarted}
+                navigate={this.navigate}
+              />
+              {/* <ReturnNav isUnavailable={current} /> */}
+              <RingNav prev={prev} next={next} isUnavailable={!currentActor} navigate={this.navigate} />
+              {/* <CreditsNav isUnavailable={currentCreditsHTML} /> */}
               <AudioPlayer audio={scene.audio} isUnavailable={!hasStarted} onAudio={this.saveAudioRef} />
-              <ABCNewsNav isUnavailable={!!current} />
+              <ABCNewsNav isUnavailable={current} />
             </AspectRatioRegulator>
           )}
       </main>

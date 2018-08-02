@@ -2,13 +2,12 @@ const cn = require('classnames');
 const { h } = require('preact');
 const styles = require('./styles.css');
 
-module.exports = ({ hasFocus, isUnveiled, children }) => (
+module.exports = ({ hasFocus, isUnavailable, children }) => (
   <div
     className={cn(styles.root, {
-      [styles.hasFocus]: hasFocus,
-      [styles.isUnveiled]: isUnveiled
+      [styles.hasFocus]: hasFocus
     })}
-    aria-hidden={isUnveiled ? '' : null}
+    aria-hidden={isUnavailable ? 'true' : 'false'}
   >
     {children}
   </div>

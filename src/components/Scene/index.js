@@ -192,7 +192,7 @@ class Scene extends Component {
     window.addEventListener('orientationchange', this.invalidateVDPOnceOriented);
   }
 
-  componentWillReceiveProps({ focused, width, height }) {
+  componentWillReceiveProps({ width, height }) {
     if (this.props.width !== width || this.props.height !== height) {
       this.updateViewportDependentProps();
     }
@@ -203,7 +203,7 @@ class Scene extends Component {
     window.removeEventListener('orientationchange', this.invalidateVDPOnceOriented);
   }
 
-  render({ isInteractive, width, height, image, video, actors, focused }, { scrollOffset, shouldAutoPan }) {
+  render({ isUnavailable, width, height, image, video, actors, focused }, { scrollOffset, shouldAutoPan }) {
     const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } = this.viewportDependentProps;
     const actorsBackToFront = actors.slice().sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
 
@@ -212,16 +212,7 @@ class Scene extends Component {
         className={cn(styles.root, autoPanClassName, {
           [styles.hasFocused]: focused
         })}
-        onMouseDown={isInteractive ? this.scrollBegin : null}
-        onTouchStart={isInteractive ? this.scrollBegin : null}
-        onMouseMoveCapture={isInteractive ? this.scrollContinue : null}
-        onTouchMoveCapture={isInteractive ? this.scrollContinue : null}
-        onMouseUp={isInteractive ? this.scrollFinish : null}
-        onTouchEnd={isInteractive ? this.scrollFinish : null}
-        onMouseLeave={isInteractive ? this.scrollFinish : null}
-        onTouchCancel={isInteractive ? this.scrollFinish : null}
-        onWheel={isInteractive ? this.scrollWheel : null}
-        onClick={isInteractive ? this.pickActor : null}
+        aria-hidden={isUnavailable || focused ? 'true' : 'false'}
         style={{
           width: `${scaledWidth}px`,
           height: `${scaledHeight}px`,
@@ -238,8 +229,18 @@ class Scene extends Component {
               : '',
           transitionDuration: scrollOffset ? '0s' : ''
         }}
+        onMouseDown={isUnavailable ? null : this.scrollBegin}
+        onTouchStart={isUnavailable ? null : this.scrollBegin}
+        onMouseMoveCapture={isUnavailable ? null : this.scrollContinue}
+        onTouchMoveCapture={isUnavailable ? null : this.scrollContinue}
+        onMouseUp={isUnavailable ? null : this.scrollFinish}
+        onTouchEnd={isUnavailable ? null : this.scrollFinish}
+        onMouseLeave={isUnavailable ? null : this.scrollFinish}
+        onTouchCancel={isUnavailable ? null : this.scrollFinish}
+        onWheel={isUnavailable ? null : this.scrollWheel}
+        onClick={isUnavailable ? null : this.pickActor}
       >
-        {shouldAutoPan && isInteractive && !focused && <style>{autoPanStyles}</style>}
+        {shouldAutoPan && !isUnavailable && !focused && <style>{autoPanStyles}</style>}
         <div className={styles.base}>
           {video ? (
             <video

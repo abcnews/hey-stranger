@@ -9,7 +9,7 @@
   transition: opacity 0.5s 0.5s, transform 2s;
 }
 
-.isRaised {
+.root[aria-hidden='true'] {
   opacity: 0;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -29,7 +29,7 @@
     margin: 0;
   }
 
-  .isRaised > :not(:first-child) {
+  .root[aria-hidden='true'] > :not(:first-child) {
     transform: translate(-50%, 150vh);
     transition: transform 2s;
   }

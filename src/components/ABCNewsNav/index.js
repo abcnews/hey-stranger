@@ -1,14 +1,8 @@
-const cn = require('classnames');
 const { h } = require('preact');
 const styles = require('./styles.css');
 
 module.exports = ({ isUnavailable }) => (
-  <nav
-    className={cn(styles.root, {
-      [styles.isUnavailable]: isUnavailable
-    })}
-    aria-hidden={isUnavailable ? '' : null}
-  >
+  <nav className={styles.root} aria-hidden={isUnavailable ? 'true' : 'false'}>
     <a href="/news/" tabindex={isUnavailable ? -1 : 0} aria-label="ABC News homepage">
       <svg xmlns="http://www.w3.org/2000/svg" width="93" height="21" viewBox="0 0 93 21">
         <path d="M1.574 19.357c.697.463 1.57.712 2.437.658.429-.026.857-.125 1.262-.312 1.084-.522 2-1.609 2.301-2.913l-2-5.65-1.543 4.339-.064.18V4.968l4.215 11.734c.692 1.695 1.738 2.39 2.13 2.654.69.407 1.546.635 2.417.666h.066a5.314 5.314 0 0 0 1.731-.233c1.171-.433 2.17-.913 3.217-2.784l-2.126-5.562-1.265 3.347c-.217.632-.717.924-1.223.9-.504-.023-1.013-.36-1.251-.988l-4-10.647s-.697-1.692-1.042-2.041C6.009 1.058 4.837.668 3.88.712c-.565 0-.784.042-1.302.217C1.491 1.407.275 2.449.143 4.364v11.599c.04 1.652.35 2.61 1.43 3.394" />

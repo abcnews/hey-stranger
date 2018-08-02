@@ -1,15 +1,11 @@
 .root {
-  transform: translate(-50%, 25%);
+  transform: translate(-50%, 0);
   position: absolute;
   left: 50%;
   bottom: 0;
   transition: transform 2s;
 }
 
-.hasFocus {
-  pointer-events: none;
-}
-
-.isUnveiled {
-  transform: translate(-50%, 0);
+.root[aria-hidden='true'] {
+  transform: translate(-50%, 25%);
 }
