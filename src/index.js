@@ -1,3 +1,5 @@
+require('babel-polyfill');
+
 const { h, render } = require('preact');
 const { getProps, reset } = require('./utils');
 

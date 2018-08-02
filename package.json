@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@abcnews/alternating-case-to-object": "^2.0.0",
+    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "preact": "^8.2.9",
     "preact-compat": "^3.18.0",

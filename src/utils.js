@@ -193,7 +193,4 @@ module.exports.reset = () => {
 
   // Add new global styles
   require('./global.css');
-
-  // Load polyfills
-  require('./polyfills.js');
 };
