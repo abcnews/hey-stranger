@@ -66,8 +66,8 @@ class Scene extends Component {
 
     const sceneBox = this.base.getBoundingClientRect();
     const sceneScale = sceneBox.width / this.props.width;
-    const sceneX = (event.pageX - sceneBox.x) / sceneScale;
-    const sceneY = (event.pageY - sceneBox.y) / sceneScale;
+    const sceneX = (event.pageX - sceneBox.left) / sceneScale;
+    const sceneY = (event.pageY - sceneBox.top) / sceneScale;
 
     const candidateActors = this.props.actors
       .filter(
