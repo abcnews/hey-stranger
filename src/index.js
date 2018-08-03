@@ -1,4 +1,5 @@
 require('babel-polyfill');
+require('focus-within').default(document);
 
 const { h, render } = require('preact');
 const { getProps, reset } = require('./utils');
