@@ -9,3 +9,7 @@
 .root[aria-hidden='true'] {
   transform: translate(-50%, 25%);
 }
+
+.hasFocus {
+  pointer-events: none;
+}
