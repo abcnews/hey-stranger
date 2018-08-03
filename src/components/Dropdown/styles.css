@@ -1,13 +1,18 @@
 .root {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 100%;
   padding: 0.75rem 1rem;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.root:not(:focus-within) {
-  right: 100%;
+.root:focus-within {
+  right: 0;
+}
+
+/* :focus-within may be polyfilled */
+.root[focus-within] {
+  right: 0;
 }
 
 .root label {
