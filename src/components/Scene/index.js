@@ -209,7 +209,8 @@ class Scene extends Component {
 
     return (
       <div
-        className={cn(styles.root, autoPanClassName, {
+        className={cn(styles.root, {
+          [autoPanClassName]: shouldAutoPan && !isUnavailable && !focused,
           [styles.hasFocused]: focused
         })}
         aria-hidden={isUnavailable || focused ? 'true' : 'false'}
