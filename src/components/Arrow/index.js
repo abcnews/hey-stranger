@@ -12,7 +12,6 @@ module.exports = ({ direction, hasTail }) => {
   return (
     <svg
       className={cn(styles.root, {
-        [styles.vertical]: isVertical,
         [styles.flipped]: isFlipped
       })}
       xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +19,7 @@ module.exports = ({ direction, hasTail }) => {
       height={height}
       viewBox={`0 0 ${width} ${height}`}
     >
-      <g>
+      <g transform={isFlipped ? 'rotate(180)' : null} transform-origin="50% 50%">
         <line
           x1={isVertical ? 6.5 : 1.5}
           y1={isVertical ? 1.5 : 6.5}

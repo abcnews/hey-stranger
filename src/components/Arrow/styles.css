@@ -1,3 +1,8 @@
+/*
+`transform` and `transform-origin` need to be defined in CSS and JS because
+Safari ignores one and Internet Explorer ignores the other
+*/
+
 .root {
   display: inline-block;
   stroke: currentColor;
@@ -5,11 +10,10 @@
   stroke-width: 2;
 }
 
-.flipped g {
-  transform: scale(-1, 1);
+.root g {
   transform-origin: 50% 50%;
 }
 
-.flipped.vertical g {
-  transform: scale(1, -1);
+.flipped g {
+  transform: rotate(180deg);
 }
