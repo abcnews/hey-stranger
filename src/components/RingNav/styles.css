@@ -30,7 +30,6 @@
 
 .root svg {
   width: 1.5em;
-  height: auto;
 }
 
 .root svg:first-child:not(:last-child) {
