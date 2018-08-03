@@ -108,8 +108,7 @@
   overflow: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  transform: translate(-50%, 0);
-  left: calc(50% + 1rem);
+  margin: 0 -2rem 0 0;
   padding: 0 2rem 0 0;
   width: calc(100% + 2rem);
   height: 100vh;
@@ -150,8 +149,7 @@
 
 @media (min-width: 64rem) and (min-height: 48rem) {
   .text {
-    transform: none;
-    left: calc(50% + 2rem);
+    left: calc(50% + 3rem);
     width: 50%;
     box-shadow: 0 0 2rem 2rem rgba(0, 0, 0, 0.55);
   }
