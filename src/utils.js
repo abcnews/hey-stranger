@@ -22,7 +22,7 @@ const fetchCAPI = cmid =>
           return reject(error || new Error(response.statusCode));
         }
 
-        resolve(content);
+        resolve(typeof content === 'object' ? content : JSON.parse(content));
       }
     );
   });
