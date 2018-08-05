@@ -3,7 +3,6 @@
 .story,
 .hand,
 .text,
-.nav,
 .root::after {
   position: absolute;
   top: 0;
@@ -157,14 +156,6 @@
   .text > * > * {
     margin-left: 0;
   }
-}
-
-.nav {
-  z-index: 1;
-}
-
-.nav > :first-child {
-  border-bottom-right-radius: 0.75rem;
 }
 
 .root::after {

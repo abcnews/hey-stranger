@@ -1,29 +1,16 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
-const Arrow = require('../Arrow');
-const Button = require('../Button');
+const BackNav = require('../BackNav');
 const Phone = require('../Phone');
 const Richtext = require('../Richtext');
 const styles = require('./styles.css');
 
 class Reader extends Component {
-  constructor(props) {
-    super(props);
-
-    this.back = this.back.bind(this);
-  }
-
-  back() {
-    if (this.props.navigate) {
-      this.props.navigate(null);
-    }
-  }
-
   componentDidUpdate() {
     this.lastFocused = this.props.focused;
   }
 
-  render({ focused }) {
+  render({ focused, navigate }) {
     return (
       <div className={styles.root} aria-hidden={focused ? 'false' : 'true'}>
         <div id="reader-stories" className={styles.stories} aria-live="assertive" aria-atomic="true">
@@ -48,12 +35,7 @@ class Reader extends Component {
             </div>
           )}
         </div>
-        <nav className={styles.nav}>
-          <Button tabindex={focused ? 0 : -1} onClick={this.back}>
-            <Arrow direction="left" />
-            <span>Back</span>
-          </Button>
-        </nav>
+        {navigate && <BackNav isUnavailable={!focused} navigate={navigate} />}
       </div>
     );
   }
