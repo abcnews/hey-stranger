@@ -1,14 +1,10 @@
-const { h, Component } = require('preact');
+const { h } = require('preact');
 const styles = require('./styles.css');
 
-class Curtain extends Component {
-  render({ isUnavailable, children }) {
-    return (
-      <div className={styles.root} aria-hidden={isUnavailable ? 'true' : 'false'}>
-        {children}
-      </div>
-    );
-  }
-}
+module.exports = ({ isUnavailable, children }) => (
+  <div className={styles.root} aria-hidden={isUnavailable ? 'true' : 'false'}>
+    {children}
+  </div>
+);
 
-module.exports = Curtain;
+module.exports.displayName = 'Curtain';
