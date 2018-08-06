@@ -1,0 +1,30 @@
+.root,
+.root::before,
+.root::after {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.root {
+  top: 0;
+  height: 100%;
+  pointer-events: none;
+}
+
+.root::before,
+.root::after {
+  content: '';
+}
+
+.root::before {
+  top: 0;
+  height: 3rem;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+}
+
+.root::after {
+  bottom: 0;
+  height: 6rem;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+}

@@ -26,8 +26,10 @@ class AudioPlayer extends Component {
   }
 
   updatePlaybackState() {
-    localStorage[`${this.audio.paused ? 'set' : 'remove'}Item`](SHOULD_SUPPRESS_REF_KEY, '1');
-    this.setState({ on: !this.audio.paused });
+    if (this.audio) {
+      localStorage[`${this.audio.paused ? 'set' : 'remove'}Item`](SHOULD_SUPPRESS_REF_KEY, '1');
+      this.setState({ on: !this.audio.paused });
+    }
   }
 
   componentDidMount() {

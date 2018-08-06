@@ -7,6 +7,7 @@ const Credits = require('../Credits');
 const CreditsNav = require('../CreditsNav');
 const Curtain = require('../Curtain');
 const Dropdown = require('../Dropdown');
+const HUDFilter = require('../HUDFilter');
 const Hints = require('../Hints');
 const Loader = require('../Loader');
 const RingNav = require('../RingNav');
@@ -55,7 +56,11 @@ class App extends Component {
     }
 
     this.hasExplored = true;
-    this.hasMadeChoice = this.props.scene && this.props.scene.actors.indexOf(current) !== -1;
+
+    if (!this.hasMadeChoice) {
+      this.hasMadeChoice = this.props.scene && this.props.scene.actors.indexOf(current) !== -1;
+    }
+
     this.setState({ current, prev, next });
   }
 
@@ -184,7 +189,12 @@ class App extends Component {
                   {...scene}
                 />
               </Stage>
-              <Credits html={scene.creditsHTML} isUnavailable={!currentCreditsHTML} navigate={this.navigate} />
+              <Credits
+                html={scene.creditsHTML.replace(/(<a )/g, !currentCreditsHTML ? '$1tabindex="-1" ' : '$1')}
+                isUnavailable={!currentCreditsHTML}
+                navigate={this.navigate}
+              />
+              <HUDFilter />
               <Dropdown
                 actors={scene.actors}
                 current={currentActor}

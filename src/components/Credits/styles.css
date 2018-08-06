@@ -28,3 +28,11 @@
 .text > * {
   margin: auto;
 }
+
+.root nav {
+  transition: opacity 0.5s;
+}
+
+.root[aria-hidden='true'] nav {
+  opacity: 0;
+}

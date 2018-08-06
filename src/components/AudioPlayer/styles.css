@@ -18,3 +18,13 @@
 .offIcon {
   opacity: 0.5;
 }
+
+@media (max-width: 31.99rem) and (min-height: 23.99rem) {
+  .onIcon {
+    margin-right: 0 !important;
+  }
+
+  .onLabel {
+    display: none;
+  }
+}
