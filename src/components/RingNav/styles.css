@@ -7,11 +7,11 @@
   transition: opacity 0.5s;
 }
 
-/* @media (max-width: 64rem) {
+@media (max-width: 64rem) {
   .root {
     display: none;
   }
-} */
+}
 
 .root[aria-hidden='true'] {
   opacity: 0;
