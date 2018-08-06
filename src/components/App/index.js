@@ -4,6 +4,7 @@ const AspectRatioRegulator = require('../AspectRatioRegulator');
 const AudioPlayer = require('../AudioPlayer');
 const Button = require('../Button');
 const Credits = require('../Credits');
+const CreditsNav = require('../CreditsNav');
 const Curtain = require('../Curtain');
 const Dropdown = require('../Dropdown');
 const Loader = require('../Loader');
@@ -103,7 +104,11 @@ class App extends Component {
                 navigate={this.navigate}
               />
               <RingNav prev={prev} next={next} isUnavailable={!currentActor} navigate={this.navigate} />
-              {/* <CreditsNav isUnavailable={currentCreditsHTML} /> */}
+              <CreditsNav
+                creditsHTML={scene.creditsHTML}
+                isUnavailable={!hasStarted || currentCreditsHTML}
+                navigate={this.navigate}
+              />
               <AudioPlayer audio={scene.audio} isUnavailable={!hasStarted} onAudio={this.saveAudioRef} />
               <ABCNewsNav isUnavailable={current} />
             </AspectRatioRegulator>
