@@ -106,6 +106,7 @@ class App extends Component {
     if (this.audio) {
       this.audio.play();
     }
+
     setTimeout(() => {
       this.setState({ isInteractive: true });
     }, 1500);

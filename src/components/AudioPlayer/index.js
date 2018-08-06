@@ -2,6 +2,8 @@ const { h, Component } = require('preact');
 const Button = require('../Button');
 const styles = require('./styles.css');
 
+const SHOULD_SUPPRESS_REF_KEY = 'AudioPlayer_shouldSuppressRef';
+
 class AudioPlayer extends Component {
   constructor(props) {
     super(props);
@@ -24,11 +26,12 @@ class AudioPlayer extends Component {
   }
 
   updatePlaybackState() {
+    localStorage[`${this.audio.paused ? 'set' : 'remove'}Item`](SHOULD_SUPPRESS_REF_KEY, '1');
     this.setState({ on: !this.audio.paused });
   }
 
   componentDidMount() {
-    if (this.props.onAudio) {
+    if (this.props.onAudio && localStorage.getItem(SHOULD_SUPPRESS_REF_KEY) === null) {
       this.props.onAudio(this.audio);
     }
   }
