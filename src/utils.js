@@ -64,6 +64,9 @@ const DEFAULT_MEDIA_DOMAIN = 'www.abc.net.au';
 
 const uncrossDomain = url => url.replace(DEFAULT_MEDIA_DOMAIN, window.location.hostname);
 
+const CONTENT_LINK_PATTERN = /xlink[^>]+contentbean:/g;
+const CONTENT_LINK_REPLACEMENT = 'href="/news/';
+
 module.exports.getProps = async articleCMID => {
   const article = await fetchCAPI(articleCMID);
   const meta = {
@@ -166,7 +169,7 @@ module.exports.getProps = async articleCMID => {
         actor.storyHTML += node.outerHTML;
       }
     } else {
-      scene.creditsHTML += node.outerHTML;
+      scene.creditsHTML += node.outerHTML.replace(CONTENT_LINK_PATTERN, CONTENT_LINK_REPLACEMENT);
     }
   }
 

@@ -3,6 +3,7 @@ const ABCNewsNav = require('../ABCNewsNav');
 const AspectRatioRegulator = require('../AspectRatioRegulator');
 const AudioPlayer = require('../AudioPlayer');
 const Button = require('../Button');
+const Credits = require('../Credits');
 const Curtain = require('../Curtain');
 const Dropdown = require('../Dropdown');
 const Loader = require('../Loader');
@@ -76,7 +77,7 @@ class App extends Component {
 
   render({ meta, scene }, { current, prev, next, hasStarted, isInteractive }) {
     const currentActor = scene && scene.actors.indexOf(current) !== -1 ? current : null;
-    // const currentCreditsHTML = scene && scene.creditsHTML === current ? current : null;
+    const currentCreditsHTML = scene && scene.creditsHTML === current ? current : null;
 
     return (
       <main role="main" className={styles.root}>
@@ -94,14 +95,13 @@ class App extends Component {
               <Stage hasFocus={!!currentActor} isUnavailable={!hasStarted}>
                 <Scene isUnavailable={!isInteractive} focused={currentActor} navigate={this.navigate} {...scene} />
               </Stage>
-              {/* <Credits html={creditsHTML} isUnavailable={!currentCreditsHTML} /> */}
+              <Credits html={scene.creditsHTML} isUnavailable={!currentCreditsHTML} navigate={this.navigate} />
               <Dropdown
                 actors={scene.actors}
                 current={currentActor}
                 isUnavailable={!hasStarted}
                 navigate={this.navigate}
               />
-              {/* <ReturnNav isUnavailable={current} /> */}
               <RingNav prev={prev} next={next} isUnavailable={!currentActor} navigate={this.navigate} />
               {/* <CreditsNav isUnavailable={currentCreditsHTML} /> */}
               <AudioPlayer audio={scene.audio} isUnavailable={!hasStarted} onAudio={this.saveAudioRef} />
