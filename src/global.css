@@ -85,8 +85,3 @@ a:visited {
 a:not(:hover):not(:active) {
   text-decoration: none;
 }
-
-button {
-  font-family: inherit;
-  letter-spacing: 0.0625rem;
-}

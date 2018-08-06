@@ -1,0 +1,6 @@
+.root {
+  display: inline-block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}

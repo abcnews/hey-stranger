@@ -136,6 +136,10 @@ class Scene extends Component {
     this.hasRecentlyScrolled = true;
     this.scrollCurrentX = event.touches ? event.touches[0].clientX : event.clientX;
 
+    if (this.props.onExplore) {
+      this.props.onExplore();
+    }
+
     this.setState({
       scrollOffset: this.clampScrollOffset(
         (this.state.scrollOffset || this.measureScrollOffset()) - this.scrollPreviousX + this.scrollCurrentX
@@ -161,6 +165,10 @@ class Scene extends Component {
 
     if (this.props.focused || this.scrollPreviousX != null || !event.deltaX) {
       return;
+    }
+
+    if (this.props.onExplore) {
+      this.props.onExplore();
     }
 
     this.setState({

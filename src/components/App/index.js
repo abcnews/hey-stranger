@@ -7,6 +7,7 @@ const Credits = require('../Credits');
 const CreditsNav = require('../CreditsNav');
 const Curtain = require('../Curtain');
 const Dropdown = require('../Dropdown');
+const Hints = require('../Hints');
 const Loader = require('../Loader');
 const RingNav = require('../RingNav');
 const Meta = require('../Meta');
@@ -20,6 +21,8 @@ class App extends Component {
     super(props);
 
     this.navigate = this.navigate.bind(this);
+    this.onInitialExplore = this.onInitialExplore.bind(this);
+    this.onInitialReveal = this.onInitialReveal.bind(this);
     this.saveAudioRef = this.saveAudioRef.bind(this);
     this.swipeBegin = this.swipeBegin.bind(this);
     this.swipeContinue = this.swipeContinue.bind(this);
@@ -27,6 +30,8 @@ class App extends Component {
     this.start = this.start.bind(this);
 
     this.updateRing(props.scene);
+
+    this.navigationCount = 0;
 
     this.state = {
       current: null,
@@ -49,7 +54,19 @@ class App extends Component {
       next = this.ring[(ringLength + ringIndex + 1) % ringLength];
     }
 
+    this.hasExplored = true;
+    this.hasMadeChoice = this.props.scene && this.props.scene.actors.indexOf(current) !== -1;
     this.setState({ current, prev, next });
+  }
+
+  onInitialExplore() {
+    this.hasExplored = true;
+    this.forceUpdate();
+  }
+
+  onInitialReveal() {
+    this.hasRevealed = true;
+    this.forceUpdate();
   }
 
   saveAudioRef(el) {
@@ -92,8 +109,10 @@ class App extends Component {
     }
 
     if (this.swipe.dX > 40 && this.state.prev) {
+      this.hasExploredOthers = true;
       this.navigate(this.state.prev);
     } else if (this.swipe.dX < -40 && this.state.next) {
+      this.hasExploredOthers = true;
       this.navigate(this.state.next);
     }
 
@@ -151,9 +170,19 @@ class App extends Component {
                   Start
                 </Button>
               </Curtain>
-              <Reader focused={currentActor} navigate={this.navigate} />
+              <Reader
+                focused={currentActor}
+                navigate={this.navigate}
+                onReveal={this.hasRevealed ? null : this.onInitialReveal}
+              />
               <Stage hasFocus={!!currentActor} isUnavailable={!hasStarted}>
-                <Scene isUnavailable={!isInteractive} focused={currentActor} navigate={this.navigate} {...scene} />
+                <Scene
+                  isUnavailable={!isInteractive}
+                  focused={currentActor}
+                  navigate={this.navigate}
+                  onExplore={this.hasExplored ? null : this.onInitialExplore}
+                  {...scene}
+                />
               </Stage>
               <Credits html={scene.creditsHTML} isUnavailable={!currentCreditsHTML} navigate={this.navigate} />
               <Dropdown
@@ -170,6 +199,12 @@ class App extends Component {
               />
               <AudioPlayer audio={scene.audio} isUnavailable={!hasStarted} onAudio={this.saveAudioRef} />
               <ABCNewsNav isUnavailable={current} />
+              <Hints
+                initialExplore={isInteractive && !this.hasExplored}
+                initialChoice={isInteractive && !current && !this.hasMadeChoice}
+                revealScreen={isInteractive && currentActor && !this.hasRevealed}
+                othersExplore={isInteractive && currentActor && !this.hasExploredOthers}
+              />
             </AspectRatioRegulator>
           )}
       </main>

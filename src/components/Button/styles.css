@@ -5,8 +5,10 @@
   padding: 0.75rem 1rem;
   background-color: rgba(0, 0, 0, 0.5);
   color: inherit;
+  font-family: inherit;
   font-size: 0.75rem;
   line-height: 1rem;
+  letter-spacing: 0.0625rem;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -24,7 +26,8 @@
 
 .isTransparent {
   background-color: transparent;
-  text-shadow: 0 0 0.125rem rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5), 0 -1px 1px rgba(0, 0, 0, 0.5), 1px 0 1px rgba(0, 0, 0, 0.5),
+    -1px 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .root > * {
