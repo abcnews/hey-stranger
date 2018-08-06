@@ -5,11 +5,12 @@
   width: 100%;
   height: 100%;
   background-color: #000;
-  transition: opacity 0.25s;
+  transition: opacity 0.5s;
 }
 
 .root[aria-hidden='true'] {
   opacity: 0;
+  transition-delay: 0.75s;
   pointer-events: none;
 }
 

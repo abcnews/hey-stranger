@@ -44,6 +44,7 @@
     transform: none;
   }
   to {
+    opacity: 0;
     transform: translate(0, 100%);
   }
 }

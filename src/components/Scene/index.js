@@ -228,6 +228,7 @@ class Scene extends Component {
             : scrollOffset !== null
               ? `translate3d(${scrollOffset}px, 0, 0)`
               : '',
+          transitionDelay: scrollOffset ? '0s' : '',
           transitionDuration: scrollOffset ? '0s' : ''
         }}
         onMouseDown={isUnavailable ? null : this.scrollBegin}

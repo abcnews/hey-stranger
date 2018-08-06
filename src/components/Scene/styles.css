@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  transition: transform 0.5s, transform-origin 0.75s;
+  transition: transform 0.5s 0.5s, transform-origin 0.75s 0.5s;
 }
 
 .root[aria-hidden='true'],
@@ -9,6 +9,7 @@
 }
 
 .hasFocused {
+  transition-delay: 0s, 0s;
   transition-duration: 0.75s, 0.5s;
 }
 
