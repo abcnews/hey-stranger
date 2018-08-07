@@ -29,6 +29,15 @@
   margin: auto;
 }
 
+.text ul {
+  list-style: none;
+}
+
+.text li a {
+  display: block;
+  margin: 0 0 0.5em 0.5em;
+}
+
 .root nav {
   transition: opacity 0.5s;
 }
