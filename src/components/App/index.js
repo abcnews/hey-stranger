@@ -213,7 +213,7 @@ class App extends Component {
                 initialExplore={isInteractive && !this.hasExplored}
                 initialChoice={isInteractive && !current && !this.hasMadeChoice}
                 revealScreen={isInteractive && currentActor && !this.hasRevealed}
-                othersExplore={isInteractive && currentActor && !this.hasExploredOthers}
+                othersExplore={isInteractive && currentActor && this.hasRevealed && !this.hasExploredOthers}
               />
             </AspectRatioRegulator>
           )}

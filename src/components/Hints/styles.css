@@ -10,7 +10,7 @@
 .root > * {
   display: flex;
   align-items: center;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   position: absolute;
   left: 50%;
   font-size: 0.75rem;
@@ -39,19 +39,16 @@
 }
 
 .initialExplore {
-  top: calc(25% - 2.5rem);
+  top: calc(20% - 3rem);
 }
 
 .initialChoice {
-  top: calc(25% + 2rem);
+  top: calc(20%);
 }
 
-.revealScreen {
-  bottom: 1.5rem;
-}
-
+.revealScreen,
 .othersExplore {
-  bottom: -1rem;
+  bottom: 0.5rem;
 }
 
 @media (min-width: 64rem) and (min-height: 48rem) {
