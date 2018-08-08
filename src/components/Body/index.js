@@ -1,7 +1,5 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
-const Arrow = require('../Arrow');
-const Button = require('../Button');
 const styles = require('./styles.css');
 
 class Body extends Component {
