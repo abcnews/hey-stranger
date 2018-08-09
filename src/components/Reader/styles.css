@@ -122,28 +122,23 @@
 }
 
 .text::before,
-.text::after,
 .text > * {
   background-color: rgba(0, 0, 0, 0.55);
 }
 
 .text::before {
   height: 12.5vh;
+  height: 2rem;
 }
 
 .text::after {
-  height: 50vh;
+  height: 125vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 20%);
 }
 
-@media (max-width: 63.999rem), (max-height: 47.999rem) {
+@media (min-width: 32rem) and (min-height: 24rem) {
   .text::before {
-    height: 2rem;
-  }
-
-  .text::after {
-    height: 125vh;
-    background-color: transparent;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 20%);
+    height: 12.5vh;
   }
 }
 
@@ -154,8 +149,20 @@
     box-shadow: 0 0 2rem 2rem rgba(0, 0, 0, 0.55);
   }
 
+  .text::after {
+    height: 50vh;
+    background-color: rgba(0, 0, 0, 0.55);
+    background-image: none;
+  }
+
   .text > * > * {
     margin-left: 0;
+  }
+}
+
+@media (min-width: 96rem) and (min-height: 72rem) {
+  .text::before {
+    height: 17.5vh;
   }
 }
 
