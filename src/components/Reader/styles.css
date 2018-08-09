@@ -128,7 +128,7 @@
 }
 
 .text::before {
-  height: 18.75vh;
+  height: 12.5vh;
 }
 
 .text::after {
@@ -137,7 +137,7 @@
 
 @media (max-width: 63.999rem), (max-height: 47.999rem) {
   .text::before {
-    height: 4rem;
+    height: 2rem;
   }
 
   .text::after {
