@@ -5,7 +5,7 @@
   left: 0;
 }
 
-@media (min-width: 64rem) and (min-height: 48rem) {
+@media (min-width: 96rem) and (min-height: 72rem) {
   .root {
     top: 0;
     bottom: auto;
