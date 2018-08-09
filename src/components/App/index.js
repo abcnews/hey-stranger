@@ -126,12 +126,8 @@ class App extends Component {
     }, 1500);
   }
 
-  updateRing({ actors, creditsHTML } = {}) {
+  updateRing({ actors } = {}) {
     this.ring = actors ? [...actors] : [];
-
-    if (creditsHTML) {
-      this.ring.push(creditsHTML);
-    }
   }
 
   componentDidUpdate() {
