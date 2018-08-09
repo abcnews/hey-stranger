@@ -32,8 +32,8 @@ class Body extends Component {
           width: `${widthPct * 100}%`
         }}
       >
-        <img ref={this.getImageRef} src={src} alt={alt} draggable="false" />
-        <img className={styles.silhouette} src={src} role="presentation" />
+        <img ref={this.getImageRef} src={src} alt={alt} draggable={0} />
+        <img className={styles.silhouette} src={src} draggable={0} role="presentation" />
       </div>
     );
   }

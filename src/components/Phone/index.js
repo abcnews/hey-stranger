@@ -11,7 +11,7 @@ module.exports = ({ name, screen, image }) => (
     <img
       src={image.url}
       alt={image.description || `${name}'s screen`}
-      draggable="false"
+      draggable={0}
       style={{
         transformOrigin: `${screen.x}px ${screen.y}px`
       }}
