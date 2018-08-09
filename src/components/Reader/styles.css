@@ -146,7 +146,7 @@
   .text {
     left: calc(50% + 3rem);
     width: 50%;
-    box-shadow: 0 0 2rem 2rem rgba(0, 0, 0, 0.55);
+    box-shadow: 0 0 6rem 6rem rgba(0, 0, 0, 0.55);
   }
 
   .text::after {
