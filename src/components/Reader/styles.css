@@ -70,6 +70,12 @@
   }
 }
 
+@media (min-width: 96rem) and (min-height: 72rem) {
+  .hand {
+    left: calc(50% - 8rem);
+  }
+}
+
 .leftHand {
   transform-origin: 0% 50%;
 }
@@ -161,6 +167,11 @@
 }
 
 @media (min-width: 96rem) and (min-height: 72rem) {
+  .text {
+    left: calc(62.5% + 3rem);
+    width: 37.5%;
+  }
+
   .text::before {
     height: 17.5vh;
   }
