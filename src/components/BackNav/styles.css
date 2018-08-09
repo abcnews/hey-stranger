@@ -4,3 +4,10 @@
   bottom: 0;
   left: 0;
 }
+
+@media (min-width: 64rem) and (min-height: 48rem) {
+  .root {
+    top: 0;
+    bottom: auto;
+  }
+}
