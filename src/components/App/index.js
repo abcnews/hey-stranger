@@ -1,7 +1,6 @@
 const { h, Component } = require('preact');
 const ABCNewsNav = require('../ABCNewsNav');
 const AspectRatioRegulator = require('../AspectRatioRegulator');
-const AudioPlayer = require('../AudioPlayer');
 const Button = require('../Button');
 const Credits = require('../Credits');
 const CreditsNav = require('../CreditsNav');
@@ -24,7 +23,6 @@ class App extends Component {
     this.navigate = this.navigate.bind(this);
     this.onInitialExplore = this.onInitialExplore.bind(this);
     this.onInitialReveal = this.onInitialReveal.bind(this);
-    this.saveAudioRef = this.saveAudioRef.bind(this);
     this.swipeBegin = this.swipeBegin.bind(this);
     this.swipeContinue = this.swipeContinue.bind(this);
     this.swipeFinish = this.swipeFinish.bind(this);
@@ -72,10 +70,6 @@ class App extends Component {
   onInitialReveal() {
     this.hasRevealed = true;
     this.forceUpdate();
-  }
-
-  saveAudioRef(el) {
-    this.audio = el;
   }
 
   swipeBegin(event) {
@@ -126,10 +120,6 @@ class App extends Component {
 
   start() {
     this.setState({ hasStarted: true });
-
-    if (this.audio) {
-      this.audio.play();
-    }
 
     setTimeout(() => {
       this.setState({ isInteractive: true });
@@ -207,7 +197,6 @@ class App extends Component {
                 isUnavailable={!hasStarted || currentCreditsHTML}
                 navigate={this.navigate}
               />
-              <AudioPlayer audio={scene.audio} isUnavailable={!hasStarted} onAudio={this.saveAudioRef} />
               <ABCNewsNav isUnavailable={current} />
               <Hints
                 initialExplore={isInteractive && !this.hasExplored}
