@@ -1,8 +1,8 @@
 .root {
-  z-index: 1;
   position: absolute;
   bottom: 0;
   left: 0;
+  transition: opacity 0.5s 0.5s;
 }
 
 @media (min-width: 96rem) and (min-height: 72rem) {
@@ -10,4 +10,10 @@
     top: 0;
     bottom: auto;
   }
+}
+
+.root[aria-hidden='true'] {
+  opacity: 0;
+  transition-delay: 0s;
+  pointer-events: none;
 }

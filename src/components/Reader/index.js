@@ -1,6 +1,5 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
-const BackNav = require('../BackNav');
 const Phone = require('../Phone');
 const Richtext = require('../Richtext');
 const styles = require('./styles.css');
@@ -22,7 +21,7 @@ class Reader extends Component {
     this.lastFocused = this.props.focused;
   }
 
-  render({ focused, navigate }) {
+  render({ focused }) {
     return (
       <div className={styles.root} aria-hidden={focused ? 'false' : 'true'}>
         <div id="reader-stories" className={styles.stories} aria-live="assertive" aria-atomic="true">
@@ -48,7 +47,6 @@ class Reader extends Component {
             </div>
           )}
         </div>
-        {navigate && <BackNav isUnavailable={!focused} navigate={navigate} />}
       </div>
     );
   }

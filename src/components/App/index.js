@@ -4,6 +4,7 @@ const AspectRatioRegulator = require('../AspectRatioRegulator');
 const Button = require('../Button');
 const About = require('../About');
 const AboutNav = require('../AboutNav');
+const BackNav = require('../BackNav');
 const Curtain = require('../Curtain');
 const Dropdown = require('../Dropdown');
 const HUDFilter = require('../HUDFilter');
@@ -169,11 +170,7 @@ class App extends Component {
                   Start
                 </Button>
               </Curtain>
-              <Reader
-                focused={currentActor}
-                navigate={this.navigate}
-                onReveal={this.hasRevealed ? null : this.onInitialReveal}
-              />
+              <Reader focused={currentActor} onReveal={this.hasRevealed ? null : this.onInitialReveal} />
               <Stage hasFocus={!!currentActor} isUnavailable={!hasStarted}>
                 <Scene
                   isUnavailable={!isInteractive}
@@ -195,12 +192,9 @@ class App extends Component {
                 isUnavailable={!hasStarted}
                 navigate={this.navigate}
               />
+              <BackNav isUnavailable={!current} navigate={this.navigate} />
               <RingNav prev={prev} next={next} isUnavailable={!currentActor} navigate={this.navigate} />
-              <AboutNav
-                aboutHTML={scene.aboutHTML}
-                isUnavailable={!hasStarted || currentAboutHTML}
-                navigate={this.navigate}
-              />
+              <AboutNav aboutHTML={scene.aboutHTML} isUnavailable={!hasStarted || current} />
               <ABCNewsNav isUnavailable={current} />
               <Hints
                 initialExplore={isInteractive && !this.hasExplored}
