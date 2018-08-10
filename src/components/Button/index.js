@@ -2,13 +2,12 @@ const cn = require('classnames');
 const { h } = require('preact');
 const styles = require('./styles.css');
 
-module.exports = ({ primary, transparent, children, className, ...props }) => (
+module.exports = ({ primary, children, className, ...props }) => (
   <button
     className={cn(
       styles.root,
       {
-        [styles.isPrimary]: primary,
-        [styles.isTransparent]: transparent
+        [styles.isPrimary]: primary
       },
       className
     )}
