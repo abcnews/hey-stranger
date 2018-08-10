@@ -133,8 +133,13 @@
 }
 
 .text::before {
-  height: 12.5vh;
-  height: 2rem;
+  height: 3rem;
+}
+
+.text > * {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .text::after {
@@ -144,7 +149,7 @@
 
 @media (min-width: 32rem) and (min-height: 24rem) {
   .text::before {
-    height: 12.5vh;
+    height: 6rem;
   }
 }
 
@@ -155,14 +160,22 @@
     box-shadow: 0 0 6rem 6rem rgba(0, 0, 0, 0.55);
   }
 
-  .text::after {
-    height: 50vh;
-    background-color: rgba(0, 0, 0, 0.55);
-    background-image: none;
+  .text::before {
+    height: 10vh;
+  }
+
+  .text > * {
+    min-height: 40vh;
   }
 
   .text > * > * {
     margin-left: 0;
+  }
+
+  .text::after {
+    height: 50vh;
+    background-color: rgba(0, 0, 0, 0.55);
+    background-image: none;
   }
 }
 
@@ -170,10 +183,6 @@
   .text {
     left: calc(62.5% + 3rem);
     width: 37.5%;
-  }
-
-  .text::before {
-    height: 17.5vh;
   }
 }
 
