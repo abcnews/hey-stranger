@@ -183,7 +183,6 @@ class App extends Component {
               <About
                 html={scene.aboutHTML.replace(/(<a )/g, !currentAboutHTML ? '$1tabindex="-1" ' : '$1')}
                 isUnavailable={!currentAboutHTML}
-                navigate={this.navigate}
               />
               <HUDFilter />
               <Dropdown
@@ -194,7 +193,7 @@ class App extends Component {
               />
               <BackNav isUnavailable={!current} navigate={this.navigate} />
               <RingNav prev={prev} next={next} isUnavailable={!currentActor} navigate={this.navigate} />
-              <AboutNav aboutHTML={scene.aboutHTML} isUnavailable={!hasStarted || current} />
+              <AboutNav aboutHTML={scene.aboutHTML} isUnavailable={!hasStarted || current} navigate={this.navigate} />
               <ABCNewsNav isUnavailable={current} />
               <Hints
                 initialExplore={isInteractive && !this.hasExplored}

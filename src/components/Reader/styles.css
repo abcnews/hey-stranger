@@ -66,14 +66,14 @@
 
 @media (min-width: 64rem) and (min-height: 48rem) {
   .hand {
-    left: calc(50% - 16rem);
+    left: calc(50% - 14rem);
   }
 }
 
 @media (min-width: 96rem) and (min-height: 72rem) {
   .hand {
     top: 37.5%;
-    left: calc(50% - 8rem);
+    left: calc(50% - 7rem);
   }
 }
 
