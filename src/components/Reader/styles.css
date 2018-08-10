@@ -55,7 +55,7 @@
 
 .hand {
   left: 50%;
-  top: 45%;
+  top: 42.5%;
 }
 
 @media (min-width: 32rem) and (min-height: 24rem) {
@@ -72,6 +72,7 @@
 
 @media (min-width: 96rem) and (min-height: 72rem) {
   .hand {
+    top: 37.5%;
     left: calc(50% - 8rem);
   }
 }
