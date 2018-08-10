@@ -16,6 +16,7 @@
 
 .text {
   display: flex;
+  overflow-y: auto;
   padding: 3rem 0;
   height: 100%;
   transition: opacity 1s 0.25s;
@@ -30,12 +31,11 @@
 }
 
 .text ul {
-  list-style: none;
+  margin-left: 1.25rem;
 }
 
 .text li a {
-  display: block;
-  margin: 0 0 0.5em 0.5em;
+  white-space: nowrap;
 }
 
 .root nav {

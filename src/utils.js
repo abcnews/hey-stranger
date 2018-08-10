@@ -82,7 +82,7 @@ module.exports.getProps = async articleCMID => {
   const nonBlockingImages = new ImagesPreloader();
   const scene = {
     actors: [],
-    creditsHTML: ''
+    aboutHTML: ''
   };
   let actor;
 
@@ -165,7 +165,7 @@ module.exports.getProps = async articleCMID => {
         actor.storyHTML += node.outerHTML;
       }
     } else {
-      scene.creditsHTML += node.outerHTML.replace(CONTENT_LINK_PATTERN, CONTENT_LINK_REPLACEMENT);
+      scene.aboutHTML += node.outerHTML.replace(CONTENT_LINK_PATTERN, CONTENT_LINK_REPLACEMENT);
     }
   }
 

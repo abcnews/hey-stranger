@@ -2,8 +2,8 @@ const { h, Component } = require('preact');
 const ABCNewsNav = require('../ABCNewsNav');
 const AspectRatioRegulator = require('../AspectRatioRegulator');
 const Button = require('../Button');
-const Credits = require('../Credits');
-const CreditsNav = require('../CreditsNav');
+const About = require('../About');
+const AboutNav = require('../AboutNav');
 const Curtain = require('../Curtain');
 const Dropdown = require('../Dropdown');
 const HUDFilter = require('../HUDFilter');
@@ -117,7 +117,7 @@ class App extends Component {
 
     this.hasExploredOthers = true;
 
-    if (this.state.current === this.props.scene.creditsHTML) {
+    if (this.state.current === this.props.scene.aboutHTML) {
       this.navigate(null);
     } else if (this.state.next && dX < 0) {
       this.navigate(this.state.next);
@@ -144,7 +144,7 @@ class App extends Component {
 
   render({ meta, scene }, { current, prev, next, hasStarted, isInteractive }) {
     const currentActor = scene && scene.actors.indexOf(current) !== -1 ? current : null;
-    const currentCreditsHTML = scene && scene.creditsHTML === current ? current : null;
+    const currentAboutHTML = scene && scene.aboutHTML === current ? current : null;
 
     return (
       <main
@@ -183,9 +183,9 @@ class App extends Component {
                   {...scene}
                 />
               </Stage>
-              <Credits
-                html={scene.creditsHTML.replace(/(<a )/g, !currentCreditsHTML ? '$1tabindex="-1" ' : '$1')}
-                isUnavailable={!currentCreditsHTML}
+              <About
+                html={scene.aboutHTML.replace(/(<a )/g, !currentAboutHTML ? '$1tabindex="-1" ' : '$1')}
+                isUnavailable={!currentAboutHTML}
                 navigate={this.navigate}
               />
               <HUDFilter />
@@ -196,9 +196,9 @@ class App extends Component {
                 navigate={this.navigate}
               />
               <RingNav prev={prev} next={next} isUnavailable={!currentActor} navigate={this.navigate} />
-              <CreditsNav
-                creditsHTML={scene.creditsHTML}
-                isUnavailable={!hasStarted || currentCreditsHTML}
+              <AboutNav
+                aboutHTML={scene.aboutHTML}
+                isUnavailable={!hasStarted || currentAboutHTML}
                 navigate={this.navigate}
               />
               <ABCNewsNav isUnavailable={current} />
