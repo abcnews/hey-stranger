@@ -107,15 +107,23 @@ class App extends Component {
       return;
     }
 
-    if (this.swipe.dX > 40 && this.state.prev) {
-      this.hasExploredOthers = true;
-      this.navigate(this.state.prev);
-    } else if (this.swipe.dX < -40 && this.state.next) {
-      this.hasExploredOthers = true;
-      this.navigate(this.state.next);
-    }
+    const { dX } = this.swipe;
 
     this.swipe = null;
+
+    if (dX == null || Math.abs(dX) <= 40) {
+      return;
+    }
+
+    this.hasExploredOthers = true;
+
+    if (this.state.current === this.props.scene.creditsHTML) {
+      this.navigate(null);
+    } else if (this.state.next && dX < 0) {
+      this.navigate(this.state.next);
+    } else if (this.state.prev) {
+      this.navigate(this.state.prev);
+    }
   }
 
   start() {
