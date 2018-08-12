@@ -1,13 +1,7 @@
 require('./polyfills');
 
 const { h, render } = require('preact');
-const { getProps, reset } = require('./utils');
-
-const metaEl = document.querySelector('meta[name="dynamic-content"]');
-
-if (!metaEl) {
-  throw new Error('dynamic-content is not specified in meta');
-}
+const { getProps, getSupplementaryCMID, reset } = require('./utils');
 
 const rootEl = document.createElement('div');
 
@@ -24,7 +18,7 @@ function load() {
 reset();
 load();
 window.dispatchEvent(new CustomEvent('unveil'));
-getProps(metaEl.getAttribute('content')).then(props => {
+getProps(getSupplementaryCMID()).then(props => {
   appProps = props;
   load();
 });

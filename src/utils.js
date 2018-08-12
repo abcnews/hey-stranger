@@ -1,6 +1,28 @@
 const alternatingCaseToObject = require('@abcnews/alternating-case-to-object');
 const xhr = require('xhr');
 
+const SUPPLEMENTARY_CMID_META_SELECTOR = 'meta[name="supplementary"]';
+
+module.exports.getSupplementaryCMID = () => {
+  const metaEl = document.querySelector(SUPPLEMENTARY_CMID_META_SELECTOR);
+
+  if (!metaEl) {
+    throw new Error(`${SUPPLEMENTARY_CMID_META_SELECTOR} does not exist`);
+  }
+
+  let cmid = metaEl.getAttribute('content');
+
+  if (cmid.indexOf('CMArticle') > -1) {
+    cmid = cmid.match(/id=(\d+)/)[1];
+  }
+
+  if (cmid != +cmid) {
+    throw new Error(`"${cmid}" does not look like a CMID`);
+  }
+
+  return cmid;
+};
+
 const CAPI_ENDPOINT =
   window.location.hostname.indexOf('nucwed') === -1 || window.location.search.indexOf('prod') > -1
     ? 'https://content-gateway.abc-prod.net.au'
