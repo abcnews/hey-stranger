@@ -17,6 +17,7 @@
 .text {
   display: flex;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 3rem 0 6rem;
   height: 100%;
   transition: opacity 1s 0.25s;
