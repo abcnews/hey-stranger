@@ -69,7 +69,7 @@
 @media (min-width: 96rem) and (min-height: 72rem) {
   .revealText {
     bottom: 20%;
-    left: calc(62.5% + 17rem);
+    left: calc(60% + 17rem);
   }
 }
 

@@ -182,8 +182,8 @@
 
 @media (min-width: 96rem) and (min-height: 72rem) {
   .text {
-    left: calc(62.5% + 3rem);
-    width: 37.5%;
+    left: calc(60% + 3rem);
+    width: 40%;
   }
 }
 
