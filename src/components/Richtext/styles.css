@@ -18,6 +18,7 @@
 
 .root > * {
   margin: 0 auto 2em;
+  width: 100%;
   max-width: 28rem;
   font-size: 1.125em;
   line-height: 1.5;
