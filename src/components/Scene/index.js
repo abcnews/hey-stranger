@@ -136,8 +136,8 @@ class Scene extends Component {
     this.hasRecentlyScrolled = true;
     this.scrollCurrentX = event.touches ? event.touches[0].clientX : event.clientX;
 
-    if (this.props.onExplore) {
-      this.props.onExplore();
+    if (this.props.explore) {
+      this.props.explore();
     }
 
     this.setState({
@@ -167,8 +167,8 @@ class Scene extends Component {
       return;
     }
 
-    if (this.props.onExplore) {
-      this.props.onExplore();
+    if (this.props.explore) {
+      this.props.explore();
     }
 
     this.setState({

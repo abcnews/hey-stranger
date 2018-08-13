@@ -22,8 +22,8 @@ class App extends Component {
     super(props);
 
     this.navigate = this.navigate.bind(this);
-    this.onExplore = this.onExplore.bind(this);
-    this.onReveal = this.onReveal.bind(this);
+    this.handleExplore = this.handleExplore.bind(this);
+    this.handleReveal = this.handleReveal.bind(this);
     this.swipeBegin = this.swipeBegin.bind(this);
     this.swipeContinue = this.swipeContinue.bind(this);
     this.swipeFinish = this.swipeFinish.bind(this);
@@ -59,11 +59,11 @@ class App extends Component {
     this.setState({ current, prev, next, hasExplored: false, hasRevealed: false });
   }
 
-  onExplore() {
+  handleExplore() {
     this.setState({ hasExplored: true });
   }
 
-  onReveal() {
+  handleReveal() {
     this.setState({ hasRevealed: true });
   }
 
@@ -162,13 +162,13 @@ class App extends Component {
                   Start
                 </Button>
               </Curtain>
-              <Reader focused={currentActor} onReveal={this.onReveal} />
+              <Reader focused={currentActor} reveal={this.handleReveal} />
               <Stage hasFocus={!!currentActor} isUnavailable={!hasStarted}>
                 <Scene
                   isUnavailable={!isInteractive}
                   focused={currentActor}
                   navigate={this.navigate}
-                  onExplore={this.onExplore}
+                  explore={this.handleExplore}
                   {...scene}
                 />
               </Stage>
