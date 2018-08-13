@@ -3,7 +3,7 @@ const Arrow = require('../Arrow');
 const TapTarget = require('../TapTarget');
 const styles = require('./styles.css');
 
-module.exports = ({ initialExplore, initialChoice, revealScreen, othersExplore }) => (
+module.exports = ({ initialExplore, initialChoice, revealScreen, revealText, othersExplore }) => (
   <div className={styles.root}>
     <div className={styles.initialExplore} aria-hidden={initialExplore ? 'false' : 'true'}>
       <Arrow direction="left" hasTail />
@@ -17,6 +17,10 @@ module.exports = ({ initialExplore, initialChoice, revealScreen, othersExplore }
     <div className={styles.revealScreen} aria-hidden={revealScreen ? 'false' : 'true'}>
       <Arrow direction="up" hasTail />
       <span>Scroll to see screen</span>
+    </div>
+    <div className={styles.revealText} aria-hidden={revealText ? 'false' : 'true'}>
+      <Arrow direction="up" hasTail />
+      <span>Scroll to read</span>
     </div>
     <div className={styles.othersExplore} aria-hidden={othersExplore ? 'false' : 'true'}>
       <Arrow direction="left" hasTail />

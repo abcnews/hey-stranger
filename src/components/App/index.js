@@ -162,7 +162,11 @@ class App extends Component {
                   Start
                 </Button>
               </Curtain>
-              <Reader focused={currentActor} reveal={this.handleReveal} />
+              <Reader
+                focused={currentActor}
+                reveal={this.handleReveal}
+                onIsScrollable={this.handleReaderTextIsScrollable}
+              />
               <Stage hasFocus={!!currentActor} isUnavailable={!hasStarted}>
                 <Scene
                   isUnavailable={!isInteractive}
@@ -191,6 +195,7 @@ class App extends Component {
                 initialExplore={isInteractive && !current && !hasExplored}
                 initialChoice={isInteractive && !current}
                 revealScreen={isInteractive && currentActor && !hasRevealed}
+                revealText={isInteractive && currentActor && !hasRevealed}
                 othersExplore={isInteractive && currentActor && hasRevealed}
               />
             </AspectRatioRegulator>
