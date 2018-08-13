@@ -1,9 +1,11 @@
 .root {
+  padding: 0 1.25rem;
   font-size: 1rem;
 }
 
 @media (min-width: 64rem) and (min-height: 48rem) {
   .root {
+    max-width: 28rem;
     font-size: 1.125rem;
   }
 }
@@ -15,15 +17,20 @@
 }
 
 .root > * {
-  margin: 0 auto;
-  padding: 0 1.25rem 2em;
+  margin: 0 auto 2em;
   max-width: 28rem;
   font-size: 1.125em;
   line-height: 1.5;
 }
 
+@media (min-width: 64rem) and (min-height: 48rem) {
+  .roo > * {
+    max-width: auto;
+  }
+}
+
 .root > :last-child {
-  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .root > h2 {
