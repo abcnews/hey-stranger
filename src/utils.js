@@ -86,6 +86,7 @@ const DEFAULT_MEDIA_DOMAIN = 'www.abc.net.au';
 
 const uncrossDomain = url => url.replace(DEFAULT_MEDIA_DOMAIN, window.location.hostname);
 
+const HEADING_PATTERN = /p--heading-(\d)/;
 const CONTENT_LINK_PATTERN = /xlink[^>]+contentbean:/g;
 const CONTENT_LINK_REPLACEMENT = 'href="/news/';
 
@@ -113,11 +114,20 @@ module.exports.getProps = async articleCMID => {
   )).reduce((memo, embed) => ((memo[embed.id] = embed), memo), {});
 
   for (let i = 0, len = nodes.length; i < len; i++) {
-    const node = nodes[i];
+    let node = nodes[i];
 
     if (!node.tagName || node.textContent.trim().length === 0) {
       // Skip non-elements & empty elements
       continue;
+    }
+
+    const headingMatch = node.className.match(HEADING_PATTERN);
+
+    if (headingMatch) {
+      const headingEl = document.createElement(`H${headingMatch[1]}`);
+
+      headingEl.innerHTML = node.innerHTML;
+      node = headingEl;
     }
 
     if (node.textContent.indexOf('#scene') === 0) {
@@ -181,7 +191,7 @@ module.exports.getProps = async articleCMID => {
           break;
       }
     } else if (actor) {
-      if (node.className === 'p--heading-1') {
+      if (node.tagName === 'H1') {
         actor.name = node.textContent;
       } else {
         actor.storyHTML += node.outerHTML;
