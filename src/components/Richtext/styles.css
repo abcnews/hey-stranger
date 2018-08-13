@@ -25,7 +25,7 @@
 
 @media (min-width: 64rem) and (min-height: 48rem) {
   .roo > * {
-    max-width: auto;
+    max-width: none;
   }
 }
 
