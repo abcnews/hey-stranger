@@ -5,10 +5,10 @@ class Dropdown extends Component {
   constructor(props) {
     super(props);
 
-    this.pickActor = this.pickActor.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  pickActor(event) {
+  handleChange(event) {
     const value = event.target.value;
 
     if (this.props.navigate) {
@@ -28,7 +28,7 @@ class Dropdown extends Component {
           aria-describedby="dropdown-label"
           tabindex={isUnavailable ? -1 : 0}
           value={current ? actors.indexOf(current) : ''}
-          onChange={this.pickActor}
+          onChange={this.handleChange}
         >
           {[<option value="">Nobody</option>].concat(
             actors.map((actor, index) => <option value={index}>{actor.name}</option>)
