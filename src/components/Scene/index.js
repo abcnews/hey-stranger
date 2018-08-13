@@ -287,6 +287,12 @@ class Scene extends Component {
 }
 
 const createAutoPan = (scrollMax = 0) => {
+  if (scrollMax < 100) {
+    // Don't allow autoPan when there's less than 100px to travel
+    // (otherwise you sometimes get a shaky/bouncy effect)
+    return [null, null];
+  }
+
   const className = `${styles.root}_autoPan__scrollMax${scrollMax}`;
   const animationName = `${className}__animation`;
 
