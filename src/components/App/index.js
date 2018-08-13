@@ -22,8 +22,8 @@ class App extends Component {
     super(props);
 
     this.navigate = this.navigate.bind(this);
-    this.onInitialExplore = this.onInitialExplore.bind(this);
-    this.onInitialReveal = this.onInitialReveal.bind(this);
+    this.onExplore = this.onExplore.bind(this);
+    this.onReveal = this.onReveal.bind(this);
     this.swipeBegin = this.swipeBegin.bind(this);
     this.swipeContinue = this.swipeContinue.bind(this);
     this.swipeFinish = this.swipeFinish.bind(this);
@@ -37,6 +37,8 @@ class App extends Component {
       current: null,
       prev: null,
       next: null,
+      hasExplored: false,
+      hasRevealed: false,
       hasStarted: false,
       isInteractive: false
     };
@@ -54,23 +56,15 @@ class App extends Component {
       next = this.ring[(ringLength + ringIndex + 1) % ringLength];
     }
 
-    this.hasExplored = true;
-
-    if (!this.hasMadeChoice) {
-      this.hasMadeChoice = this.props.scene && this.props.scene.actors.indexOf(current) !== -1;
-    }
-
-    this.setState({ current, prev, next });
+    this.setState({ current, prev, next, hasExplored: false, hasRevealed: false });
   }
 
-  onInitialExplore() {
-    this.hasExplored = true;
-    this.forceUpdate();
+  onExplore() {
+    this.setState({ hasExplored: true });
   }
 
-  onInitialReveal() {
-    this.hasRevealed = true;
-    this.forceUpdate();
+  onReveal() {
+    this.setState({ hasRevealed: true });
   }
 
   swipeBegin(event) {
@@ -116,8 +110,6 @@ class App extends Component {
       return;
     }
 
-    this.hasExploredOthers = true;
-
     if (this.state.current === this.props.scene.aboutHTML) {
       this.navigate(null);
     } else if (this.state.next && dX < 0) {
@@ -143,7 +135,7 @@ class App extends Component {
     this.updateRing(this.props.scene);
   }
 
-  render({ meta, scene }, { current, prev, next, hasStarted, isInteractive }) {
+  render({ meta, scene }, { current, prev, next, hasExplored, hasRevealed, hasStarted, isInteractive }) {
     const currentActor = scene && scene.actors.indexOf(current) !== -1 ? current : null;
     const currentAboutHTML = scene && scene.aboutHTML === current ? current : null;
 
@@ -170,13 +162,13 @@ class App extends Component {
                   Start
                 </Button>
               </Curtain>
-              <Reader focused={currentActor} onReveal={this.hasRevealed ? null : this.onInitialReveal} />
+              <Reader focused={currentActor} onReveal={this.onReveal} />
               <Stage hasFocus={!!currentActor} isUnavailable={!hasStarted}>
                 <Scene
                   isUnavailable={!isInteractive}
                   focused={currentActor}
                   navigate={this.navigate}
-                  onExplore={this.hasExplored ? null : this.onInitialExplore}
+                  onExplore={this.onExplore}
                   {...scene}
                 />
               </Stage>
@@ -196,10 +188,10 @@ class App extends Component {
               <AboutNav aboutHTML={scene.aboutHTML} isUnavailable={!hasStarted || current} navigate={this.navigate} />
               <ABCNewsNav isUnavailable={current} />
               <Hints
-                initialExplore={isInteractive && !this.hasExplored}
-                initialChoice={isInteractive && !current && !this.hasMadeChoice}
-                revealScreen={isInteractive && currentActor && !this.hasRevealed}
-                othersExplore={isInteractive && currentActor && this.hasRevealed && !this.hasExploredOthers}
+                initialExplore={isInteractive && !current && !hasExplored}
+                initialChoice={isInteractive && !current}
+                revealScreen={isInteractive && currentActor && !hasRevealed}
+                othersExplore={isInteractive && currentActor && hasRevealed}
               />
             </AspectRatioRegulator>
           )}
