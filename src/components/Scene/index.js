@@ -225,6 +225,7 @@ class Scene extends Component {
   render({ isUnavailable, width, height, image, video, actors, focused }, { scrollOffset, shouldAutoPan }) {
     const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } = this.viewportDependentProps;
     const actorsBackToFront = actors.slice().sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
+    const hasLargeViewport = window.matchMedia('(min-width: 64rem) and (min-height: 48rem)').matches;
 
     return (
       <div
@@ -263,20 +264,20 @@ class Scene extends Component {
       >
         {shouldAutoPan && !isUnavailable && !focused && <style>{autoPanStyles}</style>}
         <div className={styles.base}>
-          {video ? (
-            <video
-              src={video.url}
-              poster={image ? image.url : null}
-              alt={image ? image.description : null}
-              autoplay
-              loop
-              muted
-              playsinline
-              webkit-playsinline
-            />
-          ) : image ? (
-            <img src={image.url} alt={image.description} />
-          ) : null}
+          {image && <img src={image.url} alt={image.description} />}
+          {hasLargeViewport &&
+            video && (
+              <video
+                src={video.url}
+                poster={image ? image.url : null}
+                alt={image ? image.description : null}
+                autoplay
+                loop
+                muted
+                playsinline
+                webkit-playsinline
+              />
+            )}
         </div>
         <div className={styles.bodies}>
           {actorsBackToFront.map((actor, index) => (
