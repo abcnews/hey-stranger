@@ -78,7 +78,10 @@ class ImagesPreloader {
 }
 
 const isEmbed = node =>
-  node.firstElementChild && node.firstElementChild === node.lastElementChild && node.firstElementChild.tagName === 'A';
+  node.firstElementChild &&
+  node.firstElementChild === node.lastElementChild &&
+  node.firstElementChild.tagName === 'A' &&
+  node.innerHTML.match(INTERNAL_LINK_PATTERN);
 
 const getEmbedCMID = node => node.getAttribute('xlink:href').split(':')[1];
 
@@ -86,9 +89,17 @@ const DEFAULT_MEDIA_DOMAIN = 'www.abc.net.au';
 
 const uncrossDomain = url => url.replace(DEFAULT_MEDIA_DOMAIN, window.location.hostname);
 
+const INTERNAL_LINK_PATTERN = /xlink[^>]+contentbean:/g;
+const INTERNAL_LINK_REPLACEMENT = 'href="/news/';
+const EXTERNAL_LINK_PATTERN = /xlink[^>]+xlink:href/g;
+const EXTERNAL_LINK_REPLACEMENT = 'href';
+
+const rewriteLinkHTML = html =>
+  html
+    .replace(INTERNAL_LINK_PATTERN, INTERNAL_LINK_REPLACEMENT)
+    .replace(EXTERNAL_LINK_PATTERN, EXTERNAL_LINK_REPLACEMENT);
+
 const HEADING_PATTERN = /p--heading-(\d)/;
-const CONTENT_LINK_PATTERN = /xlink[^>]+contentbean:/g;
-const CONTENT_LINK_REPLACEMENT = 'href="/news/';
 
 module.exports.getProps = async articleCMID => {
   const article = await fetchCAPI(articleCMID);
@@ -194,10 +205,10 @@ module.exports.getProps = async articleCMID => {
       if (node.tagName === 'H1') {
         actor.name = node.textContent;
       } else {
-        actor.storyHTML += node.outerHTML;
+        actor.storyHTML += rewriteLinkHTML(node.outerHTML);
       }
     } else {
-      scene.aboutHTML += node.outerHTML.replace(CONTENT_LINK_PATTERN, CONTENT_LINK_REPLACEMENT);
+      scene.aboutHTML += rewriteLinkHTML(node.outerHTML);
     }
   }
 
