@@ -1,21 +1,11 @@
-const CanvasVideoPlayer = require('./canvas-video-player');
 const cn = require('classnames');
 const { h, Component } = require('preact');
 const Body = require('../Body');
 const styles = require('./styles.css');
 
-const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-let nextCanvasVideoID = 0;
-
 class Scene extends Component {
   constructor(props) {
     super(props);
-
-    if (IS_IOS) {
-      this.canvasID = `${styles.base}_canvas_${++nextCanvasVideoID}`;
-      this.videoID = `${styles.base}_video_${nextCanvasVideoID}`;
-    }
 
     this.imageRefs = {};
     this.updateViewportDependentProps();
@@ -275,7 +265,6 @@ class Scene extends Component {
         <div className={styles.base}>
           {video ? (
             <video
-              id={this.videoID}
               src={video.url}
               poster={image ? image.url : null}
               alt={image ? image.description : null}
@@ -288,7 +277,6 @@ class Scene extends Component {
           ) : image ? (
             <img src={image.url} alt={image.description} />
           ) : null}
-          {this.canvasID && <canvas id={this.canvasID} />}
         </div>
         <div className={styles.bodies}>
           {actorsBackToFront.map((actor, index) => (
