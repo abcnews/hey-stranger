@@ -43,6 +43,15 @@
   object-fit: cover;
 }
 
+.base > canvas {
+  opacity: 0;
+  transition: opacity 0.5s 0.5s;
+}
+
+.base > canvas[width][height] {
+  opacity: 0.99;
+}
+
 .base::after {
   content: '';
   position: absolute;
