@@ -1,6 +1,8 @@
 .root {
   position: relative;
-  transition: transform 0.5s 0.5s, transform-origin 0.75s 0.5s;
+  transition-delay: 0.5s;
+  transition-duration: 0.5s;
+  transition-property: transform-origin, transform;
 }
 
 .root[aria-hidden='true'],
@@ -9,8 +11,20 @@
 }
 
 .hasFocused {
-  transition-delay: 0s, 0s;
-  transition-duration: 0.75s, 0.5s;
+  transition-delay: 0.25s;
+}
+
+.isZoomingIn,
+.isZoomingOut {
+  transition-duration: 0.75s;
+}
+
+.isZoomingIn {
+  transition-timing-function: ease, ease-in-out;
+}
+
+.isZoomingOut {
+  transition-timing-function: ease-in-out, ease;
 }
 
 @media (orientation: landscape) {
@@ -29,12 +43,13 @@
 }
 
 .base {
-  transition: opacity 0.5s 0.75s;
+  transition: opacity 0.75s 1.25s;
 }
 
 .hasFocused .base {
   opacity: 0;
-  transition: opacity 0.25s 0s;
+  transition-delay: 0s;
+  transition-duration: 0.5s;
 }
 
 .base > :not(style) {
