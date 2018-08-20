@@ -36,7 +36,7 @@
 }
 
 .isFocused {
-  animation: enter 0.75s 0.5s backwards;
+  animation: enter 0.75s 1s backwards;
 }
 
 @keyframes exit {
@@ -91,7 +91,7 @@
 }
 
 .isFocused .leftHand {
-  animation: enterLeftHand 0.75s 0.75s backwards;
+  animation: enterLeftHand 0.75s 1.25s backwards;
 }
 
 .rightHand {
@@ -108,7 +108,7 @@
 }
 
 .isFocused .rightHand {
-  animation: enterRightHand 0.75s 0.75s backwards;
+  animation: enterRightHand 0.75s 1.25s backwards;
 }
 
 .text {
