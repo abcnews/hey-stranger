@@ -230,21 +230,21 @@ class Scene extends Component {
     const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } = this.viewportDependentProps;
     const actorsBackToFront = actors.slice().sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
     const hasLargeViewport = window.matchMedia('(min-width: 64rem) and (min-height: 48rem)').matches;
-    const isZoomingIn = focused && this.lastFocused == null;
     const isZoomingOut = !focused && this.lastFocused != null;
     const originXPct = focused ? ((focused.body.x + focused.body.focus.x) / width) * 100 : 50;
     const originYPct = focused ? ((focused.body.y + focused.body.focus.y) / height) * 100 : 50;
-    const transformOrigin = `${originXPct}% ${originYPct}%`;
     const scale = focused ? focused.body.focus.scale / 100 : 1;
     const translateX = focused
       ? `${50 - originXPct}%`
       : scrollOffset != null
         ? `${scrollOffset}px`
         : isZoomingOut
-          ? `${this.clampScrollOffset(this.measureScrollOffset())}px`
+          ? `${this.clampScrollOffset(
+              ((this.lastFocused.body.x + this.lastFocused.body.focus.x - width / 2) / -width) * scaledWidth
+            )}px`
           : 0;
     const translateY = focused ? `${66 - originYPct}%` : 0;
-    const transform = `translate3d(${translateX}, ${translateY}, 0) scale(${scale})`;
+    const transform = `${scale !== 1 ? `scale(${scale}) ` : ''}translate3d(${translateX}, ${translateY}, 0)`;
     const transitionDelay = scrollOffset ? '0s' : '';
     const transitionDuration = scrollOffset ? '0s' : '';
 
@@ -252,15 +252,12 @@ class Scene extends Component {
       <div
         className={cn(styles.root, {
           [autoPanClassName]: shouldAutoPan && !isUnavailable && !focused,
-          [styles.hasFocused]: focused,
-          [styles.isZoomingIn]: isZoomingIn,
-          [styles.isZoomingOut]: isZoomingOut
+          [styles.hasFocused]: focused
         })}
         aria-hidden={isUnavailable || focused ? 'true' : 'false'}
         style={{
           width: `${scaledWidth}px`,
           height: `${scaledHeight}px`,
-          transformOrigin,
           transform,
           transitionDelay,
           transitionDuration

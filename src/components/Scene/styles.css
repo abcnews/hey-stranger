@@ -1,8 +1,7 @@
 .root {
   position: relative;
-  transition-delay: 0.5s;
-  transition-duration: 0.5s;
-  transition-property: transform-origin, transform;
+  transform-origin: 50% 66%;
+  transition: transform 0.75s 0.5s;
 }
 
 .root[aria-hidden='true'],
@@ -12,19 +11,6 @@
 
 .hasFocused {
   transition-delay: 0.25s;
-}
-
-.isZoomingIn,
-.isZoomingOut {
-  transition-duration: 0.75s;
-}
-
-.isZoomingIn {
-  transition-timing-function: ease, ease-in-out;
-}
-
-.isZoomingOut {
-  transition-timing-function: ease-in-out, ease;
 }
 
 @media (orientation: landscape) {
