@@ -112,13 +112,19 @@
 }
 
 .text {
+  transform: translate(0, -25vh);
   overflow: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   margin: 0 -2rem 0 0;
   padding: 0 2rem 0 0;
   width: calc(100% + 2rem);
-  height: 100vh;
+  height: 125vh;
+}
+
+.wasFocused .text {
+  transform: translate(0, -250vh);
+  transition: transform 1s;
 }
 
 .text::before,
@@ -134,7 +140,7 @@
 }
 
 .text::before {
-  height: 3rem;
+  height: calc(25vh + 3rem);
 }
 
 .text > * {
@@ -150,7 +156,7 @@
 
 @media (min-width: 32rem) and (min-height: 24rem) {
   .text::before {
-    height: 6rem;
+    height: 35vh; /* calc(25vh + 10vh) */
   }
 }
 
@@ -159,10 +165,6 @@
     left: calc(50% + 3rem);
     width: 50%;
     box-shadow: 0 0 6rem 6rem rgba(0, 0, 0, 0.55);
-  }
-
-  .text::before {
-    height: 10vh;
   }
 
   .text > * {
