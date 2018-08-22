@@ -19,6 +19,10 @@ class Body extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.isInFocus !== this.props.isInFocus;
+  }
+
   render({ xPct, yPct, widthPct, depthIndex, src, alt, isInFocus }) {
     return (
       <div

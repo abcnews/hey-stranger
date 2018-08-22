@@ -1,5 +1,6 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
+const { withContext } = require('../AppContext');
 const Phone = require('../Phone');
 const Richtext = require('../Richtext');
 const styles = require('./styles.css');
@@ -12,19 +13,19 @@ class Reader extends Component {
   }
 
   handleScroll() {
-    if (!this.hasRevealed && this.props.reveal) {
-      this.props.reveal();
+    if (!this.hasRevealed) {
       this.hasRevealed = true;
+      this.props.reveal();
     }
   }
 
   componentDidUpdate() {
-    if (this.lastFocused !== this.props.focused) {
-      this.hasRevealed = false;
+    const formerCurrent = this.formerCurrent;
 
-      if (!this.props.reveal) {
-        return;
-      }
+    this.formerCurrent = this.props.isCurrentActor ? this.props.current : null;
+
+    if (formerCurrent !== this.formerCurrent) {
+      this.hasRevealed = false;
 
       setTimeout(() => {
         const focusedTextEl = this.base.querySelector(`.${styles.isFocused} .${styles.text}`);
@@ -34,32 +35,34 @@ class Reader extends Component {
         }
       }, 500);
     }
-
-    this.lastFocused = this.props.focused;
   }
 
-  render({ focused }) {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.current !== this.props.current;
+  }
+
+  render({ current, isCurrentActor }) {
     return (
-      <div className={styles.root} aria-hidden={focused ? 'false' : 'true'}>
+      <div className={styles.root} aria-hidden={isCurrentActor ? 'false' : 'true'}>
         <div id="reader-stories" className={styles.stories} aria-live="assertive" aria-atomic="true">
-          {this.lastFocused &&
-            this.lastFocused !== focused && (
-              <div key={this.lastFocused} className={cn(styles.story, styles.wasFocused)} aria-hidden="true">
-                <div className={cn(styles.hand, styles[`${this.lastFocused.phone.screen.hand}Hand`])}>
-                  <Phone name={this.lastFocused.name} {...this.lastFocused.phone} />
+          {this.formerCurrent &&
+            this.formerCurrent !== current && (
+              <div key={this.formerCurrent} className={cn(styles.story, styles.wasFocused)} aria-hidden="true">
+                <div className={cn(styles.hand, styles[`${this.formerCurrent.phone.screen.hand}Hand`])}>
+                  <Phone name={this.formerCurrent.name} {...this.formerCurrent.phone} />
                 </div>
                 <div className={styles.text}>
-                  <Richtext html={this.lastFocused.storyHTML} />
+                  <Richtext html={this.formerCurrent.storyHTML} />
                 </div>
               </div>
             )}
-          {focused && (
-            <div key={focused} className={cn(styles.story, styles.isFocused)} role="dialog">
-              <div className={cn(styles.hand, styles[`${focused.phone.screen.hand}Hand`])}>
-                <Phone name={focused.name} {...focused.phone} />
+          {isCurrentActor && (
+            <div key={current} className={cn(styles.story, styles.isFocused)} role="dialog">
+              <div className={cn(styles.hand, styles[`${current.phone.screen.hand}Hand`])}>
+                <Phone name={current.name} {...current.phone} />
               </div>
               <div className={styles.text} onScroll={this.handleScroll}>
-                <Richtext html={focused.storyHTML} />
+                <Richtext html={current.storyHTML} />
               </div>
             </div>
           )}
@@ -69,4 +72,4 @@ class Reader extends Component {
   }
 }
 
-module.exports = Reader;
+module.exports = withContext(Reader);

@@ -1,15 +1,18 @@
 const { h } = require('preact');
 const Arrow = require('../Arrow');
 const Button = require('../Button');
+const { withContext } = require('../AppContext');
 const styles = require('./styles.css');
 
-module.exports = ({ isUnavailable, navigate }) => (
-  <nav className={styles.root} aria-hidden={isUnavailable ? 'true' : 'false'}>
-    <Button tabindex={isUnavailable ? -1 : 0} onClick={() => navigate(null)}>
+const BackNav = ({ current, goTo }) => (
+  <nav className={styles.root} aria-hidden={current ? 'false' : 'true'}>
+    <Button tabindex={current ? 0 : -1} onClick={() => goTo(null)}>
       <Arrow direction="left" />
       <span>Back</span>
     </Button>
   </nav>
 );
 
-module.exports.displayName = 'BackNav';
+BackNav.displayName = 'BackNav';
+
+module.exports = withContext(BackNav);

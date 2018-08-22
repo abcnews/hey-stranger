@@ -1,7 +1,6 @@
 const { h, Component } = require('preact');
 const ABCNewsNav = require('../ABCNewsNav');
 const AspectRatioRegulator = require('../AspectRatioRegulator');
-const Button = require('../Button');
 const About = require('../About');
 const AboutNav = require('../AboutNav');
 const BackNav = require('../BackNav');
@@ -11,9 +10,8 @@ const HUDFilter = require('../HUDFilter');
 const Hints = require('../Hints');
 const Loader = require('../Loader');
 const RingNav = require('../RingNav');
-const Meta = require('../Meta');
+const AppContext = require('../AppContext');
 const Reader = require('../Reader');
-const Scene = require('../Scene');
 const Stage = require('../Stage');
 const styles = require('./styles.css');
 
@@ -21,22 +19,21 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.navigate = this.navigate.bind(this);
-    this.handleExplore = this.handleExplore.bind(this);
-    this.handleReveal = this.handleReveal.bind(this);
+    this.explore = this.explore.bind(this);
+    this.goTo = this.goTo.bind(this);
+    this.next = this.next.bind(this);
+    this.prev = this.prev.bind(this);
+    this.reveal = this.reveal.bind(this);
+    this.start = this.start.bind(this);
+
     this.swipeBegin = this.swipeBegin.bind(this);
     this.swipeContinue = this.swipeContinue.bind(this);
     this.swipeFinish = this.swipeFinish.bind(this);
-    this.start = this.start.bind(this);
 
     this.updateRing(props.scene);
 
-    this.navigationCount = 0;
-
     this.state = {
       current: null,
-      prev: null,
-      next: null,
       hasExplored: false,
       hasRevealed: false,
       hasStarted: false,
@@ -44,27 +41,44 @@ class App extends Component {
     };
   }
 
-  navigate(target) {
-    const current = target;
-    const ringLength = this.ring.length;
-    const ringIndex = this.ring.indexOf(current);
-    let prev = null;
-    let next = null;
-
-    if (ringIndex !== -1) {
-      prev = this.ring[(ringLength + ringIndex - 1) % ringLength];
-      next = this.ring[(ringLength + ringIndex + 1) % ringLength];
-    }
-
-    this.setState({ current, prev, next, hasExplored: false, hasRevealed: false });
-  }
-
-  handleExplore() {
+  explore() {
     this.setState({ hasExplored: true });
   }
 
-  handleReveal() {
+  goTo(current) {
+    this.setState({ current, hasExplored: false, hasRevealed: false });
+  }
+
+  next() {
+    this.step();
+  }
+
+  prev() {
+    this.step(true);
+  }
+
+  step(isBackwards) {
+    const ringIndex = this.ring.indexOf(this.state.current);
+
+    if (ringIndex === -1) {
+      return;
+    }
+
+    const ringLength = this.ring.length;
+
+    this.goTo(this.ring[(ringLength + ringIndex + (isBackwards ? -1 : 1)) % ringLength]);
+  }
+
+  reveal() {
     this.setState({ hasRevealed: true });
+  }
+
+  start() {
+    this.setState({ hasStarted: true });
+
+    setTimeout(() => {
+      this.setState({ isInteractive: true });
+    }, 1500);
   }
 
   swipeBegin(event) {
@@ -111,20 +125,12 @@ class App extends Component {
     }
 
     if (this.state.current === this.props.scene.aboutHTML) {
-      this.navigate(null);
-    } else if (this.state.next && dX < 0) {
-      this.navigate(this.state.next);
-    } else if (this.state.prev) {
-      this.navigate(this.state.prev);
+      this.goTo(null);
+    } else if (dX < 0) {
+      this.next();
+    } else {
+      this.prev();
     }
-  }
-
-  start() {
-    this.setState({ hasStarted: true });
-
-    setTimeout(() => {
-      this.setState({ isInteractive: true });
-    }, 1500);
   }
 
   updateRing({ actors } = {}) {
@@ -135,72 +141,62 @@ class App extends Component {
     this.updateRing(this.props.scene);
   }
 
-  render({ meta, scene }, { current, prev, next, hasExplored, hasRevealed, hasStarted, isInteractive }) {
-    const currentActor = scene && scene.actors.indexOf(current) !== -1 ? current : null;
-    const currentAboutHTML = scene && scene.aboutHTML === current ? current : null;
-
+  render({ meta, scene }, { current, hasExplored, hasRevealed, hasStarted, isInteractive }) {
     return (
-      <main
-        role="main"
-        className={styles.root}
-        onMouseDown={current ? this.swipeBegin : null}
-        onTouchStart={current ? this.swipeBegin : null}
-        onMouseMove={current ? this.swipeContinue : null}
-        onTouchMove={current ? this.swipeContinue : null}
-        onMouseUp={current ? this.swipeFinish : null}
-        onTouchEnd={current ? this.swipeFinish : null}
-        onMouseLeave={current ? this.swipeFinish : null}
-        onTouchCancel={current ? this.swipeFinish : null}
+      <AppContext.Provider
+        value={{
+          current,
+          hasExplored,
+          hasRevealed,
+          hasStarted,
+          isCurrentAbout: scene && scene.aboutHTML === current,
+          isCurrentActor: scene && scene.actors.indexOf(current) !== -1,
+          isInteractive,
+          meta,
+          scene,
+          explore: this.explore,
+          goTo: this.goTo,
+          next: this.next,
+          prev: this.prev,
+          reveal: this.reveal,
+          start: this.start
+        }}
       >
-        <Loader />
-        {meta &&
-          scene && (
-            <AspectRatioRegulator min="4/9" max="3/2">
-              <Curtain isUnavailable={hasStarted}>
-                <Meta isUnavailable={hasStarted} {...meta} />
-                <Button primary tabindex={hasStarted ? -1 : 0} onClick={this.start}>
-                  Start
-                </Button>
-              </Curtain>
-              <Reader
-                focused={currentActor}
-                reveal={this.handleReveal}
-                onIsScrollable={this.handleReaderTextIsScrollable}
-              />
-              <Stage hasFocus={!!currentActor} isUnavailable={!hasStarted}>
-                <Scene
-                  isUnavailable={!isInteractive}
-                  focused={currentActor}
-                  navigate={this.navigate}
-                  explore={this.handleExplore}
-                  {...scene}
-                />
-              </Stage>
-              <About
-                html={scene.aboutHTML.replace(/(<a )/g, !currentAboutHTML ? '$1tabindex="-1" ' : '$1')}
-                isUnavailable={!currentAboutHTML}
-              />
-              <HUDFilter />
-              <Dropdown
-                actors={scene.actors}
-                current={currentActor}
-                isUnavailable={!hasStarted}
-                navigate={this.navigate}
-              />
-              <BackNav isUnavailable={!current} navigate={this.navigate} />
-              <RingNav prev={prev} next={next} isUnavailable={!currentActor} navigate={this.navigate} />
-              <AboutNav aboutHTML={scene.aboutHTML} isUnavailable={!hasStarted || current} navigate={this.navigate} />
-              <ABCNewsNav isUnavailable={current} />
-              <Hints
-                initialExplore={isInteractive && !current && !hasExplored}
-                initialChoice={isInteractive && !current}
-                revealScreen={isInteractive && currentActor && !hasRevealed}
-                revealText={isInteractive && currentActor && !hasRevealed}
-                othersExplore={isInteractive && currentActor && hasRevealed}
-              />
-            </AspectRatioRegulator>
-          )}
-      </main>
+        <main
+          role="main"
+          className={styles.root}
+          onMouseDown={current ? this.swipeBegin : null}
+          onTouchStart={current ? this.swipeBegin : null}
+          onMouseMove={current ? this.swipeContinue : null}
+          onTouchMove={current ? this.swipeContinue : null}
+          onMouseUp={current ? this.swipeFinish : null}
+          onTouchEnd={current ? this.swipeFinish : null}
+          onMouseLeave={current ? this.swipeFinish : null}
+          onTouchCancel={current ? this.swipeFinish : null}
+        >
+          <Loader />
+          <AppContext.Consumer>
+            {({ meta, scene }) =>
+              meta &&
+              scene && (
+                <AspectRatioRegulator min="4/9" max="3/2">
+                  <Curtain />
+                  <Reader />
+                  <Stage />
+                  <About />
+                  <HUDFilter />
+                  <Dropdown />
+                  <BackNav />
+                  <RingNav />
+                  <AboutNav />
+                  <ABCNewsNav />
+                  <Hints />
+                </AspectRatioRegulator>
+              )
+            }
+          </AppContext.Consumer>
+        </main>
+      </AppContext.Provider>
     );
   }
 }

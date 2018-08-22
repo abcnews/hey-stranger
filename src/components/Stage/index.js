@@ -1,16 +1,20 @@
 const cn = require('classnames');
 const { h } = require('preact');
+const { withContext } = require('../AppContext');
+const Scene = require('../Scene');
 const styles = require('./styles.css');
 
-module.exports = ({ hasFocus, isUnavailable, children }) => (
+const Stage = ({ hasStarted, isCurrentActor }) => (
   <div
     className={cn(styles.root, {
-      [styles.hasFocus]: hasFocus
+      [styles.hasFocus]: isCurrentActor
     })}
-    aria-hidden={isUnavailable ? 'true' : 'false'}
+    aria-hidden={hasStarted ? 'false' : 'true'}
   >
-    {children}
+    <Scene />
   </div>
 );
 
-module.exports.displayName = 'Stage';
+Stage.displayName = 'Stage';
+
+module.exports = withContext(Stage);

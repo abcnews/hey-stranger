@@ -1,4 +1,5 @@
 const { h, Component } = require('preact');
+const { withContext } = require('../AppContext');
 const styles = require('./styles.css');
 
 class Dropdown extends Component {
@@ -11,12 +12,12 @@ class Dropdown extends Component {
   handleChange(event) {
     const value = event.target.value;
 
-    if (this.props.navigate) {
-      this.props.navigate(value === '' ? null : this.props.actors[event.target.value]);
-    }
+    this.props.goTo(value === '' ? null : this.props.scene.actors[event.target.value]);
   }
 
-  render({ isUnavailable, actors, current }) {
+  render({ hasStarted, current, scene }) {
+    const currentActorIndex = scene.actors.indexOf(current);
+
     return (
       <nav className={styles.root}>
         <label id="dropdown-label" for="dropdown-select">
@@ -26,12 +27,12 @@ class Dropdown extends Component {
           id="dropdown-select"
           aria-controls="reader-stories"
           aria-describedby="dropdown-label"
-          tabindex={isUnavailable ? -1 : 0}
-          value={current ? actors.indexOf(current) : ''}
+          tabindex={hasStarted ? 0 : -1}
+          value={currentActorIndex === -1 ? '' : currentActorIndex}
           onChange={this.handleChange}
         >
           {[<option value="">Nobody</option>].concat(
-            actors.map((actor, index) => <option value={index}>{actor.name}</option>)
+            scene.actors.map((actor, index) => <option value={index}>{actor.name}</option>)
           )}
         </select>
       </nav>
@@ -39,4 +40,4 @@ class Dropdown extends Component {
   }
 }
 
-module.exports = Dropdown;
+module.exports = withContext(Dropdown);
