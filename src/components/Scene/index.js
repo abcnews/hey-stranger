@@ -12,6 +12,7 @@ class Scene extends Component {
     this.updateViewportDependentProps();
 
     this.state = {
+      scrollOffset: null,
       shouldAutoPan: true
     };
 
@@ -207,8 +208,9 @@ class Scene extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
+      nextProps.isInteractive !== this.props.isInteractive ||
       nextProps.current !== this.props.current ||
-      nextProps.scene === this.props.scene ||
+      nextProps.scene !== this.props.scene ||
       nextState.scrollOffset !== this.state.scrollOffset
     );
   }
