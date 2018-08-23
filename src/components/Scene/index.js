@@ -185,6 +185,8 @@ class Scene extends Component {
     const scrollMax = Math.max(0, Math.round((scaledWidth - viewport.width) / 2));
     const [autoPanClassName, autoPanStyles] = createAutoPan(scrollMax);
 
+    this.formerViewportDependentProps = this.viewportDependentProps || {};
+
     this.viewportDependentProps = {
       viewportRatio: viewport.ratio,
       scaledWidth,
@@ -208,6 +210,7 @@ class Scene extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
+      this.viewportDependentProps.scaledWidth !== this.formerViewportDependentProps.scaledWidth ||
       nextProps.isInteractive !== this.props.isInteractive ||
       nextProps.current !== this.props.current ||
       nextProps.scene !== this.props.scene ||
