@@ -202,9 +202,18 @@ class Scene extends Component {
     window.addEventListener('orientationchange', this.invalidateVDPOnceOriented);
   }
 
-  componentWillReceiveProps({ scene }) {
+  componentWillReceiveProps({ scene, isCurrentActor }) {
     if (this.props.scene.width !== scene.width || this.props.scene.height !== scene.height) {
       this.updateViewportDependentProps(scene);
+    }
+
+    if (!this.zoomOutScrollOffset && !isCurrentActor && this.props.isCurrentActor) {
+      this.zoomOutScrollOffset = this.clampScrollOffset(
+        ((this.props.current.body.x + this.props.current.body.focus.x - this.props.scene.width / 2) /
+          -this.props.scene.width) *
+          this.viewportDependentProps.scaledWidth
+      );
+      setTimeout(() => (this.zoomOutScrollOffset = null), 2000);
     }
   }
 
@@ -232,7 +241,6 @@ class Scene extends Component {
     const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } = this.viewportDependentProps;
     const actorsBackToFront = actors.slice().sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
     const hasLargeViewport = window.matchMedia('(min-width: 64rem) and (min-height: 48rem)').matches;
-    const isZoomingOut = !isCurrentActor && this.formerCurrent != null;
     const originXPct = isCurrentActor ? ((current.body.x + current.body.focus.x) / width) * 100 : 50;
     const originYPct = isCurrentActor ? ((current.body.y + current.body.focus.y) / height) * 100 : 50;
     const scale = isCurrentActor ? current.body.focus.scale / 100 : 1;
@@ -240,10 +248,8 @@ class Scene extends Component {
       ? `${50 - originXPct}%`
       : scrollOffset != null
         ? `${scrollOffset}px`
-        : isZoomingOut
-          ? `${this.clampScrollOffset(
-              ((this.formerCurrent.body.x + this.formerCurrent.body.focus.x - width / 2) / -width) * scaledWidth
-            )}px`
+        : this.zoomOutScrollOffset != null
+          ? `${this.zoomOutScrollOffset}px`
           : 0;
     const translateY = isCurrentActor ? `${66 - originYPct}%` : 0;
     const transform = `${scale !== 1 ? `scale(${scale}) ` : ''}translate3d(${translateX}, ${translateY}, 0)`;
