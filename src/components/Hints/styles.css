@@ -29,8 +29,7 @@
 }
 
 .initialChoice,
-.revealScreen,
-.revealText {
+.revealScreen {
   flex-direction: column;
 }
 
@@ -47,29 +46,11 @@
   bottom: 0.5rem;
 }
 
-.revealText {
-  display: none;
-  bottom: 10%;
-  left: calc(50% + 17rem);
-  transition-delay: 1s;
-}
-
 @media (min-width: 64rem) and (min-height: 48rem) {
   .initialExplore,
   .revealScreen,
   .othersExplore {
     display: none;
-  }
-
-  .revealText {
-    display: flex;
-  }
-}
-
-@media (min-width: 96rem) and (min-height: 72rem) {
-  .revealText {
-    bottom: 20%;
-    left: calc(60% + 17rem);
   }
 }
 

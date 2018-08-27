@@ -8,7 +8,6 @@ const Hints = ({ current, hasExplored, hasRevealed, isCurrentActor, isInteractiv
   const initialExplore = isInteractive && !current && !hasExplored;
   const initialChoice = isInteractive && !current;
   const revealScreen = isInteractive && isCurrentActor && !hasRevealed;
-  const revealText = isInteractive && isCurrentActor && !hasRevealed;
   const othersExplore = isInteractive && isCurrentActor && hasRevealed;
 
   return (
@@ -25,10 +24,6 @@ const Hints = ({ current, hasExplored, hasRevealed, isCurrentActor, isInteractiv
       <div className={styles.revealScreen} aria-hidden={revealScreen ? 'false' : 'true'}>
         <Arrow direction="up" hasTail />
         <span>Scroll to see screen</span>
-      </div>
-      <div className={styles.revealText} aria-hidden={revealText ? 'false' : 'true'}>
-        <Arrow direction="up" hasTail />
-        <span>Scroll to read</span>
       </div>
       <div className={styles.othersExplore} aria-hidden={othersExplore ? 'false' : 'true'}>
         <Arrow direction="left" hasTail />
