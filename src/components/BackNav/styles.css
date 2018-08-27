@@ -12,14 +12,10 @@
 }
 
 @media (min-width: 32rem) and (min-height: 24rem) {
-  .root {
-    top: 0;
-  }
-
   .root button {
-    padding-bottom: 100vh;
+    padding-top: 100vh;
     min-width: 15vw;
     text-align: left;
-    cursor: w-resize;
+    cursor: s-resize;
   }
 }

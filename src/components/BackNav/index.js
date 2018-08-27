@@ -7,7 +7,7 @@ const styles = require('./styles.css');
 const BackNav = ({ current, goTo }) => (
   <nav className={styles.root} aria-hidden={current ? 'false' : 'true'}>
     <Button tabindex={current ? 0 : -1} onClick={() => goTo(null)}>
-      <Arrow direction="left" />
+      <Arrow direction="down" />
       <span>Back</span>
     </Button>
   </nav>
