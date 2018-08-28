@@ -20,12 +20,12 @@
 }
 
 .root > * {
-  margin: 0 0.5rem;
+  margin: 0 1rem;
 }
 
 @media (min-width: 96rem) and (min-height: 72rem) {
   .root > * {
-    margin: 0 1rem;
+    margin: 0 2rem;
   }
 }
 
@@ -34,9 +34,9 @@
 }
 
 .root svg:first-child:not(:last-child) {
-  margin-right: 1.5em;
+  margin-right: 2em;
 }
 
 .root svg:last-child:not(:first-child) {
-  margin-left: 1.5em;
+  margin-left: 2em;
 }
