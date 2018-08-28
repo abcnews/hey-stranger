@@ -41,15 +41,15 @@
 .root > blockquote > p:not([class]) {
   margin: 0 0 0.75em;
   font-family: ABCSerif;
-  font-size: 1.25em;
+  font-size: 1.125em;
   font-style: italic;
   hanging-punctuation: first;
 }
 
 .root > blockquote > p[class] {
-  margin: 0;
-  font-size: 1.875em;
-  font-style: italic;
+  margin: -0.25em 0 0;
+  font-size: 1.125em;
+  font-weight: bold;
 }
 
 .root > blockquote > p[class]::before {

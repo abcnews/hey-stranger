@@ -28,7 +28,7 @@
 
 @keyframes enter {
   from {
-    transform: translate(0, 100%);
+    transform: translate(0, 125vh);
   }
   to {
     transform: none;
@@ -36,7 +36,7 @@
 }
 
 .isFocused {
-  animation: enter 0.75s 1s backwards;
+  animation: enter 1s 0.75s backwards;
 }
 
 @keyframes exit {
@@ -45,7 +45,7 @@
   }
   to {
     opacity: 0;
-    transform: translate(0, 100%);
+    transform: translate(0, 125vh);
   }
 }
 
@@ -91,7 +91,7 @@
 }
 
 .isFocused .leftHand {
-  animation: enterLeftHand 0.75s 1.25s backwards;
+  animation: enterLeftHand 0.75s 1s backwards;
 }
 
 .rightHand {
@@ -108,7 +108,7 @@
 }
 
 .isFocused .rightHand {
-  animation: enterRightHand 0.75s 1.25s backwards;
+  animation: enterRightHand 0.75s 1s backwards;
 }
 
 .text {
