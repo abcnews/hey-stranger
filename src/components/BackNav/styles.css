@@ -16,6 +16,6 @@
     padding-bottom: 100vh;
     min-width: 15vw;
     text-align: left;
-    cursor: s-resize;
+    cursor: w-resize;
   }
 }
