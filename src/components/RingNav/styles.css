@@ -1,7 +1,7 @@
 .root {
   display: none;
   position: absolute;
-  bottom: 0;
+  bottom: 2.5rem;
   left: 0;
   justify-content: center;
   width: 100%;
