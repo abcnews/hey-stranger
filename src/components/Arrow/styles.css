@@ -10,6 +10,13 @@ Safari ignores one and Internet Explorer ignores the other
   stroke-width: 2;
 }
 
+@media (min-width: 32rem) and (min-height: 24rem) {
+  .root {
+    transform: scale(1.75);
+    stroke-width: 1.5;
+  }
+}
+
 .root g {
   transform-origin: 50% 50%;
 }
