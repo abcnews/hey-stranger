@@ -1,8 +1,6 @@
 const { h } = require('preact');
 const { createContext } = require('preact-context');
 
-const FN = () => {};
-
 const { Consumer, Provider } = createContext({
   current: null,
   hasExplored: false,
@@ -12,10 +10,10 @@ const { Consumer, Provider } = createContext({
   isCurrentActor: false,
   isInteractive: false,
   meta: null,
+  next: null,
+  prev: null,
   scene: null,
-  goTo: FN,
-  prev: FN,
-  next: FN
+  goTo: () => {}
 });
 
 const getDisplayName = Component => Component.displayName || Component.name || 'Component';

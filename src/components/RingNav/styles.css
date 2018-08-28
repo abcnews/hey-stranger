@@ -1,15 +1,16 @@
 .root {
-  transform: translate(-50%, 0);
   display: none;
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: 0;
+  justify-content: center;
+  width: 100%;
   transition: opacity 0.5s;
 }
 
 @media (min-width: 64rem) and (min-height: 48rem) {
   .root {
-    display: block;
+    display: flex;
   }
 }
 

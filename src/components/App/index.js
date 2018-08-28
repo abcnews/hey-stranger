@@ -21,8 +21,6 @@ class App extends Component {
 
     this.explore = this.explore.bind(this);
     this.goTo = this.goTo.bind(this);
-    this.next = this.next.bind(this);
-    this.prev = this.prev.bind(this);
     this.reveal = this.reveal.bind(this);
     this.start = this.start.bind(this);
 
@@ -37,7 +35,9 @@ class App extends Component {
       hasExplored: false,
       hasRevealed: false,
       hasStarted: false,
-      isInteractive: false
+      isInteractive: false,
+      next: null,
+      prev: null
     };
   }
 
@@ -46,27 +46,18 @@ class App extends Component {
   }
 
   goTo(current) {
-    this.setState({ current, hasExplored: false, hasRevealed: false });
-  }
+    let next = null;
+    let prev = null;
+    const ringIndex = this.ring.indexOf(current);
 
-  next() {
-    this.step();
-  }
+    if (ringIndex !== -1) {
+      const ringLength = this.ring.length;
 
-  prev() {
-    this.step(true);
-  }
-
-  step(isBackwards) {
-    const ringIndex = this.ring.indexOf(this.state.current);
-
-    if (ringIndex === -1) {
-      return;
+      next = this.ring[(ringLength + ringIndex + 1) % ringLength];
+      prev = this.ring[(ringLength + ringIndex - 1) % ringLength];
     }
 
-    const ringLength = this.ring.length;
-
-    this.goTo(this.ring[(ringLength + ringIndex + (isBackwards ? -1 : 1)) % ringLength]);
+    this.setState({ current, hasExplored: false, hasRevealed: false, next, prev });
   }
 
   reveal() {
@@ -127,9 +118,9 @@ class App extends Component {
     if (this.state.current === this.props.scene.aboutHTML) {
       this.goTo(null);
     } else if (dX < 0) {
-      this.next();
+      this.goTo(this.state.next);
     } else {
-      this.prev();
+      this.goTo(this.state.prev);
     }
   }
 
@@ -141,7 +132,7 @@ class App extends Component {
     this.updateRing(this.props.scene);
   }
 
-  render({ meta, scene }, { current, hasExplored, hasRevealed, hasStarted, isInteractive }) {
+  render({ meta, scene }, { current, hasExplored, hasRevealed, hasStarted, isInteractive, next, prev }) {
     return (
       <AppContext.Provider
         value={{
@@ -153,11 +144,11 @@ class App extends Component {
           isCurrentActor: scene && scene.actors.indexOf(current) !== -1,
           isInteractive,
           meta,
+          next,
+          prev,
           scene,
           explore: this.explore,
           goTo: this.goTo,
-          next: this.next,
-          prev: this.prev,
           reveal: this.reveal,
           start: this.start
         }}
