@@ -1,6 +1,10 @@
+const cn = require('classnames');
 const { h } = require('preact');
+const { withContext } = require('../AppContext');
 const styles = require('./styles.css');
 
-module.exports = () => <div className={styles.root} />;
+const HUDFilter = ({ isCurrentActor }) => <div className={cn(styles.root, { [styles.hasFocus]: isCurrentActor })} />;
 
-module.exports.displayName = 'HUDFilter';
+HUDFilter.displayName = 'HUDFilter';
+
+module.exports = withContext(HUDFilter);

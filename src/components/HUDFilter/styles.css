@@ -24,7 +24,14 @@
 }
 
 .root::after {
+  opacity: 0.6;
   bottom: 0;
   height: 20%;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  transition: opacity 0.5s 0.75s;
+}
+
+.hasFocus::after {
+  opacity: 1;
+  transition-delay: 0s;
 }
