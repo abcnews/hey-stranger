@@ -10,7 +10,7 @@ const HUDFilter = require('../HUDFilter');
 const Hints = require('../Hints');
 const Loader = require('../Loader');
 const RingNav = require('../RingNav');
-const AppContext = require('../AppContext');
+const { Consumer, Provider } = require('../AppContext');
 const Reader = require('../Reader');
 const Stage = require('../Stage');
 const styles = require('./styles.css');
@@ -128,13 +128,15 @@ class App extends Component {
     this.ring = actors ? [...actors] : [];
   }
 
+  componentDidMount() {}
+
   componentDidUpdate() {
     this.updateRing(this.props.scene);
   }
 
   render({ meta, scene }, { current, hasExplored, hasRevealed, hasStarted, isInteractive, next, prev }) {
     return (
-      <AppContext.Provider
+      <Provider
         value={{
           current,
           hasExplored,
@@ -166,7 +168,7 @@ class App extends Component {
           onTouchCancel={current ? this.swipeFinish : null}
         >
           <Loader />
-          <AppContext.Consumer>
+          <Consumer>
             {({ meta, scene }) =>
               meta &&
               scene && (
@@ -185,9 +187,9 @@ class App extends Component {
                 </AspectRatioRegulator>
               )
             }
-          </AppContext.Consumer>
+          </Consumer>
         </main>
-      </AppContext.Provider>
+      </Provider>
     );
   }
 }

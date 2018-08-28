@@ -29,7 +29,7 @@
 }
 
 .base {
-  transition: opacity 0.75s 1.25s;
+  transition: opacity 0.75s 1s;
 }
 
 .hasFocused .base {

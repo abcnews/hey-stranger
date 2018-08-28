@@ -36,7 +36,7 @@
 }
 
 .isFocused {
-  animation: enter 1s 0.75s backwards;
+  animation: enter 0.75s 1s backwards;
 }
 
 @keyframes exit {
@@ -91,7 +91,7 @@
 }
 
 .isFocused .leftHand {
-  animation: enterLeftHand 0.75s 1s backwards;
+  animation: enterLeftHand 0.75s 1.25s backwards;
 }
 
 .rightHand {
@@ -108,7 +108,7 @@
 }
 
 .isFocused .rightHand {
-  animation: enterRightHand 0.75s 1s backwards;
+  animation: enterRightHand 0.75s 1.25s backwards;
 }
 
 .text {
@@ -147,6 +147,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  min-height: 50vh;
 }
 
 .text::after {
@@ -157,6 +158,10 @@
 @media (min-width: 32rem) and (min-height: 24rem) {
   .text::before {
     height: 35vh; /* calc(25vh + 10vh) */
+  }
+
+  .text > * {
+    min-height: 42.5vh;
   }
 }
 
