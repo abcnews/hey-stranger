@@ -14,13 +14,11 @@
   position: absolute;
   left: 50%;
   font-size: 0.75rem;
-  font-style: italic;
   font-weight: bold;
   letter-spacing: 0.0625rem;
   text-align: center;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 -1px 1px rgba(0, 0, 0, 0.25), 1px 0 1px rgba(0, 0, 0, 0.25),
     -1px 0 1px rgba(0, 0, 0, 0.25);
-  text-transform: uppercase;
   transition: opacity 0.5s 0.5s;
 }
 
@@ -36,7 +34,7 @@
 }
 
 .initialExplore {
-  top: calc(20% - 4em);
+  top: calc(20% - 4.25em);
 }
 
 .initialChoice {
