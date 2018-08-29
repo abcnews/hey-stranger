@@ -1,7 +1,7 @@
 const { h } = require('preact');
 const styles = require('./styles.css');
 
-module.exports = ({ name, screen, image }) => (
+const Phone = ({ name, screen, image }) => (
   <div
     className={styles.root}
     style={{
@@ -19,4 +19,6 @@ module.exports = ({ name, screen, image }) => (
   </div>
 );
 
-module.exports.displayName = 'Phone';
+Phone.displayName = 'Phone';
+
+module.exports = Phone;

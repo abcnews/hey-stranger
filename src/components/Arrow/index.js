@@ -4,7 +4,7 @@ const styles = require('./styles.css');
 const FLIPPED_DIRECTIONS = ['up', 'down'];
 const VERTICAL_DIRECTIONS = ['down', 'right'];
 
-module.exports = ({ direction, hasTail }) => {
+const Arrow = ({ direction, hasTail }) => {
   const isFlipped = VERTICAL_DIRECTIONS.includes(direction);
   const isVertical = FLIPPED_DIRECTIONS.includes(direction);
 
@@ -45,4 +45,6 @@ module.exports = ({ direction, hasTail }) => {
   );
 };
 
-module.exports.displayName = 'Arrow';
+Arrow.displayName = 'Arrow';
+
+module.exports = Arrow;

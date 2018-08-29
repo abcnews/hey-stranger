@@ -2,7 +2,7 @@ const cn = require('classnames');
 const { h } = require('preact');
 const styles = require('./styles.css');
 
-module.exports = ({ primary, children, className, ...props }) => (
+const Button = ({ primary, children, className, ...props }) => (
   <button
     className={cn(
       styles.root,
@@ -17,4 +17,6 @@ module.exports = ({ primary, children, className, ...props }) => (
   </button>
 );
 
-module.exports.displayName = 'Button';
+Button.displayName = 'Button';
+
+module.exports = Button;
