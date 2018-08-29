@@ -1,8 +1,3 @@
-/*
-`transform` and `transform-origin` need to be defined in CSS and JS because
-Safari ignores one and Internet Explorer ignores the other
-*/
-
 .root {
   display: inline-block;
   stroke: currentColor;
@@ -15,12 +10,4 @@ Safari ignores one and Internet Explorer ignores the other
     transform: scale(1.75);
     stroke-width: 1.5;
   }
-}
-
-.root g {
-  transform-origin: 50% 50%;
-}
-
-.flipped g {
-  transform: rotate(180deg);
 }
