@@ -5,17 +5,17 @@
   transition: opacity 0.5s 0.5s;
 }
 
+@media (min-width: 64rem) and (min-height: 48rem) {
+  .root {
+    top: auto;
+    right: calc(50% + 18rem);
+    bottom: 2.5rem;
+    left: auto;
+  }
+}
+
 .root[aria-hidden='true'] {
   opacity: 0;
   transition-delay: 0s;
   pointer-events: none;
-}
-
-@media (min-width: 32rem) and (min-height: 24rem) {
-  .root button {
-    padding-bottom: 100vh;
-    min-width: 15vw;
-    text-align: left;
-    cursor: w-resize;
-  }
 }
