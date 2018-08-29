@@ -2,28 +2,14 @@
   font-display: swap;
   font-family: ABCSans;
   font-weight: 400;
-  src: url('//www.abc.net.au/res/fonts/abcsans/abcsans-light.woff') format('woff');
+  src: url('//www.abc.net.au/res/fonts/abcsans/abcsans-regular.woff') format('woff');
 }
 
 @font-face {
   font-display: swap;
   font-family: ABCSans;
   font-weight: 700;
-  src: url('//www.abc.net.au/res/fonts/abcsans/abcsans-regular.woff') format('woff');
-}
-
-@font-face {
-  font-display: swap;
-  font-family: ABCSerif;
-  font-weight: 400;
-  src: url('//www.abc.net.au/res/fonts/abcserif/abcserif-regular.woff') format('woff');
-}
-
-@font-face {
-  font-display: swap;
-  font-family: ABCSerif;
-  font-weight: 700;
-  src: url('//www.abc.net.au/res/fonts/abcserif/abcserif-bold.woff') format('woff');
+  src: url('//www.abc.net.au/res/fonts/abcsans/abcsans-bold.woff') format('woff');
 }
 
 @font-face {
@@ -69,6 +55,8 @@ body {
   padding: 0 !important;
   background-color: #000 !important;
   color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 [data-app-root] ~ * {
