@@ -4,3 +4,30 @@
   stroke: currentColor;
   stroke-width: 2;
 }
+
+/* @keyframes tap {
+  0%,
+  30%,
+  100% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.75;
+  }
+}
+
+.root circle {
+  animation: tap 2.5s ease-out infinite;
+}
+
+.root circle + circle {
+  animation-delay: -0.1s;
+}
+
+.root circle + circle + circle {
+  animation-delay: -0.15s;
+}
+
+[aria-hidden='true'] .root circle {
+  animation-play-state: paused;
+} */
