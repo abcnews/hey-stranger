@@ -1,19 +1,8 @@
-const { h, Component } = require('preact');
-const smartquotes = require('./smartquotes');
+const { h } = require('preact');
 const styles = require('./styles.css');
 
-class Richtext extends Component {
-  componentDidMount() {
-    smartquotes(this.base);
-  }
+const Richtext = ({ html }) => <div className={styles.root} dangerouslySetInnerHTML={{ __html: html }} />;
 
-  componentDidUpdate() {
-    smartquotes(this.base);
-  }
-
-  render({ html }) {
-    return <div className={styles.root} dangerouslySetInnerHTML={{ __html: html }} />;
-  }
-}
+Richtext.displayName = 'Richtext';
 
 module.exports = Richtext;
