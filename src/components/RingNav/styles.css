@@ -1,11 +1,12 @@
 .root {
   display: none;
+  transform: translate(-50%, 0);
   position: absolute;
   bottom: 2.5rem;
-  left: 0;
-  justify-content: center;
-  width: 100%;
-  transition: opacity 0.5s;
+  left: 50%;
+  justify-content: space-between;
+  width: 26rem;
+  transition: opacity 0.5s 0.5s;
 }
 
 @media (min-width: 64rem) and (min-height: 48rem) {
@@ -16,17 +17,8 @@
 
 .root[aria-hidden='true'] {
   opacity: 0;
+  transition-delay: 0s;
   pointer-events: none;
-}
-
-.root > * {
-  margin: 0 1rem;
-}
-
-@media (min-width: 96rem) and (min-height: 72rem) {
-  .root > * {
-    margin: 0 2rem;
-  }
 }
 
 .root svg {
