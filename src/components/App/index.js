@@ -67,6 +67,11 @@ class App extends Component {
 
       this.numActorsViewed++;
 
+      if (this.numActorsViewed === 1) {
+        increment('action', 'first-actor');
+        increment('first-actor', current.name);
+      }
+
       increment('actor', current.name);
     }
 
