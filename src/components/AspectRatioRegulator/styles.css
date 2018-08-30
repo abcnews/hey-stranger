@@ -95,7 +95,7 @@
   animation-name: deviceClockwise;
 }
 
-.isCounterClockwise .device {
+.counterClockwise .device {
   animation-name: deviceCounterClockwise;
 }
 
