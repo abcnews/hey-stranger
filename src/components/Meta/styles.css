@@ -32,7 +32,8 @@
 }
 
 .byline,
-.infoSource {
+.infoSource,
+.misc {
   font-size: 0.75rem;
 }
 
@@ -51,7 +52,8 @@
   }
 
   .byline,
-  .infoSource {
+  .infoSource,
+  .misc {
     font-size: 0.875rem;
   }
 

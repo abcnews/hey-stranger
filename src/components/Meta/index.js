@@ -3,7 +3,7 @@ const { withContext } = require('../AppContext');
 const styles = require('./styles.css');
 
 const Meta = ({ isInteractive, meta }) => {
-  const { title, bylineHTML, infoSource, infoSourceURL, standfirst } = meta;
+  const { title, bylineHTML, infoSource, infoSourceURL, standfirst, misc } = meta;
 
   return (
     <header className={styles.root}>
@@ -40,6 +40,7 @@ const Meta = ({ isInteractive, meta }) => {
         </div>
       )}
       {standfirst && <p className={styles.standfirst}>{standfirst}</p>}
+      {misc.length && <p className={styles.misc} dangerouslySetInnerHTML={{ __html: misc.join('<br/>') }} />}
     </header>
   );
 };

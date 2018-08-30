@@ -103,12 +103,14 @@ const HEADING_PATTERN = /p--heading-(\d)/;
 
 module.exports.getProps = async articleCMID => {
   const article = await fetchCAPI(articleCMID);
+  const [standfirst, ...misc] = article.teaserTextPlain.split(/\n+/);
   const meta = {
     title: article.title,
     bylineHTML: article.byline ? article.byline.slice(3, -4) : null,
     infoSource: article.infoSource,
     infoSourceURL: article.infosourceUrl,
-    standfirst: article.teaserTextPlain
+    standfirst,
+    misc
   };
   const doc = new DOMParser().parseFromString(article.textXML.text, 'text/html');
   const nodes = [...doc.body.firstChild.children];
