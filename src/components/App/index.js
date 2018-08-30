@@ -25,9 +25,9 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.ending = this.ending.bind(this);
     this.explore = this.explore.bind(this);
     this.goTo = this.goTo.bind(this);
-    this.logNumActorsViewed = this.logNumActorsViewed.bind(this);
     this.reveal = this.reveal.bind(this);
     this.start = this.start.bind(this);
 
@@ -48,6 +48,10 @@ class App extends Component {
       next: null,
       prev: null
     };
+  }
+
+  ending() {
+    increment('num-actors-viewed', this.numActorsViewed);
   }
 
   explore() {
@@ -80,10 +84,6 @@ class App extends Component {
     if (this.props.scene && this.props.scene.aboutHTML === current) {
       increment('action', 'about');
     }
-  }
-
-  logNumActorsViewed() {
-    increment('num-actors-viewed', this.numActorsViewed);
   }
 
   reveal() {
@@ -158,7 +158,7 @@ class App extends Component {
 
   componentDidMount() {
     increment('action', 'rendered');
-    window.addEventListener('unload', this.logNumViewed);
+    window.addEventListener('beforeunload', this.ending);
   }
 
   componentDidUpdate() {
@@ -166,7 +166,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('unload', this.logNumViewed);
+    window.removeEventListener('beforeunload', this.ending);
   }
 
   render({ meta, scene }, { current, hasExplored, hasRevealed, hasStarted, isInteractive, next, prev }) {
