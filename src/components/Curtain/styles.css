@@ -19,18 +19,3 @@
   display: block;
   margin: 0 auto;
 }
-
-@media (max-width: 32rem) {
-  .root > :not(:first-child) {
-    transform: translate(-50%, 0);
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    margin: 0;
-  }
-
-  .root[aria-hidden='true'] > :not(:first-child) {
-    transform: translate(-50%, 150vh);
-    transition: transform 2s;
-  }
-}

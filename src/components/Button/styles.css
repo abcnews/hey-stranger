@@ -22,8 +22,9 @@
 
 .isPrimary {
   border-width: 0.0625rem;
-  padding: 0.75rem 3rem;
+  padding: 0.75rem 2rem;
   background-color: rgba(0, 0, 0, 0.5);
+  color: #68e1ff;
 }
 
 .root > * {

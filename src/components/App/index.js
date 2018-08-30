@@ -177,6 +177,7 @@ class App extends Component {
           hasExplored,
           hasRevealed,
           hasStarted,
+          increment,
           isCurrentAbout: scene && scene.aboutHTML === current,
           isCurrentActor: scene && scene.actors.indexOf(current) !== -1,
           isInteractive,
