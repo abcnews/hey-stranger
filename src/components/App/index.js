@@ -16,7 +16,7 @@ const Reader = require('../Reader');
 const Stage = require('../Stage');
 const styles = require('./styles.css');
 
-const LOGGER = new Client(`hey-stranger_${window.location.hostname}`);
+const LOGGER = new Client(`hey-stranger_${String(window.location.hostname).split('.')[0]}`);
 const NO_OP = () => {};
 
 const increment = (question, answer) => LOGGER.increment({ question, answer }, NO_OP);
