@@ -1,3 +1,4 @@
+const { Client } = require('@abcnews/poll-counters-client');
 const { h, Component } = require('preact');
 const ABCNewsNav = require('../ABCNewsNav');
 const AspectRatioRegulator = require('../AspectRatioRegulator');
@@ -15,12 +16,18 @@ const Reader = require('../Reader');
 const Stage = require('../Stage');
 const styles = require('./styles.css');
 
+const LOGGER = new Client(`hey-stranger_${window.location.hostname}`);
+const NO_OP = () => {};
+
+const increment = (question, answer) => LOGGER.increment({ question, answer }, NO_OP);
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.explore = this.explore.bind(this);
     this.goTo = this.goTo.bind(this);
+    this.logNumActorsViewed = this.logNumActorsViewed.bind(this);
     this.reveal = this.reveal.bind(this);
     this.start = this.start.bind(this);
 
@@ -29,6 +36,8 @@ class App extends Component {
     this.swipeFinish = this.swipeFinish.bind(this);
 
     this.updateRing(props.scene);
+
+    this.numActorsViewed = 0;
 
     this.state = {
       current: null,
@@ -55,9 +64,21 @@ class App extends Component {
 
       next = this.ring[(ringLength + ringIndex + 1) % ringLength];
       prev = this.ring[(ringLength + ringIndex - 1) % ringLength];
+
+      this.numActorsViewed++;
+
+      increment('actor', current.name);
     }
 
     this.setState({ current, hasExplored: false, hasRevealed: false, next, prev });
+
+    if (this.props.scene && this.props.scene.aboutHTML === current) {
+      increment('action', 'about');
+    }
+  }
+
+  logNumActorsViewed() {
+    increment('num-actors-viewed', this.numActorsViewed);
   }
 
   reveal() {
@@ -70,6 +91,8 @@ class App extends Component {
     setTimeout(() => {
       this.setState({ isInteractive: true });
     }, 1500);
+
+    increment('action', 'started');
   }
 
   swipeBegin(event) {
@@ -128,10 +151,17 @@ class App extends Component {
     this.ring = actors ? [...actors] : [];
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    increment('action', 'rendered');
+    window.addEventListener('unload', this.logNumViewed);
+  }
 
   componentDidUpdate() {
     this.updateRing(this.props.scene);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('unload', this.logNumViewed);
   }
 
   render({ meta, scene }, { current, hasExplored, hasRevealed, hasStarted, isInteractive, next, prev }) {
