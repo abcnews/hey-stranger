@@ -26,9 +26,14 @@ class Curtain extends Component {
 
   render({ hasStarted }) {
     return (
-      <div className={styles.root} aria-hidden={hasStarted ? 'true' : 'false'}>
+      <div
+        className={styles.root}
+        aria-hidden={hasStarted ? 'true' : 'false'}
+        onMouseDown={this.start}
+        onTouchStart={this.start}
+      >
         <Meta />
-        <Button primary tabindex={hasStarted ? -1 : 0} onClick={this.start}>
+        <Button primary tabindex={hasStarted ? -1 : 0}>
           {this.startButtonText}
         </Button>
       </div>
