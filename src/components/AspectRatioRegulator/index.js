@@ -30,7 +30,9 @@ class AspectRatioRegulator extends Component {
   }
 
   update() {
-    this.setState(this.inferState());
+    setTimeout(() => {
+      this.setState(this.inferState());
+    }, 0);
   }
 
   render() {
