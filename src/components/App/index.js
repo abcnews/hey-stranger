@@ -51,7 +51,7 @@ class App extends Component {
   }
 
   ending() {
-    increment('num-actors-viewed', this.numActorsViewed);
+    increment('num-actors-viewed', this.numActorsViewed || '0');
   }
 
   explore() {
