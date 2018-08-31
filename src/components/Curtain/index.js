@@ -24,7 +24,7 @@ class Curtain extends Component {
         return;
       }
 
-      if (node.localName !== 'a' || node.href === undefined || window.location.host !== node.host) {
+      if (!node.tagName || node.tagName !== 'A') {
         return traverse(node.parentNode);
       }
 
