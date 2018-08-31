@@ -4,7 +4,7 @@ const Button = require('../Button');
 const Meta = require('../Meta');
 const styles = require('./styles.css');
 
-const BUTTON_TEXT_OPTIONS = ['Start', 'Show me the phones!', 'Let me see', 'Take a peek'];
+const BUTTON_TEXT_OPTIONS = ['Show me the phones!', 'Let me see', 'Take a peek'];
 
 class Curtain extends Component {
   constructor(props) {
