@@ -38,6 +38,7 @@ class App extends Component {
     this.updateRing(props.scene);
 
     this.numActorsViewed = 0;
+    this.uniqueActorsViewed = {};
 
     this.state = {
       current: null,
@@ -52,6 +53,10 @@ class App extends Component {
 
   ending() {
     increment('num-actors-viewed', this.numActorsViewed || '0');
+
+    if (this.numActorsViewed > 0) {
+      increment('num-unique-actors-viewed', Object.keys(this.uniqueActorsViewed).length);
+    }
   }
 
   explore() {
@@ -70,6 +75,7 @@ class App extends Component {
       prev = this.ring[(ringLength + ringIndex - 1) % ringLength];
 
       this.numActorsViewed++;
+      this.uniqueActorsViewed[current.name] = true;
 
       if (this.numActorsViewed === 1) {
         increment('action', 'first-actor');
