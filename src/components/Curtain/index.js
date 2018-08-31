@@ -10,7 +10,7 @@ class Curtain extends Component {
   constructor(props) {
     super(props);
 
-    this.start = this.start.bind(this);
+    this.onTap = this.onTap.bind(this);
 
     this.startButtonText = BUTTON_TEXT_OPTIONS[Math.floor(Math.random() * BUTTON_TEXT_OPTIONS.length)];
   }
@@ -18,7 +18,23 @@ class Curtain extends Component {
     this.props.increment('start-button-shown', this.startButtonText);
   }
 
-  start() {
+  onTap(event) {
+    var node = (function traverse(node) {
+      if (node == null) {
+        return;
+      }
+
+      if (node.localName !== 'a' || node.href === undefined || window.location.host !== node.host) {
+        return traverse(node.parentNode);
+      }
+
+      return node;
+    })(event.target);
+
+    if (node != null) {
+      return;
+    }
+
     this.props.increment('start-button-pressed', this.startButtonText);
 
     this.props.start();
@@ -29,8 +45,8 @@ class Curtain extends Component {
       <div
         className={styles.root}
         aria-hidden={hasStarted ? 'true' : 'false'}
-        onMouseDown={this.start}
-        onTouchStart={this.start}
+        onMouseDown={this.onTap}
+        onTouchStart={this.onTap}
       >
         <Meta />
         <Button primary tabindex={hasStarted ? -1 : 0}>
