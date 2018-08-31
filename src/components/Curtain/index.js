@@ -4,18 +4,11 @@ const Button = require('../Button');
 const Meta = require('../Meta');
 const styles = require('./styles.css');
 
-const BUTTON_TEXT_OPTIONS = ['Show me the phones!', 'Let me see', 'Take a peek'];
-
 class Curtain extends Component {
   constructor(props) {
     super(props);
 
     this.onTap = this.onTap.bind(this);
-
-    this.startButtonText = BUTTON_TEXT_OPTIONS[Math.floor(Math.random() * BUTTON_TEXT_OPTIONS.length)];
-  }
-  componentDidMount() {
-    this.props.increment('start-button-shown', this.startButtonText);
   }
 
   onTap(event) {
@@ -35,8 +28,6 @@ class Curtain extends Component {
       return;
     }
 
-    this.props.increment('start-button-pressed', this.startButtonText);
-
     this.props.start();
   }
 
@@ -50,7 +41,7 @@ class Curtain extends Component {
       >
         <Meta />
         <Button primary tabindex={hasStarted ? -1 : 0}>
-          {this.startButtonText}
+          Let me see
         </Button>
       </div>
     );
