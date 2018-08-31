@@ -126,8 +126,11 @@ module.exports.getProps = async articleCMID => {
     nodes.filter(isEmbed).map(node => fetchCAPI(getEmbedCMID(node.firstElementChild)))
   )).reduce((memo, embed) => ((memo[embed.id] = embed), memo), {});
 
-  for (let i = 0, len = nodes.length; i < len; i++) {
-    let node = nodes[i];
+  const nodesLength = nodes.length;
+  let nodeIndex = 0;
+
+  for (; nodeIndex < nodesLength; nodeIndex++) {
+    let node = nodes[nodeIndex];
 
     if (!node.tagName || node.textContent.trim().length === 0) {
       // Skip non-elements & empty elements
