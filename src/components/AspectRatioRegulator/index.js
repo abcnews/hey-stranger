@@ -2,6 +2,8 @@ const cn = require('classnames');
 const { h, Component } = require('preact');
 const styles = require('./styles.css');
 
+const IS_MOBILE_DEVICE = typeof window.orientation !== 'undefined' || navigator.userAgent.indexOf('IEMobile') !== -1;
+
 class AspectRatioRegulator extends Component {
   constructor(props) {
     super(props);
@@ -9,12 +11,12 @@ class AspectRatioRegulator extends Component {
     this.inferState = this.inferState.bind(this);
     this.update = this.update.bind(this);
 
-    if (this.props.max) {
+    if (IS_MOBILE_DEVICE && this.props.max) {
       this.maxMQL = window.matchMedia(`(max-height: 150mm) and (min-aspect-ratio: ${this.props.max})`);
       this.maxMQL.addListener(this.update);
     }
 
-    if (this.props.min) {
+    if (IS_MOBILE_DEVICE && this.props.min) {
       this.minMQL = window.matchMedia(`(max-width: 150mm) and (max-aspect-ratio: ${this.props.min})`);
       this.minMQL.addListener(this.update);
     }
