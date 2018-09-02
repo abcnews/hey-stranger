@@ -11,13 +11,10 @@
     "type": "preact"
   },
   "scripts": {
-    "start": "aunty serve",
-    "test": "aunty test"
+    "start": "aunty serve"
   },
   "devDependencies": {
-    "@abcnews/aunty": "^9.5.1",
-    "html-looks-like": "^1.0.3",
-    "preact-render-to-string": "^3.7.0"
+    "@abcnews/aunty": "^9.5.1"
   },
   "dependencies": {
     "@abcnews/alternating-case-to-object": "^2.0.0",
@@ -26,7 +23,6 @@
     "classnames": "^2.2.6",
     "focus-within": "^2.0.0",
     "preact": "^8.3.1",
-    "preact-compat": "^3.18.0",
     "preact-context": "^1.0.3",
     "xhr": "^2.5.0"
   }
