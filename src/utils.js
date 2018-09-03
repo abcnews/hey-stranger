@@ -23,10 +23,10 @@ module.exports.getSupplementaryCMID = () => {
   return cmid;
 };
 
-const CAPI_ENDPOINT =
+const CAPI_HOST =
   window.location.hostname.indexOf('nucwed') === -1 || window.location.search.indexOf('prod') > -1
-    ? 'https://content-gateway.abc-prod.net.au'
-    : 'http://nucwed.aus.aunty.abc.net.au';
+    ? 'content-gateway.abc-prod.net.au'
+    : 'capi.aus.aunty.abc.net.au:9991';
 
 const fetchCAPI = cmid =>
   new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ const fetchCAPI = cmid =>
     xhr(
       {
         responseType: 'json',
-        uri: `${CAPI_ENDPOINT}/api/v2/content/id/${cmid}`
+        uri: `https://${CAPI_HOST}/api/v2/content/id/${cmid}`
       },
       (error, response, content) => {
         if (error || response.statusCode !== 200) {
