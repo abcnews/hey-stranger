@@ -19,7 +19,7 @@
   "dependencies": {
     "@abcnews/alternating-case-to-object": "^2.0.0",
     "@abcnews/poll-counters-client": "^1.1.0",
-    "babel-polyfill": "^6.26.0",
+    "@babel/polyfill": "^7.0.0",
     "classnames": "^2.2.6",
     "focus-within": "^2.0.0",
     "preact": "^8.3.1",
