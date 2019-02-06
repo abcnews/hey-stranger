@@ -1,7 +1,18 @@
 const alternatingCaseToObject = require('@abcnews/alternating-case-to-object');
-const xhr = require('xhr');
+const capiFetch = require('@abcnews/capi-fetch').default;
 
 const SUPPLEMENTARY_CMID_META_SELECTOR = 'meta[name="supplementary"]';
+
+const capi = cmid =>
+  new Promise((resolve, reject) => {
+    capiFetch(cmid, (err, doc) => {
+      if (err) {
+        return reject(error);
+      }
+
+      resolve(doc);
+    });
+  });
 
 module.exports.getSupplementaryCMID = () => {
   const metaEl = document.querySelector(SUPPLEMENTARY_CMID_META_SELECTOR);
@@ -22,32 +33,6 @@ module.exports.getSupplementaryCMID = () => {
 
   return cmid;
 };
-
-const CAPI_ENDPOINT =
-  window.location.hostname.indexOf('nucwed') === -1 || window.location.search.indexOf('prod') > -1
-    ? 'https://content-gateway.abc-prod.net.au'
-    : 'http://nucwed.aus.aunty.abc.net.au';
-
-const fetchCAPI = cmid =>
-  new Promise((resolve, reject) => {
-    if (!cmid.length && cmid != +cmid) {
-      return reject(new Error(`Invalid CMID: ${cmid}`));
-    }
-
-    xhr(
-      {
-        responseType: 'json',
-        uri: `${CAPI_ENDPOINT}/api/v2/content/id/${cmid}`
-      },
-      (error, response, content) => {
-        if (error || response.statusCode !== 200) {
-          return reject(error || new Error(response.statusCode));
-        }
-
-        resolve(typeof content === 'object' ? content : JSON.parse(content));
-      }
-    );
-  });
 
 class ImagesPreloader {
   constructor() {
@@ -102,7 +87,7 @@ const rewriteLinkHTML = html =>
 const HEADING_PATTERN = /p--heading-(\d)/;
 
 module.exports.getProps = async articleCMID => {
-  const article = await fetchCAPI(articleCMID);
+  const article = await capi(articleCMID);
   const [standfirst, ...misc] = article.teaserTextPlain.split(/\n+/);
   const meta = {
     title: article.title,
@@ -123,7 +108,7 @@ module.exports.getProps = async articleCMID => {
   let actor;
 
   const cmEmbedsById = (await Promise.all(
-    nodes.filter(isEmbed).map(node => fetchCAPI(getEmbedCMID(node.firstElementChild)))
+    nodes.filter(isEmbed).map(node => capi(getEmbedCMID(node.firstElementChild)))
   )).reduce((memo, embed) => ((memo[embed.id] = embed), memo), {});
 
   const nodesLength = nodes.length;
