@@ -38,7 +38,7 @@
   font-size: 1.5em;
 }
 
-.root > blockquote > p:not([class]) {
+.root > blockquote > p {
   margin: 0 0 0.75em;
   font-family: ABCSerif;
   font-size: 1.125em;
@@ -46,12 +46,12 @@
   hanging-punctuation: first;
 }
 
-.root > blockquote > p[class] {
+.root > blockquote > cite {
   margin: -0.25em 0 0;
   font-size: 1.125em;
   font-weight: bold;
 }
 
-.root > blockquote > p[class]::before {
+.root > blockquote > cite::before {
   content: '— ';
 }

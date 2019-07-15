@@ -1,18 +1,7 @@
 const alternatingCaseToObject = require('@abcnews/alternating-case-to-object');
-const capiFetch = require('@abcnews/capi-fetch').default;
+const terminusFetch = require('@abcnews/terminus-fetch').default;
 
 const SUPPLEMENTARY_CMID_META_SELECTOR = 'meta[name="supplementary"]';
-
-const capi = cmid =>
-  new Promise((resolve, reject) => {
-    capiFetch(cmid, (err, doc) => {
-      if (err) {
-        return reject(error);
-      }
-
-      resolve(doc);
-    });
-  });
 
 module.exports.getSupplementaryCMID = () => {
   const metaEl = document.querySelector(SUPPLEMENTARY_CMID_META_SELECTOR);
@@ -62,33 +51,48 @@ class ImagesPreloader {
   }
 }
 
-const isEmbed = node =>
-  node.firstElementChild &&
-  node.firstElementChild === node.lastElementChild &&
-  node.firstElementChild.tagName === 'A' &&
-  node.innerHTML.match(INTERNAL_LINK_PATTERN);
+function isMediaEmbedLink(x) {
+  return x.docType === 'CustomImage' || x.docType === 'Video';
+}
 
-const getEmbedCMID = node => node.getAttribute('xlink:href').split(':')[1];
+function isEmbed(x) {
+  return x.tagname === 'a' && x.parameters.ref;
+}
 
 const DEFAULT_MEDIA_DOMAIN = 'www.abc.net.au';
 
 const uncrossDomain = url => url.replace(DEFAULT_MEDIA_DOMAIN, window.location.hostname);
 
-const INTERNAL_LINK_PATTERN = /xlink[^>]+contentbean:/g;
-const INTERNAL_LINK_REPLACEMENT = 'href="/news/';
-const EXTERNAL_LINK_PATTERN = /xlink[^>]+xlink:href/g;
-const EXTERNAL_LINK_REPLACEMENT = 'href';
+function childAttributes(child) {
+  if (!child.parameters) {
+    return '';
+  }
 
-const rewriteLinkHTML = html =>
-  html
-    .replace(INTERNAL_LINK_PATTERN, INTERNAL_LINK_REPLACEMENT)
-    .replace(EXTERNAL_LINK_PATTERN, EXTERNAL_LINK_REPLACEMENT);
+  return Object.keys(child.parameters).reduce((memo, key) => `${memo} ${key}="${child.parameters[key]}"`, '');
+}
 
-const HEADING_PATTERN = /p--heading-(\d)/;
+function childToHTML(child) {
+  return child.type === 'text'
+    ? child.content
+    : child.children
+    ? `<${child.tagname}${childAttributes(child)}>${child.children.reduce(
+        (memo, child) => `${memo}${childToHTML(child)}`,
+        ''
+      )}</${child.tagname}>`
+    : `<${child.tagname}${childAttributes(child)} />`;
+}
+
+function childToText(child) {
+  return child.type === 'text'
+    ? child.content
+    : child.children
+    ? `${child.children.reduce((memo, child) => `${memo}${childToText(child)}`, '')}`
+    : '';
+}
 
 module.exports.getProps = async articleCMID => {
-  const article = await capi(articleCMID);
-  const [standfirst, ...misc] = article.teaserTextPlain.split(/\n+/);
+  const article = await terminusFetch(articleCMID);
+  const [standfirst, ...misc] = article.synopsis.split(/\n+/);
   const meta = {
     title: article.title,
     bylineHTML: article.byline ? article.byline.slice(3, -4) : null,
@@ -97,8 +101,7 @@ module.exports.getProps = async articleCMID => {
     standfirst,
     misc
   };
-  const doc = new DOMParser().parseFromString(article.textXML.text, 'text/html');
-  const nodes = [...doc.body.firstChild.children];
+  const nodes = article.text.children;
   const blockingImages = new ImagesPreloader();
   const nonBlockingImages = new ImagesPreloader();
   const scene = {
@@ -108,7 +111,7 @@ module.exports.getProps = async articleCMID => {
   let actor;
 
   const cmEmbedsById = (await Promise.all(
-    nodes.filter(isEmbed).map(node => capi(getEmbedCMID(node.firstElementChild)))
+    article.embeddedMedia.filter(isMediaEmbedLink).map(x => terminusFetch({ id: x.id, type: x.docType.toLowerCase() }))
   )).reduce((memo, embed) => ((memo[embed.id] = embed), memo), {});
 
   const nodesLength = nodes.length;
@@ -117,27 +120,18 @@ module.exports.getProps = async articleCMID => {
   for (; nodeIndex < nodesLength; nodeIndex++) {
     let node = nodes[nodeIndex];
 
-    if (!node.tagName || node.textContent.trim().length === 0) {
-      // Skip non-elements & empty elements
+    if (!node.children) {
+      // Skip empty elements
       continue;
     }
 
-    const headingMatch = node.className.match(HEADING_PATTERN);
-
-    if (headingMatch) {
-      const headingEl = document.createElement(`H${headingMatch[1]}`);
-
-      headingEl.innerHTML = node.innerHTML;
-      node = headingEl;
-    }
-
-    if (node.textContent.indexOf('#scene') === 0) {
-      const config = alternatingCaseToObject(node.textContent);
+    if (childToText(node).indexOf('#scene') === 0) {
+      const config = alternatingCaseToObject(childToText(node));
 
       scene.width = config.w;
       scene.height = config.h;
-    } else if (node.textContent.indexOf('#actor') === 0) {
-      const config = alternatingCaseToObject(node.textContent);
+    } else if (childToText(node).indexOf('#actor') === 0) {
+      const config = alternatingCaseToObject(childToText(node));
 
       actor = {
         body: {
@@ -163,16 +157,16 @@ module.exports.getProps = async articleCMID => {
 
       scene.actors.push(actor);
     } else if (isEmbed(node)) {
-      const embed = cmEmbedsById[getEmbedCMID(node.firstElementChild)];
+      const embed = cmEmbedsById[node.parameters.ref];
 
       switch (embed.docType) {
         case 'Video':
-          scene.video = { ...embed.renditions.slice().sort((a, b) => b.width - a.width)[0] };
+          scene.video = { ...embed.media.video.renditions.files.slice().sort((a, b) => b.width - a.width)[0] };
           scene.video.url = uncrossDomain(scene.video.url);
           break;
         case 'CustomImage':
         case 'Image':
-          const image = { ...embed.media.slice().sort((a, b) => b.width - a.width)[0] };
+          const image = { ...embed.media.image.primary.complete.slice().sort((a, b) => b.width - a.width)[0] };
 
           image.url = uncrossDomain(image.url);
           image.description = embed.alt;
@@ -192,13 +186,13 @@ module.exports.getProps = async articleCMID => {
           break;
       }
     } else if (actor) {
-      if (node.tagName === 'H1') {
-        actor.name = node.textContent;
+      if (node.tagname === 'h1') {
+        actor.name = node.children[0].content;
       } else {
-        actor.storyHTML += rewriteLinkHTML(node.outerHTML);
+        actor.storyHTML += childToHTML(node);
       }
     } else {
-      scene.aboutHTML += rewriteLinkHTML(node.outerHTML);
+      scene.aboutHTML += childToHTML(node);
     }
   }
 
