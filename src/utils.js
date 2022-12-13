@@ -53,15 +53,14 @@ function childAttributes(child) {
     return '';
   }
 
-  const attributes = Object.keys(child.parameters).reduce(
+  let attributes = Object.keys(child.parameters).reduce(
     (memo, key) => `${memo} ${key}="${child.parameters[key]}"`,
     ''
   );
 
   // Restore internal document links
-  if (child.tagname === 'a' && attributes.ref != null) {
-    attributes.href = `/news/${attributes.ref}`;
-    delete attributes.ref;
+  if (isEmbed(child)) {
+    attributes = attributes.replace(`ref="`, 'href="/news/');
   }
 
   return attributes;
