@@ -79,7 +79,7 @@ function childToText(child) {
 }
 
 export async function fetchProps() {
-  const { articledetail } = __API__.document.loaders;
+  const { articledetail } = (__API__.document || __API__.app).loaders;
   const settings = articledetail.contextSettings['meta.data.name'];
   const article = await fetchOne(settings.supplementary.id);
   const [standfirst, ...misc] = article.synopsis.split(/\n+/);
