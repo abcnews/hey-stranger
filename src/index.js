@@ -15,11 +15,6 @@ requestDOMPermit('page').then(async () => {
     .querySelector('meta[name="viewport"]')
     .setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
 
-  // Remove existing global styles
-  [...document.querySelectorAll('link[rel="stylesheet"][data-chunk]')].forEach(x =>
-    x.parentElement.removeChild(x)
-  );
-
   // Get app root element
   const rootEl = document.querySelector('[data-component="Decoy"][data-key="page"]');
 
