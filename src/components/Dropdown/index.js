@@ -1,6 +1,6 @@
 const { h, Component } = require('preact');
 const { withContext } = require('../AppContext');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 class Dropdown extends Component {
   constructor(props) {

@@ -9,11 +9,6 @@
   right: 0;
 }
 
-/* :focus-within may be polyfilled */
-.root[focus-within] {
-  right: 0;
-}
-
 .root label {
   display: block;
   font-size: 0.75rem;

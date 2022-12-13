@@ -2,7 +2,7 @@ const cn = require('classnames');
 const { h, Component } = require('preact');
 const Body = require('../Body');
 const { withContext } = require('../AppContext');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 class Scene extends Component {
   constructor(props) {

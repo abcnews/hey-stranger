@@ -1,7 +1,7 @@
 const { h } = require('preact');
 const Button = require('../Button');
 const { withContext } = require('../AppContext');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const AboutNav = ({ hasStarted, current, scene, goTo }) => (
   <nav className={styles.root} aria-hidden={!hasStarted || current ? 'true' : 'false'}>

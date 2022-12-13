@@ -2,7 +2,7 @@ const { h } = require('preact');
 const { withContext } = require('../AppContext');
 const Arrow = require('../Arrow');
 const TapTarget = require('../TapTarget');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const Hints = ({ current, hasExplored, hasRevealed, isCurrentActor, isInteractive }) => {
   const initialExplore = isInteractive && !current && !hasExplored;

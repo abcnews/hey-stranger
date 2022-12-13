@@ -1,6 +1,6 @@
 const cn = require('classnames');
 const { h } = require('preact');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const Button = ({ primary, children, className, ...props }) => (
   <button

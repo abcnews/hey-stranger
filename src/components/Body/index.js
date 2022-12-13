@@ -1,6 +1,6 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 class Body extends Component {
   constructor(props) {

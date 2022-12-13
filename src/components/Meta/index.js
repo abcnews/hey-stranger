@@ -1,6 +1,6 @@
 const { h } = require('preact');
 const { withContext } = require('../AppContext');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const Meta = ({ isInteractive, meta }) => {
   const { title, bylineHTML, infoSource, infoSourceURL, standfirst, misc } = meta;

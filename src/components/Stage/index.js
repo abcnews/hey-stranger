@@ -2,7 +2,7 @@ const cn = require('classnames');
 const { h } = require('preact');
 const { withContext } = require('../AppContext');
 const Scene = require('../Scene');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const Stage = ({ hasStarted, isCurrentActor }) => (
   <div

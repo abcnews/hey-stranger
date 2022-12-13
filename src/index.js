@@ -1,38 +1,35 @@
-require('./polyfills');
+import 'regenerator-runtime/runtime';
+import { requestDOMPermit } from '@abcnews/env-utils';
+import { h, render } from 'preact';
+import App from './components/App';
+import './global.css';
+import './unveil';
+import { fetchProps } from './utils';
 
-const { h, render } = require('preact');
-const { getProps, getSupplementaryCMID, reset } = require('./utils');
+requestDOMPermit('page').then(async () => {
+  // Load supplementary article and parse props from it
+  const props = await fetchProps();
 
-const rootEl = document.createElement('div');
+  // Set viewport
+  document
+    .querySelector('meta[name="viewport"]')
+    .setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
 
-rootEl.setAttribute('data-app-root', '');
-document.body.insertBefore(rootEl, document.body.firstChild);
+  // Remove existing global styles
+  [...document.querySelectorAll('link[rel="stylesheet"][data-chunk]')].forEach(x =>
+    x.parentElement.removeChild(x)
+  );
 
-let appProps = {};
+  // Get app root element
+  const rootEl = document.querySelector('[data-component="Decoy"][data-key="page"]');
 
-function load() {
-  const App = require('./components/App');
-  render(<App meta={appProps.meta} scene={appProps.scene} />, rootEl, rootEl.firstChild);
-}
+  // Render app
+  rootEl.innerHTML = '';
+  render(<App meta={props.meta} scene={props.scene} />, rootEl, rootEl.firstChild);
 
-reset();
-load();
-window.dispatchEvent(new CustomEvent('unveil'));
-getProps(getSupplementaryCMID()).then(props => {
-  appProps = props;
-  load();
+  // Notify page the app is ready (for unveiling)
+  window.dispatchEvent(new CustomEvent('hey-stranger:ready'));
 });
-
-if (module.hot) {
-  module.hot.accept('./components/App', () => {
-    try {
-      load();
-    } catch (err) {
-      const ErrorBox = require('./components/ErrorBox');
-      render(<ErrorBox error={err} />, root, root.firstChild);
-    }
-  });
-}
 
 if (process.env.NODE_ENV === 'development') {
   require('preact/devtools');

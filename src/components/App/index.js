@@ -14,7 +14,7 @@ const RingNav = require('../RingNav');
 const { Consumer, Provider } = require('../AppContext');
 const Reader = require('../Reader');
 const Stage = require('../Stage');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const LOGGER = new Client(`hey-stranger_${String(window.location.hostname).split('.')[0]}`);
 const NO_OP = () => {};

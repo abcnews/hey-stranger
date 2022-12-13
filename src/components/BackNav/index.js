@@ -2,7 +2,7 @@ const { h } = require('preact');
 const Arrow = require('../Arrow');
 const Button = require('../Button');
 const { withContext } = require('../AppContext');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const BackNav = ({ current, goTo }) => (
   <nav className={styles.root} aria-hidden={current ? 'false' : 'true'}>

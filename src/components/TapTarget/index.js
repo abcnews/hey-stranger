@@ -1,5 +1,5 @@
 const { h } = require('preact');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const TapTarget = () => {
   return (

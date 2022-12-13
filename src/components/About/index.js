@@ -1,7 +1,7 @@
 const { h } = require('preact');
 const Richtext = require('../Richtext');
 const { withContext } = require('../AppContext');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const About = ({ isCurrentAbout, scene }) => {
   return (

@@ -1,27 +1,12 @@
-const alternatingCaseToObject = require('@abcnews/alternating-case-to-object');
-const terminusFetch = require('@abcnews/terminus-fetch').default;
+import acto from '@abcnews/alternating-case-to-object';
+import { fetchOne } from '@abcnews/terminus-fetch';
 
-const SUPPLEMENTARY_CMID_META_SELECTOR = 'meta[name="supplementary"]';
+export function getSupplementaryCMID() {
+  const { articledetail } = __API__.document.loaders;
+  const settings = articledetail.contextSettings['meta.data.name'];
 
-module.exports.getSupplementaryCMID = () => {
-  const metaEl = document.querySelector(SUPPLEMENTARY_CMID_META_SELECTOR);
-
-  if (!metaEl) {
-    throw new Error(`${SUPPLEMENTARY_CMID_META_SELECTOR} does not exist`);
-  }
-
-  let cmid = metaEl.getAttribute('content');
-
-  if (cmid.indexOf('CMArticle') > -1) {
-    cmid = cmid.match(/id=(\d+)/)[1];
-  }
-
-  if (cmid != +cmid) {
-    throw new Error(`"${cmid}" does not look like a CMID`);
-  }
-
-  return cmid;
-};
+  return settings.supplementary.id;
+}
 
 class ImagesPreloader {
   constructor() {
@@ -52,7 +37,7 @@ class ImagesPreloader {
 }
 
 function isMediaEmbedLink(x) {
-  return x.docType === 'CustomImage' || x.docType === 'Video';
+  return x.docType === 'Image' || x.docType === 'Video';
 }
 
 function isEmbed(x) {
@@ -68,7 +53,10 @@ function childAttributes(child) {
     return '';
   }
 
-  return Object.keys(child.parameters).reduce((memo, key) => `${memo} ${key}="${child.parameters[key]}"`, '');
+  return Object.keys(child.parameters).reduce(
+    (memo, key) => `${memo} ${key}="${child.parameters[key]}"`,
+    ''
+  );
 }
 
 function childToHTML(child) {
@@ -90,8 +78,10 @@ function childToText(child) {
     : '';
 }
 
-module.exports.getProps = async articleCMID => {
-  const article = await terminusFetch(articleCMID);
+export async function fetchProps() {
+  const { articledetail } = __API__.document.loaders;
+  const settings = articledetail.contextSettings['meta.data.name'];
+  const article = await fetchOne(settings.supplementary.id);
   const [standfirst, ...misc] = article.synopsis.split(/\n+/);
   const meta = {
     title: article.title,
@@ -101,7 +91,7 @@ module.exports.getProps = async articleCMID => {
     standfirst,
     misc
   };
-  const nodes = article.text.children;
+  const nodes = article.text.json.children;
   const blockingImages = new ImagesPreloader();
   const nonBlockingImages = new ImagesPreloader();
   const scene = {
@@ -110,9 +100,13 @@ module.exports.getProps = async articleCMID => {
   };
   let actor;
 
-  const cmEmbedsById = (await Promise.all(
-    article.embeddedMedia.filter(isMediaEmbedLink).map(x => terminusFetch({ id: x.id, type: x.docType.toLowerCase() }))
-  )).reduce((memo, embed) => ((memo[embed.id] = embed), memo), {});
+  const cmEmbedsById = (
+    await Promise.all(
+      article.embeddedMedia
+        .filter(isMediaEmbedLink)
+        .map(x => fetchOne({ id: x.id, type: x.docType.toLowerCase() }))
+    )
+  ).reduce((memo, embed) => ((memo[embed.id] = embed), memo), {});
 
   const nodesLength = nodes.length;
   let nodeIndex = 0;
@@ -126,12 +120,12 @@ module.exports.getProps = async articleCMID => {
     }
 
     if (childToText(node).indexOf('#scene') === 0) {
-      const config = alternatingCaseToObject(childToText(node));
+      const config = acto(childToText(node));
 
       scene.width = config.w;
       scene.height = config.h;
     } else if (childToText(node).indexOf('#actor') === 0) {
-      const config = alternatingCaseToObject(childToText(node));
+      const config = acto(childToText(node));
 
       actor = {
         body: {
@@ -161,12 +155,15 @@ module.exports.getProps = async articleCMID => {
 
       switch (embed.docType) {
         case 'Video':
-          scene.video = { ...embed.media.video.renditions.files.slice().sort((a, b) => b.width - a.width)[0] };
+          scene.video = {
+            ...embed.media.video.renditions.files.slice().sort((a, b) => b.width - a.width)[0]
+          };
           scene.video.url = uncrossDomain(scene.video.url);
           break;
-        case 'CustomImage':
         case 'Image':
-          const image = { ...embed.media.image.primary.complete.slice().sort((a, b) => b.width - a.width)[0] };
+          const image = {
+            ...embed.media.image.primary.complete.slice().sort((a, b) => b.width - a.width)[0]
+          };
 
           image.url = uncrossDomain(image.url);
           image.description = embed.alt;
@@ -205,18 +202,4 @@ module.exports.getProps = async articleCMID => {
     meta,
     scene
   };
-};
-
-module.exports.reset = () => {
-  // Set viewport
-  (
-    document.querySelector('meta[name="viewport"]') ||
-    (x => (x.setAttribute('name', 'viewport'), document.head.appendChild(x), x))(document.createElement('meta'))
-  ).setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
-
-  // Remove existing global styles
-  [...document.querySelectorAll('link[rel="stylesheet"]')].forEach(x => x.parentElement.removeChild(x));
-
-  // Add new global styles
-  require('./global.css');
-};
+}

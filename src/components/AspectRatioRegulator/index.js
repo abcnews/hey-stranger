@@ -1,6 +1,6 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 const IS_MOBILE_DEVICE = typeof window.orientation !== 'undefined' || navigator.userAgent.indexOf('IEMobile') !== -1;
 

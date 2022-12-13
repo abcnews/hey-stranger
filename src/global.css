@@ -1,25 +1,3 @@
-@font-face {
-  font-display: swap;
-  font-family: ABCSans;
-  font-weight: 400;
-  src: url('//www.abc.net.au/res/fonts/abcsans/abcsans-regular.woff') format('woff');
-}
-
-@font-face {
-  font-display: swap;
-  font-family: ABCSans;
-  font-weight: 700;
-  src: url('//www.abc.net.au/res/fonts/abcsans/abcsans-bold.woff') format('woff');
-}
-
-@font-face {
-  font-display: swap;
-  font-family: ABCSerif;
-  font-style: italic;
-  font-weight: 400;
-  src: url('//www.abc.net.au/res/fonts/abcserif/abcserif-regular_italic.woff') format('woff');
-}
-
 html,
 body {
   position: fixed;
@@ -59,10 +37,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-[data-app-root] ~ * {
-  display: none !important;
-}
-
 a,
 a:hover,
 a:active,
@@ -72,4 +46,9 @@ a:visited {
 
 a:not(:hover):not(:active) {
   text-decoration: none;
+}
+
+[data-component='DeveloperFlags'],
+[data-component='Decoy'] ~ * {
+  display: none;
 }

@@ -1,5 +1,4 @@
-const { h } = require('preact');
-const { createContext } = require('preact-context');
+const { createContext, h } = require('preact');
 
 const { Consumer, Provider } = createContext({
   current: null,

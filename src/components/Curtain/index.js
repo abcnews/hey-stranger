@@ -2,7 +2,7 @@ const { h, Component } = require('preact');
 const { withContext } = require('../AppContext');
 const Button = require('../Button');
 const Meta = require('../Meta');
-const styles = require('./styles.css');
+const styles = require('./styles.css').default;
 
 class Curtain extends Component {
   constructor(props) {
