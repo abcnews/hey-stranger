@@ -1,13 +1,6 @@
 import acto from '@abcnews/alternating-case-to-object';
 import { fetchOne } from '@abcnews/terminus-fetch';
 
-export function getSupplementaryCMID() {
-  const { articledetail } = __API__.document.loaders;
-  const settings = articledetail.contextSettings['meta.data.name'];
-
-  return settings.supplementary.id;
-}
-
 class ImagesPreloader {
   constructor() {
     this.assets = new Set();
