@@ -89,25 +89,27 @@ class Scene extends Component {
     const ctx = canvas.getContext('2d');
 
     const futureCurrent = candidateActors.find(actor => {
+      if (!ctx) return false;
+
       const imageRef = Object.keys(this.imageRefs).find(key =>
         key.startsWith(actor.body.image.url)
       );
+
       ctx.clearRect(0, 0, this.props.scene.width, this.props.scene.height);
-      ctx.drawImage(
-        // this.imageRefs[actor.body.image.url  + "&no-cache"],
-        imageRef ? this.imageRefs[imageRef] : null,
-        actor.body.x,
-        actor.body.y,
-        actor.body.width,
-        actor.body.height
-      );
+
+      imageRef &&
+        ctx.drawImage(
+          this.imageRefs[imageRef],
+          actor.body.x,
+          actor.body.y,
+          actor.body.width,
+          actor.body.height
+        );
 
       return ctx.getImageData(sceneX, sceneY, 1, 1).data[3] >= 128;
     });
 
-    if (!futureCurrent && !this.props.current) {
-      return;
-    }
+    if (!futureCurrent && !this.props.current) return;
 
     this.props.goTo(futureCurrent === this.props.current ? null : futureCurrent);
     this.setState({ scrollOffset: null });
