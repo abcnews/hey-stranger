@@ -24,6 +24,7 @@ class Body extends Component {
   }
 
   render({ xPct, yPct, widthPct, depthIndex, src, alt, isInFocus }) {
+    
     return (
       <div
         className={cn(styles.root, {
@@ -38,7 +39,7 @@ class Body extends Component {
       >
         <img
           ref={this.getImageRef}
-          src={src}
+          src={src + "&no-cache=" + Date.now()}
           alt={alt}
           crossOrigin="anonymous"
           draggable={0}

@@ -89,9 +89,13 @@ class Scene extends Component {
     const ctx = canvas.getContext('2d');
 
     const futureCurrent = candidateActors.find(actor => {
+      const imageRef = Object.keys(this.imageRefs).find(key =>
+        key.startsWith(actor.body.image.url)
+      );
       ctx.clearRect(0, 0, this.props.scene.width, this.props.scene.height);
       ctx.drawImage(
-        this.imageRefs[actor.body.image.url],
+        // this.imageRefs[actor.body.image.url  + "&no-cache"],
+        imageRef ? this.imageRefs[imageRef] : null,
         actor.body.x,
         actor.body.y,
         actor.body.width,
@@ -144,7 +148,9 @@ class Scene extends Component {
 
     this.setState({
       scrollOffset: this.clampScrollOffset(
-        (this.state.scrollOffset || this.measureScrollOffset()) - this.scrollPreviousX + this.scrollCurrentX
+        (this.state.scrollOffset || this.measureScrollOffset()) -
+          this.scrollPreviousX +
+          this.scrollCurrentX
       )
     });
 
@@ -172,7 +178,9 @@ class Scene extends Component {
     this.props.explore();
 
     this.setState({
-      scrollOffset: this.clampScrollOffset((this.state.scrollOffset || this.measureScrollOffset()) - event.deltaX)
+      scrollOffset: this.clampScrollOffset(
+        (this.state.scrollOffset || this.measureScrollOffset()) - event.deltaX
+      )
     });
   }
 
@@ -209,7 +217,9 @@ class Scene extends Component {
 
     if (!this.zoomOutScrollOffset && !isCurrentActor && this.props.isCurrentActor) {
       this.zoomOutScrollOffset = this.clampScrollOffset(
-        ((this.props.current.body.x + this.props.current.body.focus.x - this.props.scene.width / 2) /
+        ((this.props.current.body.x +
+          this.props.current.body.focus.x -
+          this.props.scene.width / 2) /
           -this.props.scene.width) *
           this.viewportDependentProps.scaledWidth
       );
@@ -238,21 +248,32 @@ class Scene extends Component {
 
   render({ current, isCurrentActor, isInteractive, scene }, { scrollOffset, shouldAutoPan }) {
     const { width, height, image, video, actors } = scene;
-    const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } = this.viewportDependentProps;
-    const actorsBackToFront = actors.slice().sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
-    const hasLargeViewport = window.matchMedia('(min-width: 64rem) and (min-height: 48rem)').matches;
-    const originXPct = isCurrentActor ? ((current.body.x + current.body.focus.x) / width) * 100 : 50;
-    const originYPct = isCurrentActor ? ((current.body.y + current.body.focus.y) / height) * 100 : 50;
+    const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } =
+      this.viewportDependentProps;
+    const actorsBackToFront = actors
+      .slice()
+      .sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
+    const hasLargeViewport = window.matchMedia(
+      '(min-width: 64rem) and (min-height: 48rem)'
+    ).matches;
+    const originXPct = isCurrentActor
+      ? ((current.body.x + current.body.focus.x) / width) * 100
+      : 50;
+    const originYPct = isCurrentActor
+      ? ((current.body.y + current.body.focus.y) / height) * 100
+      : 50;
     const scale = isCurrentActor ? current.body.focus.scale / 100 : 1;
     const translateX = isCurrentActor
       ? `${50 - originXPct}%`
       : scrollOffset != null
-        ? `${scrollOffset}px`
-        : this.zoomOutScrollOffset != null
-          ? `${this.zoomOutScrollOffset}px`
-          : 0;
+      ? `${scrollOffset}px`
+      : this.zoomOutScrollOffset != null
+      ? `${this.zoomOutScrollOffset}px`
+      : 0;
     const translateY = isCurrentActor ? `${66 - originYPct}%` : 0;
-    const transform = `${scale !== 1 ? `scale(${scale}) ` : ''}translate3d(${translateX}, ${translateY}, 0)`;
+    const transform = `${
+      scale !== 1 ? `scale(${scale}) ` : ''
+    }translate3d(${translateX}, ${translateY}, 0)`;
     const transitionDelay = scrollOffset ? '0s' : '';
     const transitionDuration = scrollOffset ? '0s' : '';
 
@@ -284,19 +305,18 @@ class Scene extends Component {
         {shouldAutoPan && isInteractive && !isCurrentActor && <style>{autoPanStyles}</style>}
         <div className={styles.base}>
           {image && <img src={image.url} alt={image.description} />}
-          {hasLargeViewport &&
-            video && (
-              <video
-                src={video.url}
-                poster={image ? image.url : null}
-                alt={image ? image.description : null}
-                autoplay
-                loop
-                muted
-                playsinline
-                webkit-playsinline
-              />
-            )}
+          {hasLargeViewport && video && (
+            <video
+              src={video.url}
+              poster={image ? image.url : null}
+              alt={image ? image.description : null}
+              autoplay
+              loop
+              muted
+              playsinline
+              webkit-playsinline
+            />
+          )}
         </div>
         <div className={styles.bodies}>
           {actorsBackToFront.map((actor, index) => (
