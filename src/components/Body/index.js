@@ -24,7 +24,10 @@ class Body extends Component {
   }
 
   render({ xPct, yPct, widthPct, depthIndex, src, alt, isInFocus }) {
-    
+    // Added a no-cache GET parameter to force a request to fix Chromium CORS error
+    // Ref: https://www.hacksoft.io/blog/handle-images-cors-error-in-chrome
+    const noCacheSrc = src + '&no-cache=' + Date.now();
+
     return (
       <div
         className={cn(styles.root, {
@@ -39,7 +42,7 @@ class Body extends Component {
       >
         <img
           ref={this.getImageRef}
-          src={src + "&no-cache=" + Date.now()}
+          src={noCacheSrc}
           alt={alt}
           crossOrigin="anonymous"
           draggable={0}

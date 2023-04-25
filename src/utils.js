@@ -41,15 +41,6 @@ const DEFAULT_MEDIA_DOMAIN = 'www.abc.net.au';
 
 const uncrossDomain = url => url.replace(DEFAULT_MEDIA_DOMAIN, window.location.hostname);
 
-// Added a no-cache GET parameter to force a request to fix Chromium CORS error
-// Ref: https://www.hacksoft.io/blog/handle-images-cors-error-in-chrome
-const noCacheDomain = url => {
-  // const urlObj = new URL(url);
-  // urlObj.searchParams.append('no-cache', Date.now().toString());
-  // return urlObj.toString();
-  return url + '&no-cache'
-};
-
 function childAttributes(child) {
   if (!child.parameters) {
     return '';
