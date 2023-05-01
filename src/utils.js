@@ -12,7 +12,8 @@ class ImagesPreloader {
 
       image.onload = resolve;
       image.onerror = reject;
-      image.src = url;
+      image.src = url + '&send-origin';
+      image.crossOrigin = 'anonymous';
     });
   }
 
