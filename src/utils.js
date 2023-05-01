@@ -203,6 +203,9 @@ export async function fetchProps() {
             case 'Lisa holding their phone':
               image.url = __webpack_public_path__ + 'assets/Lisa.png';
               break;
+            case 'Sefa holding their phone':
+              image.url = __webpack_public_path__ + 'assets/Sefa.png';
+              break;
           }
 
           if (!actor) {
@@ -240,20 +243,3 @@ export async function fetchProps() {
     scene
   };
 }
-
-//
-
-// Map actors replacing old actors.image.url with new actors.image.url based on actors.name
-// const actorsNewSrc = actors.map(actor => {
-//   const newSrc = `${__webpack_public_path__}assets/${actor.name}.png`;
-//   return {
-//     ...actor,
-//     body: {
-//       ...actor.body,
-//       image: {
-//         ...actor.body.image,
-//         url: newSrc
-//       }
-//     }
-//   };
-// });
