@@ -252,6 +252,7 @@ class Scene extends Component {
     const { width, height, image, video, actors } = scene;
     const { scaledWidth, scaledHeight, autoPanClassName, autoPanStyles } =
       this.viewportDependentProps;
+
     const actorsBackToFront = actors
       .slice()
       .sort((a, b) => a.body.y + a.body.height - (b.body.y + b.body.height));
