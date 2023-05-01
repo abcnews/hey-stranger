@@ -1,6 +1,6 @@
 {
 	"name": "hey-stranger",
-	"version": "2.0.7",
+	"version": "2.0.8",
 	"description": "A project generated from aunty's preact app template.",
 	"license": "MIT",
 	"private": true,
