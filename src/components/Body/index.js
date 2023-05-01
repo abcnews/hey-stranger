@@ -44,7 +44,7 @@ class Body extends Component {
       >
         <img
           ref={this.getImageRef}
-          src={src}
+          src={src + "&send-origin"}
           alt={alt}
           crossOrigin="anonymous"
           draggable={0}

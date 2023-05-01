@@ -12,7 +12,8 @@ class ImagesPreloader {
 
       image.onload = resolve;
       image.onerror = reject;
-      image.src = url;
+      image.src = url + '&send-origin';
+      image.crossOrigin = 'anonymous';
     });
   }
 
@@ -167,46 +168,6 @@ export async function fetchProps() {
 
           image.url = uncrossDomain(image.url);
           image.description = embed.alt;
-
-          // Fix for cross-origin images from eg.
-          // https://live-production.wcms.abc-cdn.net.au/7889d6ed0eb416d64064a5b91c2280ae?src
-          // NOTE: Remove switch statement once this issue resolved:
-          // https://github.com/abcnews/odyssey/issues/5
-          switch (image.description) {
-            case 'Moss holding their phone and wearing headphones':
-              image.url = __webpack_public_path__ + 'assets/Moss.png';
-              break;
-            case 'Sonam holding their phone out on an extended selfie stick':
-              image.url = __webpack_public_path__ + 'assets/Sonam.png';
-              break;
-            case 'Troy holding their phone':
-              image.url = __webpack_public_path__ + 'assets/Troy.png';
-              break;
-            case 'Jess holding their phone':
-              image.url = __webpack_public_path__ + 'assets/Jess.png';
-              break;
-            case 'Paul holding their phone':
-              image.url = __webpack_public_path__ + 'assets/Paul.png';
-              break;
-            case 'Thalia holding their phone; Atlas holding their tablet':
-              image.url = __webpack_public_path__ + 'assets/ThaliaAtlas.png';
-              break;
-            case 'Sally holding their phone':
-              image.url = __webpack_public_path__ + 'assets/Sally.png';
-              break;
-            case 'Emmanuella holding their phone and wearing headphones':
-              image.url = __webpack_public_path__ + 'assets/Emmanuella.png';
-              break;
-            case 'Laura holding their phone':
-              image.url = __webpack_public_path__ + 'assets/Laura.png';
-              break;
-            case 'Lisa holding their phone':
-              image.url = __webpack_public_path__ + 'assets/Lisa.png';
-              break;
-            case 'Sefa holding their phone':
-              image.url = __webpack_public_path__ + 'assets/Sefa.png';
-              break;
-          }
 
           if (!actor) {
             scene.image = image;
