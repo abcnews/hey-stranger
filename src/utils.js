@@ -12,7 +12,7 @@ class ImagesPreloader {
 
       image.onload = resolve;
       image.onerror = reject;
-      image.src = url + '&send-origin';
+      image.src = getCanvasImageUrl(url);
       image.crossOrigin = 'anonymous';
     });
   }
@@ -204,3 +204,9 @@ export async function fetchProps() {
     scene
   };
 }
+
+export const getCanvasImageUrl = src => {
+  const url = new URL(src);
+  url.searchParams.append('send-origin', 'true');
+  return url.toString();
+};
