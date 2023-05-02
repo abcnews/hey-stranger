@@ -1,6 +1,7 @@
 const cn = require('classnames');
 const { h, Component } = require('preact');
 const styles = require('./styles.css').default;
+const { getCanvasImageUrl } = require('../../utils');
 
 class Body extends Component {
   constructor(props) {
@@ -24,12 +25,6 @@ class Body extends Component {
   }
 
   render({ xPct, yPct, widthPct, depthIndex, src, alt, isInFocus }) {
-    // Added a no-cache GET parameter to force a request to fix Chromium CORS error
-    // Ref: https://www.hacksoft.io/blog/handle-images-cors-error-in-chrome
-    // NOTE: No longer doing this. Using Content FTP instead on same domain
-    // until Akamai cross-origin issue is resolved.
-    // const noCacheSrc = src + '&no-cache=' + Date.now();
-
     return (
       <div
         className={cn(styles.root, {
@@ -44,7 +39,7 @@ class Body extends Component {
       >
         <img
           ref={this.getImageRef}
-          src={src + "&send-origin"}
+          src={getCanvasImageUrl(src)}
           alt={alt}
           crossOrigin="anonymous"
           draggable={0}
