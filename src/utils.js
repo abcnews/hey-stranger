@@ -207,6 +207,6 @@ export async function fetchProps() {
 
 export const getCanvasImageUrl = src => {
   const url = new URL(src);
-  url.searchParams.append('send-origin', "true");
+  url.searchParams.append('send-origin', 'true');
   return url.toString();
 };
