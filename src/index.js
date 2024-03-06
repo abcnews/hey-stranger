@@ -1,4 +1,3 @@
-import 'regenerator-runtime/runtime';
 import { requestDOMPermit } from '@abcnews/env-utils';
 import { h, render } from 'preact';
 import App from './components/App';
