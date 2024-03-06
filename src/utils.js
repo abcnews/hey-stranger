@@ -80,9 +80,10 @@ function childToText(child) {
 }
 
 export async function fetchProps() {
-  const { articledetail } = (__API__.document || __API__.app).loaders;
-  const settings = articledetail.contextSettings['meta.data.name'];
-  const article = await fetchOne(settings.supplementary.id);
+  const article = await fetchOne(
+    __NEXT_DATA__.props.pageProps.document.loaders.articledetail.contextSettings['meta.data.name']
+      .supplementary.id
+  );
   const [standfirst, ...misc] = article.synopsis.split(/\n+/);
   const meta = {
     title: article.title,
