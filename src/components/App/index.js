@@ -1,4 +1,3 @@
-const { Client } = require('@abcnews/poll-counters-client');
 const { h, Component } = require('preact');
 const ABCNewsNav = require('../ABCNewsNav');
 const AspectRatioRegulator = require('../AspectRatioRegulator');
@@ -15,11 +14,6 @@ const { Consumer, Provider } = require('../AppContext');
 const Reader = require('../Reader');
 const Stage = require('../Stage');
 const styles = require('./styles.css').default;
-
-const LOGGER = new Client(`hey-stranger_${String(window.location.hostname).split('.')[0]}`);
-const NO_OP = () => {};
-
-const increment = (question, answer) => LOGGER.increment({ question, answer }, NO_OP);
 
 class App extends Component {
   constructor(props) {
@@ -51,13 +45,7 @@ class App extends Component {
     };
   }
 
-  ending() {
-    increment('num-actors-viewed', this.numActorsViewed || '0');
-
-    if (this.numActorsViewed > 0) {
-      increment('num-unique-actors-viewed', Object.keys(this.uniqueActorsViewed).length);
-    }
-  }
+  ending() {}
 
   explore() {
     this.setState({ hasExplored: true });
@@ -76,20 +64,9 @@ class App extends Component {
 
       this.numActorsViewed++;
       this.uniqueActorsViewed[current.name] = true;
-
-      if (this.numActorsViewed === 1) {
-        increment('action', 'first-actor');
-        increment('first-actor', current.name);
-      }
-
-      increment('actor', current.name);
     }
 
     this.setState({ current, hasExplored: false, hasRevealed: false, next, prev });
-
-    if (this.props.scene && this.props.scene.aboutHTML === current) {
-      increment('action', 'about');
-    }
   }
 
   reveal() {
@@ -102,8 +79,6 @@ class App extends Component {
     setTimeout(() => {
       this.setState({ isInteractive: true });
     }, 1500);
-
-    increment('action', 'started');
   }
 
   swipeBegin(event) {
@@ -163,7 +138,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    increment('action', 'rendered');
     window.addEventListener('beforeunload', this.ending);
   }
 
@@ -175,7 +149,10 @@ class App extends Component {
     window.removeEventListener('beforeunload', this.ending);
   }
 
-  render({ meta, scene }, { current, hasExplored, hasRevealed, hasStarted, isInteractive, next, prev }) {
+  render(
+    { meta, scene },
+    { current, hasExplored, hasRevealed, hasStarted, isInteractive, next, prev }
+  ) {
     return (
       <Provider
         value={{
